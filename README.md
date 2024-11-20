@@ -137,7 +137,7 @@ Response Example:
 ![Alt Text](/src/assets/proposal/login.png)
 
 #### Dashboard Page
-![Alt Text](/src/assets/proposal/dashboard.png.png)
+![Alt Text](/src/assets/proposal/dashboard.png)
 
 #### pecialist Selection Page
 ![Alt Text](/src/assets/proposal/specialists-selection.png)
