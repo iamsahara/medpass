@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -13,6 +15,7 @@ export default function Login({ onLogin }) {
     if (email === "admin@example.com" && password === "password") {
       setError("");
       onLogin();
+      navigate('/dashboard');
     } else {
       setError("Invalid email or password");
     }
