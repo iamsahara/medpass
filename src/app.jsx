@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import NotFound from "./pages/NotFound/NotFound";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import Booking from "./pages/Booking/Booking";
 
 
 const theme = createTheme({
@@ -121,6 +122,7 @@ export default function App() {
             />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/booking" element={<Booking />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
