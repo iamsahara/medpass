@@ -10,10 +10,9 @@ export default function Login({ onLogin }) {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Example authentication logic
     if (email === "admin@example.com" && password === "password") {
       setError("");
-      onLogin(); // Calls the login function from App
+      onLogin();
     } else {
       setError("Invalid email or password");
     }
