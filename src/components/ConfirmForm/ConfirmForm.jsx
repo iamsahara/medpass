@@ -73,25 +73,6 @@ function Step3({ formData, onBack, onConfirm }) {
         />
       </Box>
 
-      {/* Appointment Date */}
-      <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
-        <Typography sx={{ flex: 1 }}>Date</Typography>
-        <TextField
-          value={formData.appointmentDate || "2024-11-21"}
-          disabled
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton>
-                  <Edit />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          sx={{ flex: 2 }}
-        />
-      </Box>
-
       {/* Description */}
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Description</Typography>
