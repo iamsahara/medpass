@@ -137,16 +137,16 @@ Response Example:
 ![Alt Text](/src/assets/proposal/login.png)
 
 #### Dashboard Page
-![Alt Text](/src/assets/proposal.png)
+![Alt Text](/src/assets/proposal/dashboard.png.png)
 
 #### pecialist Selection Page
-![Alt Text](/src/assets/proposal.png)
+![Alt Text](/src/assets/proposal/specialists-selection.png)
 
 #### Patient Selection Page
-![Alt Text](/src/assets/proposal.png)
+![Alt Text](/src/assets/proposal/patient-selection.png)
 
 #### Booking Confirmation Page
-![Alt Text](/src/assets/proposal.png)
+![Alt Text](/src/assets/proposal/booking-confirmation.png)
 
 
 ### Data
