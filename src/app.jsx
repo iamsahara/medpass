@@ -5,6 +5,7 @@ import { CssBaseline, Box } from "@mui/material";
 import Header from "./components/Header/Header";
 import NotFound from "./pages/NotFound/NotFound";
 import Login from "./pages/Login/Login";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 
 const theme = createTheme({
@@ -119,6 +120,7 @@ export default function App() {
               }
             />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Box>
