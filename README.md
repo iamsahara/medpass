@@ -134,25 +134,25 @@ Response Example:
 ### Mockups
 
 #### Login Page
-![Alt Text](./login.png)
+![Alt Text](/src/assets/proposal/login.png)
 
 #### Dashboard Page
-![Alt Text](./dashboard.png)
+![Alt Text](/src/assets/proposal.png)
 
 #### pecialist Selection Page
-![Alt Text](./specialists-selection.png)
+![Alt Text](/src/assets/proposal.png)
 
 #### Patient Selection Page
-![Alt Text](./patient-selection.png)
+![Alt Text](/src/assets/proposal.png)
 
 #### Booking Confirmation Page
-![Alt Text](./booking-confirmation.png)
+![Alt Text](/src/assets/proposal.png)
 
 
 ### Data
 
 Database Schema:
-![Alt Text](./db_diagram.png)
+![Alt Text](/src/assets/proposal/db_diagram.png)
 
 Users (Family Doctors) Table:
 id, name, email, password, address, phone_number
