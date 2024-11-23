@@ -12,9 +12,11 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.7",
-    "@mui/material": "^6.1.7",
+    "@mui/material": "^6.1.8",
     "@mui/system": "^6.1.7",
+    "@mui/x-date-pickers": "^7.22.3",
     "axios": "^1.7.7",
+    "dayjs": "^1.11.13",
     "preact": "^10.24.3",
     "react-router-dom": "^6.28.0"
   },
