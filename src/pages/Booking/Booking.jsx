@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Step1 from '../../components/BookingStep1/Step1';
-import Step2 from '../../components/BookingStep2/Step2';
-import Step3 from '../../components/BookingStep3/Step3';
+import BookingStep1 from '../../components/BookingStep1/BookingStep1';
+import BookingStep2 from '../../components/BookingStep2/BookingStep2';
+import BookingStep3 from '../../components/BookingStep3/BookingStep3';
 import { Box, Typography, Stepper, Step, StepLabel, Button } from '@mui/material';
 
 function Booking() {
@@ -12,7 +12,7 @@ function Booking() {
     patient: null,
   });
 
-  const steps = ['Select Specialist', 'Select Patient', 'Confirm Appointment'];
+  const steps = ['Select Patient', 'Select Specialist', 'Confirm Appointment'];
 
   const handleNext = () => setActiveStep((prevStep) => prevStep + 1);
   const handleBack = () => setActiveStep((prevStep) => prevStep - 1);
@@ -28,7 +28,7 @@ function Booking() {
     switch (step) {
       case 0:
         return (
-          <Step1
+          <BookingStep1
             formData={formData}
             onNext={handleNext}
             onDataChange={handleDataChange}
@@ -36,7 +36,7 @@ function Booking() {
         );
       case 1:
         return (
-          <Step2
+          <BookingStep2
             formData={formData}
             onNext={handleNext}
             onBack={handleBack}
@@ -45,7 +45,7 @@ function Booking() {
         );
       case 2:
         return (
-          <Step3
+          <BookingStep3
             formData={formData}
             onBack={handleBack}
             onNext={handleNext}
