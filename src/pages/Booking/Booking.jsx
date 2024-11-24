@@ -2,8 +2,17 @@ import React, { useState } from "react";
 import BookingStep1 from "../../components/BookingStep1/BookingStep1";
 import BookingStep2 from "../../components/BookingStep2/BookingStep2";
 import BookingStep3 from "../../components/BookingStep3/BookingStep3";
-import { Box, Typography, Stepper, Step, StepLabel, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom"; // Assuming you're using React Router
+import {
+  Box,
+  Typography,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  AppBar,
+  Toolbar,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Booking() {
   const [activeStep, setActiveStep] = useState(0);
@@ -14,10 +23,19 @@ function Booking() {
   });
 
   const steps = ["Select Patient", "Select Specialist", "Confirm Appointment"];
-  const navigate = useNavigate(); // React Router's navigation hook
+  const doctorFirstName = "Emily";
+  const doctorLastName = "Carter";
+  const doctorTitle = "Physician";
+  const navigate = useNavigate();
 
   // Move to the next step
-  const handleNext = () => setActiveStep((prevStep) => prevStep + 1);
+  const handleNext = () => {
+    if (activeStep === 2) {
+      setActiveStep(3); // Proceed to confirmation step
+    } else {
+      setActiveStep((prevStep) => prevStep + 1);
+    }
+  };
 
   // Move to the previous step
   const handleBack = () => setActiveStep((prevStep) => prevStep - 1);
@@ -72,18 +90,32 @@ function Booking() {
               Your appointment details have been sent to both you and your
               patient's email.
             </Typography>
-            <Box sx={{ marginTop: 2, display: "flex", gap: 2, justifyContent: "center" }}>
+            <Box
+              sx={{
+                marginTop: 2,
+                display: "flex",
+                gap: 2,
+                justifyContent: "center",
+              }}
+            >
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => setActiveStep(0)} // Restart booking process
+                onClick={() => {
+                  setActiveStep(0);
+                  setFormData({
+                    specialist: null,
+                    appointmentDate: null,
+                    patient: null,
+                  });
+                }}
               >
                 Book Another Appointment
               </Button>
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate("/dashboard")} // Navigate to dashboard
+                onClick={() => navigate("/dashboard")}
               >
                 Back to Dashboard
               </Button>
@@ -100,18 +132,39 @@ function Booking() {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, margin: "auto", padding: 3 }}>
-      <Typography variant="h4" align="center" gutterBottom>
-        Booking Page
-      </Typography>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label, index) => (
-          <Step key={index}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <Box sx={{ marginTop: 3 }}>{renderStepContent(activeStep)}</Box>
+    <Box>
+      {/* Header */}
+      <AppBar position="static">
+        <Toolbar>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+   Dr. {doctorFirstName} {doctorLastName} / {doctorTitle}
+</Typography>
+
+          <Button
+            color="inherit"
+            onClick={() => {
+              navigate("/login"); // Navigate to login
+            }}
+          >
+            Logout
+          </Button>
+        </Toolbar>
+      </AppBar>
+
+      {/* Booking Content */}
+      <Box sx={{ maxWidth: 600, margin: "auto", padding: 3 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Booking Page
+        </Typography>
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {steps.map((label, index) => (
+            <Step key={index}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        <Box sx={{ marginTop: 3 }}>{renderStepContent(activeStep)}</Box>
+      </Box>
     </Box>
   );
 }
