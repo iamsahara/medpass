@@ -15,7 +15,7 @@ export const SpecialistsProvider = ({ children }) => {
   useEffect(() => {
     const fetchSpecialists = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/dashboard/specialists`);
+        const response = await axios.get(`${apiUrl}/api/specialists`);
         setSpecialists(response.data);
       } catch (err) {
         setError(err.message || "Failed to fetch specialists.");

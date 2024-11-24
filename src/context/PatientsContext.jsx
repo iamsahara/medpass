@@ -15,7 +15,7 @@ export const PatientsProvider = ({ children }) => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/dashboard/patients`);
+        const response = await axios.get(`${apiUrl}/api/patients`);
         setPatients(response.data);
       } catch (err) {
         setError(err.message || "Failed to fetch patients.");

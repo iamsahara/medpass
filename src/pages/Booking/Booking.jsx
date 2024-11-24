@@ -9,8 +9,6 @@ import {
   Step,
   StepLabel,
   Button,
-  AppBar,
-  Toolbar,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 

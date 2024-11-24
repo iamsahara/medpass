@@ -13,6 +13,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import theme from "./styles/theme";
 import { PatientsProvider } from "./context/PatientsContext";
 import { SpecialistsProvider } from "./context/SpecialistsContext";
+import UserProfile from "./components/UserProfile/UserProfile"
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -49,6 +50,7 @@ export default function App() {
                     <Route path="/patients" element={<Patients />} />
                     <Route path="/specialists" element={<Specialists />} />
                     <Route path="/booking" element={<Booking />} />
+                    <Route path="/profile" element={<UserProfile />} />
                   </>
                 ) : (
                   // Redirect unauthenticated users to login

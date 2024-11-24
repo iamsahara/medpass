@@ -4,38 +4,51 @@ import {
   Button,
   Typography,
   TextField,
+  Select,
+  MenuItem,
   List,
-  Card,
-  CardContent,
-  Divider,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
+import axios from "axios";
+import SpecialistCard from "../SpecialistCard/SpecialistCard";
 import { SpecialistsContext } from "../../context/SpecialistsContext";
 
-function BookingStep2({ onBack, onNext, onDataChange }) {
+function BookingStep2({ formData, onBack, onNext, onDataChange }) {
+  const apiUrl = import.meta.env.VITE_API_URL;
+  console.log("Patient ID:", formData);
+  console.log("API URL:", apiUrl);
+  console.log("Form Data", formData);
   const { specialists, loading, error } = useContext(SpecialistsContext);
-  const [searchCriteria, setSearchCriteria] = useState({ name: "", specialty: "" });
+  const [searchCriteria, setSearchCriteria] = useState("");
   const [filteredSpecialists, setFilteredSpecialists] = useState(specialists);
+  const [sortOption, setSortOption] = useState(""); 
   const [selectedSpecialist, setSelectedSpecialist] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [localError, setLocalError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  const handleSearchChange = (field, value) => {
-    const updatedCriteria = { ...searchCriteria, [field]: value };
-    setSearchCriteria(updatedCriteria);
+  const handleSearchChange = (value) => {
+    setSearchCriteria(value);
 
-    const filtered = specialists.filter((specialist) => {
-      return (
-        (!updatedCriteria.name ||
-          specialist.name.toLowerCase().includes(updatedCriteria.name.toLowerCase())) &&
-        (!updatedCriteria.specialty ||
-          specialist.specialty.toLowerCase().includes(updatedCriteria.specialty.toLowerCase()))
-      );
-    });
+    const filtered = specialists.filter((specialist) =>
+      specialist.name.toLowerCase().includes(value.toLowerCase())
+    );
 
     setFilteredSpecialists(filtered);
+  };
+
+  const handleSortChange = async (sortOption) => {
+    setSortOption(sortOption);
+    if (sortOption === "closest") {
+      try {
+        const response = await axios.get(
+          `${apiUrl}/api/specialists/closest?patientId=${formData.patient.id}`
+        );
+        console.log(response.data)
+        setFilteredSpecialists(response.data);
+      } catch (err) {
+        console.error("Error fetching closest specialists:", err.message);
+      }
+    }
   };
 
   const handleSpecialistSelect = (specialist) => {
@@ -63,11 +76,10 @@ function BookingStep2({ onBack, onNext, onDataChange }) {
       return;
     }
 
-    // Show success message and navigate to Step 3
     setLocalError("");
     setSuccessMessage("Step 2 completed successfully!");
     setTimeout(() => {
-      onNext(); // Proceed to the next step after 1 second
+      onNext();
     }, 1000);
   };
 
@@ -89,73 +101,39 @@ function BookingStep2({ onBack, onNext, onDataChange }) {
         Step 2: Select a Specialist
       </Typography>
 
+      {/* Search and Sort Controls */}
       <Box sx={{ display: "flex", gap: 2, marginBottom: 3 }}>
         <TextField
           label="Search by Name"
-          value={searchCriteria.name}
-          onChange={(e) => handleSearchChange("name", e.target.value)}
+          value={searchCriteria}
+          onChange={(e) => handleSearchChange(e.target.value)}
           fullWidth
         />
-        <TextField
-          label="Search by Specialty"
-          value={searchCriteria.specialty}
-          onChange={(e) => handleSearchChange("specialty", e.target.value)}
-          fullWidth
-        />
+       <Select
+  value={sortOption}
+  onChange={(e) => handleSortChange(e.target.value)} // Updates sortOption state
+  displayEmpty
+  fullWidth
+>
+  <MenuItem value="" disabled>
+    Sort By
+  </MenuItem>
+  <MenuItem value="closest">Closest to Patient</MenuItem>
+</Select>
       </Box>
 
-      {localError && (
-        <Typography color="error" sx={{ marginBottom: 2 }}>
-          {localError}
-        </Typography>
-      )}
-
-      {successMessage && (
-        <Typography color="success" sx={{ marginBottom: 2 }}>
-          {successMessage}
-        </Typography>
-      )}
-
+      {/* Specialist List */}
       <List>
         {filteredSpecialists.length > 0 ? (
           filteredSpecialists.map((specialist) => (
-            <Card
+            <SpecialistCard
               key={specialist.id}
-              sx={{
-                marginBottom: 2,
-                border:
-                  selectedSpecialist?.id === specialist.id
-                    ? "2px solid #00C853"
-                    : "1px solid #ddd",
-              }}
-            >
-              <CardContent>
-                <Typography
-                  variant="h6"
-                  sx={{ cursor: "pointer", textDecoration: "underline" }}
-                  onClick={() => handleSpecialistSelect(specialist)}
-                >
-                  {specialist.name}
-                </Typography>
-                <Typography variant="body2">Specialty: {specialist.specialty}</Typography>
-                <Typography variant="body2">Address: {specialist.address}</Typography>
-                <Typography variant="body2">Phone: {specialist.phone}</Typography>
-                <Typography variant="body2">
-                  First Available: {dayjs(specialist.firstAvailibility).format("MMMM DD, YYYY")}
-                </Typography>
-                <Divider sx={{ my: 2 }} />
-                <DatePicker
-                  label="Select Appointment Date"
-                  value={
-                    selectedSpecialist?.id === specialist.id ? selectedDate : null
-                  }
-                  onChange={(date) => handleDateSelect(date)}
-                  shouldDisableDate={(date) =>
-                    !specialist.availability.includes(date.format("YYYY-MM-DD"))
-                  }
-                />
-              </CardContent>
-            </Card>
+              specialist={specialist}
+              selectedSpecialist={selectedSpecialist}
+              selectedDate={selectedDate}
+              onSelectSpecialist={handleSpecialistSelect}
+              onSelectDate={handleDateSelect}
+            />
           ))
         ) : (
           <Typography variant="body2">No specialists found.</Typography>
@@ -171,6 +149,18 @@ function BookingStep2({ onBack, onNext, onDataChange }) {
           Next
         </Button>
       </Box>
+
+      {/* Error or Success Messages */}
+      {localError && (
+        <Typography color="error" sx={{ marginTop: 2 }}>
+          {localError}
+        </Typography>
+      )}
+      {successMessage && (
+        <Typography color="primary" sx={{ marginTop: 2 }}>
+          {successMessage}
+        </Typography>
+      )}
     </Box>
   );
 }

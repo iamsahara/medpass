@@ -36,8 +36,11 @@ function BookingStep1({ formData, onNext, onBack, onDataChange }) {
   // Handle patient selection
   const handlePatientSelect = (patient) => {
     setSelectedPatient(patient);
+    console.log("Form Data in Step 1:", formData);
     onDataChange("patient", patient); // Pass selected patient ID to formData
   };
+
+
 
   // Proceed to the next step
   const handleNext = () => {
