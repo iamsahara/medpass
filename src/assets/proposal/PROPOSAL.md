@@ -181,7 +181,7 @@ name, specialty
   }
 ]
 
-**GET /api/patients**
+**GET /api/dashboard/patients**
 
 Fetches a list of patient.
 
@@ -267,7 +267,7 @@ Allow doctors to select a specialist and a time slot.
 Day 7-8: Patient Search and Selection
 Patient Selection UI:
 Create a page to display and search for patients.
-Build the GET /api/patients endpoint to fetch the list of patients from the backend.
+Build the GET /api/dashboard/patients endpoint to fetch the list of patients from the backend.
 Optional Notes:
 
 Add an input field for optional notes (e.g., reason for referral).

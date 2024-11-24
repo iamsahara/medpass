@@ -1,81 +1,87 @@
-import { createTheme} from "@mui/system";
+import { createTheme } from "@mui/material/styles";
+
 const theme = createTheme({
-    palette: {
-      mode: "light", // Light theme
-      primary: {
-        main: "#000000", // Black for primary elements
-        light: "#333333", // Lighter black for hover effects
-        dark: "#000000", // Keep dark as pure black
-      },
-      secondary: {
-        main: "#FFFFFF", // White for secondary elements
-        light: "#F5F5F5", // Slightly off-white for contrast
-        dark: "#E0E0E0", // Light gray for secondary hover
-      },
-      background: {
-        default: "#FFFFFF", // White background
-        paper: "#F9F9F9", // Subtle grayish-white for cards and containers
-      },
-      text: {
-        primary: "#000000", // Black text
-        secondary: "#4A4A4A", // Dark gray text for less emphasis
-      },
-      common: {
-        black: "#000000",
-        white: "#FFFFFF", // Ensure 'white' is defined here
-      },
+  palette: {
+    mode: "light", // Light theme
+    primary: {
+      main: "#4A90E2", // Soft modern blue
+      light: "#6FB7FF", // Lighter blue for hover effects
+      dark: "#003A75", // Deep navy blue for contrast
     },
-    typography: {
-      fontFamily: "Roboto, Arial, sans-serif",
-      h1: { color: "#000000", fontWeight: 700 }, // Bold black for headers
-      h2: { color: "#000000", fontWeight: 600 },
-      body1: { color: "#000000", fontWeight: 400 }, // Black for body text
-      button: {
-        textTransform: "none", // No uppercase for buttons
-        fontWeight: 500, // Bold text for buttons
-      },
+    secondary: {
+      main: "#FF6F61", // Vibrant coral for secondary elements
+      light: "#FFA094", // Lighter coral for hover effects
+      dark: "#B23A31", // Deep coral for secondary contrast
     },
-    components: {
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            borderRadius: "4px", // Subtle rounded corners
-            textTransform: "none", // No uppercase text
-            fontWeight: 500,
+    background: {
+      default: "#F5F7FA", // Soft grayish-blue background
+      paper: "#FFFFFF", // White for cards and containers
+    },
+    text: {
+      primary: "#1C1C1C", // Almost black for primary text
+      secondary: "#5A5A5A", // Medium gray for less emphasis
+    },
+  },
+  typography: {
+    fontFamily: "Poppins, Arial, sans-serif", // Clean modern font
+    h1: { color: "#1C1C1C", fontWeight: 700 }, // Bold, dark headers
+    h2: { color: "#1C1C1C", fontWeight: 600 },
+    body1: { color: "#1C1C1C", fontWeight: 400 }, // Clean body text
+    button: {
+      textTransform: "none", // No uppercase for buttons
+      fontWeight: 500, // Medium weight for buttons
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "8px", // Slightly more rounded corners
+          textTransform: "none", // No uppercase text
+          fontWeight: 500,
+        },
+        containedPrimary: {
+          backgroundColor: "#4A90E2", // Soft blue buttons
+          color: "#FFFFFF", // White text
+          "&:hover": {
+            backgroundColor: "#6FB7FF", // Lighter blue on hover
           },
-          containedPrimary: {
-            backgroundColor: "#000000", // Black buttons
-            color: "#FFFFFF", // White text
-            "&:hover": {
-              backgroundColor: "#333333", // Slightly lighter black on hover
-            },
+        },
+        containedSecondary: {
+          backgroundColor: "#FF6F61", // Vibrant coral buttons
+          color: "#FFFFFF", // White text
+          "&:hover": {
+            backgroundColor: "#FFA094", // Lighter coral on hover
           },
-          containedSecondary: {
-            backgroundColor: "#FFFFFF", // White buttons
-            color: "#000000", // Black text
-            "&:hover": {
-              backgroundColor: "#F5F5F5", // Subtle grayish-white on hover
-            },
+        },
+        outlinedPrimary: {
+          borderColor: "#4A90E2", // Blue outline
+          color: "#4A90E2", // Blue text
+          "&:hover": {
+            borderColor: "#6FB7FF", // Lighter blue outline
+            color: "#6FB7FF",
           },
-          outlinedPrimary: {
-            borderColor: "#000000", // Black outline
-            color: "#000000", // Black text
-            "&:hover": {
-              borderColor: "#333333", // Slightly lighter black on hover
-              color: "#333333",
-            },
-          },
-          outlinedSecondary: {
-            borderColor: "#FFFFFF", // White outline
-            color: "#FFFFFF", // White text
-            "&:hover": {
-              borderColor: "#F5F5F5", // Subtle gray on hover
-              color: "#F5F5F5",
-            },
+        },
+        outlinedSecondary: {
+          borderColor: "#FF6F61", // Coral outline
+          color: "#FF6F61", // Coral text
+          "&:hover": {
+            borderColor: "#FFA094", // Lighter coral outline
+            color: "#FFA094",
           },
         },
       },
     },
-  });
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: "12px", // Modern rounded corners
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Subtle shadow
+          backgroundColor: "#FFFFFF", // White card background
+        },
+      },
+    },
+  },
+});
 
-  export default theme;
+export default theme;

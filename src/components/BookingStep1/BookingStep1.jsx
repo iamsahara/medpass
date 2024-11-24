@@ -1,92 +1,69 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Box, Typography, TextField, Button, List } from "@mui/material";
-import PatientCard from "../PatientCard/PatientCard";
-
-const mockPatients = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone_number: "987-654-3210",
-    address: "456 Maple St, Toronto",
-    insurance_number: "INS12345",
-    date_of_birth: "1990-01-01",
-    history: [
-      {
-        specialist: "Dr. Green",
-        appointments: [
-          { date: "2024-01-10", status: "Completed", description: "Routine checkup" },
-          { date: "2024-02-20", status: "Pending", description: "Follow-up on test results" },
-        ],
-      },
-      {
-        specialist: "Dr. White",
-        appointments: [
-          { date: "2024-03-15", status: "Completed", description: "Skin checkup" },
-          { date: "2024-04-18", status: "Cancelled", description: "Rescheduled appointment" },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone_number: "123-456-7890",
-    address: "789 Oak St, Vancouver",
-    insurance_number: "INS67890",
-    date_of_birth: "1985-05-15",
-    history: [
-      {
-        specialist: "Dr. Brown",
-        appointments: [
-          { date: "2024-05-10", status: "Completed", description: "Neurological evaluation" },
-          { date: "2024-06-20", status: "Pending", description: "Follow-up scan" },
-        ],
-      },
-    ],
-  },
-];
+import PatientCard from "../PatientCard/PatientCard"; // Import PatientCard
+import { PatientsContext } from "../../context/PatientsContext"; // Ensure context import is correct
 
 function BookingStep1({ formData, onNext, onBack, onDataChange }) {
+  const { patients, loading, error } = useContext(PatientsContext); // Use context
   const [searchCriteria, setSearchCriteria] = useState({ name: "", insurance: "" });
-  const [filteredPatients, setFilteredPatients] = useState(mockPatients);
+  const [filteredPatients, setFilteredPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
 
+  // Initialize filteredPatients with patients from context
   useEffect(() => {
-    setFilteredPatients(mockPatients);
-  }, []);
+    setFilteredPatients(patients || []);
+  }, [patients]);
 
+  // Handle search criteria changes and filter the patient list
   const handleSearchChange = (field, value) => {
     const updatedCriteria = { ...searchCriteria, [field]: value };
     setSearchCriteria(updatedCriteria);
 
-    const filtered = mockPatients.filter((patient) => {
+    const filtered = (patients || []).filter((patient) => {
       return (
         (!updatedCriteria.name ||
           patient.name.toLowerCase().includes(updatedCriteria.name.toLowerCase())) &&
         (!updatedCriteria.insurance ||
-          patient.insurance_number.toLowerCase().includes(updatedCriteria.insurance.toLowerCase()))
+          patient.insurance_number
+            ?.toLowerCase()
+            .includes(updatedCriteria.insurance.toLowerCase()))
       );
     });
 
     setFilteredPatients(filtered);
   };
 
+  // Handle patient selection
   const handlePatientSelect = (patient) => {
     setSelectedPatient(patient);
-    onDataChange("patient", patient.id);
+    onDataChange("patient", patient.id); // Pass selected patient ID to formData
   };
 
+  // Proceed to the next step
   const handleNext = () => {
     if (selectedPatient) {
       onNext();
     }
   };
 
+  // Handle loading and error states
+  if (loading) {
+    return <Typography variant="body1">Loading patients...</Typography>;
+  }
+
+  if (error) {
+    return (
+      <Typography variant="body1" color="error">
+        {error}
+      </Typography>
+    );
+  }
+
   return (
     <Box>
-      <Typography variant="h5">Step 2: Select a Patient</Typography>
+      <Typography variant="h5" gutterBottom>
+        Step 1: Select a Patient
+      </Typography>
 
       {/* Search Inputs */}
       <Box sx={{ display: "flex", gap: 2, marginBottom: 3 }}>
@@ -106,14 +83,20 @@ function BookingStep1({ formData, onNext, onBack, onDataChange }) {
 
       {/* Patient List */}
       <List>
-        {filteredPatients.map((patient) => (
-          <PatientCard
-            key={patient.id}
-            patient={patient}
-            onSelect={handlePatientSelect}
-            isSelected={selectedPatient?.id === patient.id}
-          />
-        ))}
+        {filteredPatients.length > 0 ? (
+          filteredPatients.map((patient) => (
+            <PatientCard
+              key={patient.id}
+              patient={patient}
+              onSelect={() => handlePatientSelect(patient)}
+              isSelected={selectedPatient?.id === patient.id}
+            />
+          ))
+        ) : (
+          <Typography variant="body1" align="center" color="text.secondary">
+            No patients found.
+          </Typography>
+        )}
       </List>
 
       {/* Navigation Buttons */}

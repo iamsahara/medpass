@@ -1,59 +1,84 @@
 import React, { useState } from "react";
-import { Card, CardContent, Typography, Button, Box, List, ListItem, ListItemText } from "@mui/material";
+import { Box, Card, CardContent, Typography, Button, Collapse, List, ListItem, CircularProgress } from "@mui/material";
 
-function PatientCard({ patient, onSelect, isSelected }) {
+function PatientCard({ patient, onSelect, isSelected, onViewHistory }) {
   const [showHistory, setShowHistory] = useState(false);
+  const [history, setHistory] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const toggleHistory = async (e) => {
+    e.stopPropagation(); // Prevent triggering onSelect
+    if (!showHistory && !history) {
+      setLoading(true);
+      const fetchedHistory = await onViewHistory(patient.id);
+      setHistory(fetchedHistory);
+      setLoading(false);
+    }
+    setShowHistory(!showHistory);
+  };
 
   return (
     <Card
+      onClick={onSelect}
       sx={{
         marginBottom: 2,
-        border: isSelected ? "2px solid #00C853" : "1px solid #ddd",
         cursor: "pointer",
+        backgroundColor: isSelected ? "#e0f7fa" : "#fff",
+        border: isSelected ? "2px solid #00796b" : "1px solid #ddd",
       }}
-      onClick={() => onSelect(patient)}
     >
       <CardContent>
-        <Typography variant="h6">{patient.name}</Typography>
-        <Typography>Email: {patient.email}</Typography>
-        <Typography>Phone: {patient.phone_number}</Typography>
-        <Typography>Address: {patient.address}</Typography>
-        <Typography>Insurance: {patient.insurance_number}</Typography>
-        <Typography>Date of Birth: {patient.date_of_birth}</Typography>
-      </CardContent>
-      <Box sx={{ display: "flex", justifyContent: "space-between", padding: 2 }}>
-        <Button
-          variant="text"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent selecting the card when toggling history
-            setShowHistory((prev) => !prev);
-          }}
-        >
-          {showHistory ? "Hide History" : "View History"}
-        </Button>
-      </Box>
-      {showHistory && (
-        <Box sx={{ padding: 2, borderTop: "1px solid #ddd" }}>
-          <Typography variant="subtitle1">Appointment History</Typography>
-          {patient.history.map((record, index) => (
-            <Box key={index} sx={{ marginBottom: 2 }}>
-              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-                Specialist: {record.specialist}
+        {/* Patient Info */}
+        <Box>
+          <Typography variant="h6">{patient.name}</Typography>
+          <Typography variant="body2">Email: {patient.email}</Typography>
+          <Typography variant="body2">Phone: {patient.phone}</Typography>
+          <Typography variant="body2">
+            Date of Birth: {patient.date_of_birth}
+          </Typography>
+          <Typography variant="body2">Address: {patient.address}</Typography>
+        </Box>
+
+        {/* View History Button */}
+        <Box display="flex" justifyContent="flex-end" marginTop={2}>
+          <Button
+            variant="outlined"
+            size="small"
+            color="secondary"
+            onClick={toggleHistory}
+          >
+            {showHistory ? "Hide History" : "View History"}
+          </Button>
+        </Box>
+
+        {/* Patient History Section */}
+        <Collapse in={showHistory}>
+          {loading ? (
+            <Box display="flex" justifyContent="center" marginTop={2}>
+              <CircularProgress size={20} />
+            </Box>
+          ) : history ? (
+            <Box marginTop={2}>
+              <Typography variant="body2" fontWeight="bold">
+                Appointment History:
               </Typography>
               <List>
-                {record.appointments.map((appointment, i) => (
-                  <ListItem key={i}>
-                    <ListItemText
-                      primary={`${appointment.date} - ${appointment.status}`}
-                      secondary={appointment.description}
-                    />
+                {history.map((appointment, index) => (
+                  <ListItem key={index}>
+                    <Typography variant="body2">
+                      {appointment.date}: {appointment.details}
+                    </Typography>
                   </ListItem>
                 ))}
               </List>
             </Box>
-          ))}
-        </Box>
-      )}
+          ) : (
+            <Typography variant="body2" color="text.secondary" marginTop={2}>
+              No history available.
+            </Typography>
+          )}
+        </Collapse>
+      </CardContent>
     </Card>
   );
 }

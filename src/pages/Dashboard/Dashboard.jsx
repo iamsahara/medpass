@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -13,38 +13,47 @@ import {
   Card,
   CardContent,
   Fab,
-} from '@mui/material';
-import { Notifications, Person, People, Settings, Add } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom'; // Import for navigation
-import Button from '@mui/material/Button';
+} from "@mui/material";
+import { Notifications, Person, People, Settings, Add } from "@mui/icons-material";
+import { useNavigate, NavLink } from "react-router-dom"; 
+import Button from "@mui/material/Button";
 
 function DashboardPage() {
-  const navigate = useNavigate(); // Hook for navigation
-
-  const doctorName = "Green"; // Placeholder value, replace with dynamic data
+  const navigate = useNavigate(); 
+  const doctorName = "Green"; 
+  const menuItems = [
+    { text: "My Profile", icon: <Person />, path: "/profile" },
+    { text: "Patients", icon: <People />, path: "/patients" },
+    { text: "Specialists", icon: <Settings />, path: "/specialists" },
+    { text: "Notifications", icon: <Notifications />, path: "/notifications" },
+    { text: "Manage Referrals", icon: <Settings />, path: "/referrals" },
+  ];
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       {/* Sidebar */}
       <Drawer
         variant="permanent"
         sx={{ width: 240, flexShrink: 0 }}
-        PaperProps={{ sx: { width: 240, boxSizing: 'border-box' } }}
+        PaperProps={{ sx: { width: 240, boxSizing: "border-box" } }}
       >
         <Toolbar />
         <List>
-          {[
-            { text: 'My Profile', icon: <Person /> },
-            { text: 'Patients', icon: <People /> },
-            { text: 'Specialists', icon: <Settings /> },
-            { text: 'Notifications', icon: <Notifications /> },
-            { text: 'Manage Referrals', icon: <Settings /> },
-          ].map((item, index) => (
+          {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton>
-                <ListItemText primary={item.text} />
-                {item.icon}
-              </ListItemButton>
+              <NavLink
+                to={item.path}
+                style={({ isActive }) => ({
+                  textDecoration: "none",
+                  color: isActive ? "blue" : "black",
+                  width: "100%",
+                })}
+              >
+                <ListItemButton>
+                  <ListItemText primary={item.text} />
+                  {item.icon}
+                </ListItemButton>
+              </NavLink>
             </ListItem>
           ))}
         </List>
@@ -62,7 +71,7 @@ function DashboardPage() {
               color="inherit"
               onClick={() => {
                 // Navigate to login page
-                navigate('/login');
+                navigate("/login");
               }}
             >
               Logout
@@ -101,14 +110,21 @@ function DashboardPage() {
         </Grid>
 
         {/* Book Appointment Section */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+           gap: "2rem",
+            marginTop: 4,
+          }}
+        >
           <Typography variant="h6">Book Appointment</Typography>
           <Fab
             color="primary"
             aria-label="add"
             onClick={() => {
               // Navigate to booking page
-              navigate('/booking');
+              navigate("/booking");
             }}
           >
             <Add />
