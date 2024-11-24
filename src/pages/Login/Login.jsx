@@ -3,7 +3,7 @@ import { TextField, Button, Box, Typography } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 
-export default function Login({ onLogin }) {
+ function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -72,3 +72,4 @@ export default function Login({ onLogin }) {
     </Box>
   );
 }
+export default Login;

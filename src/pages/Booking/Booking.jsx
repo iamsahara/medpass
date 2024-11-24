@@ -23,9 +23,6 @@ function Booking() {
   });
 
   const steps = ["Select Patient", "Select Specialist", "Confirm Appointment"];
-  const doctorFirstName = "Emily";
-  const doctorLastName = "Carter";
-  const doctorTitle = "Physician";
   const navigate = useNavigate();
 
   // Move to the next step
@@ -133,24 +130,6 @@ function Booking() {
 
   return (
     <Box>
-      {/* Header */}
-      <AppBar position="static">
-        <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-   Dr. {doctorFirstName} {doctorLastName} / {doctorTitle}
-</Typography>
-
-          <Button
-            color="inherit"
-            onClick={() => {
-              navigate("/login"); // Navigate to login
-            }}
-          >
-            Logout
-          </Button>
-        </Toolbar>
-      </AppBar>
-
       {/* Booking Content */}
       <Box sx={{ maxWidth: 600, margin: "auto", padding: 3 }}>
         <Typography variant="h4" align="center" gutterBottom>

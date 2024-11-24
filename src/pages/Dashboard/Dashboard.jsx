@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,15 +12,25 @@ import {
   Grid,
   Card,
   CardContent,
+  IconButton,
   Fab,
+  Divider,
 } from "@mui/material";
-import { Notifications, Person, People, Settings, Add } from "@mui/icons-material";
-import { useNavigate, NavLink } from "react-router-dom"; 
-import Button from "@mui/material/Button";
+import {
+  Menu as MenuIcon,
+  Notifications,
+  Person,
+  People,
+  Settings,
+  Add,
+} from "@mui/icons-material";
+import { useNavigate, NavLink } from "react-router-dom";
 
 function DashboardPage() {
-  const navigate = useNavigate(); 
-  const doctorName = "Green"; 
+  const navigate = useNavigate();
+  const doctorName = "Green";
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const menuItems = [
     { text: "My Profile", icon: <Person />, path: "/profile" },
     { text: "Patients", icon: <People />, path: "/patients" },
@@ -33,11 +43,16 @@ function DashboardPage() {
     <Box sx={{ display: "flex" }}>
       {/* Sidebar */}
       <Drawer
-        variant="permanent"
-        sx={{ width: 240, flexShrink: 0 }}
-        PaperProps={{ sx: { width: 240, boxSizing: "border-box" } }}
+        variant="temporary"
+        open={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        sx={{
+          "& .MuiDrawer-paper": {
+            width: 240,
+            boxSizing: "border-box",
+          },
+        }}
       >
-        <Toolbar />
         <List>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
@@ -48,6 +63,7 @@ function DashboardPage() {
                   color: isActive ? "blue" : "black",
                   width: "100%",
                 })}
+                onClick={() => setIsSidebarOpen(false)} // Close sidebar on navigation
               >
                 <ListItemButton>
                   <ListItemText primary={item.text} />
@@ -60,75 +76,90 @@ function DashboardPage() {
       </Drawer>
 
       {/* Main Content */}
-      <Box sx={{ flexGrow: 1, padding: 3 }}>
-        {/* Header */}
-        <AppBar position="static">
+      <Box sx={{ flexGrow: 1, bgcolor: "#f9f9f9", minHeight: "100vh" }}>
+        {/* AppBar */}
+        <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
           <Toolbar>
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              Welcome, Dr. {doctorName}!
-            </Typography>
-            <Button
+            <IconButton
               color="inherit"
-              onClick={() => {
-                // Navigate to login page
-                navigate("/login");
-              }}
+              edge="start"
+              onClick={() => setIsSidebarOpen(true)}
+              sx={{ marginRight: 2 }}
             >
-              Logout
-            </Button>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6">Dashboard</Typography>
           </Toolbar>
         </AppBar>
 
-        {/* Dashboard Cards */}
-        <Grid container spacing={3} sx={{ marginTop: 2 }}>
-          <Grid item xs={12} sm={6} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Approved Referrals</Typography>
-                <Typography variant="h4">12</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Active Referrals</Typography>
-                <Typography variant="h4">8</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h6">Pending Referrals</Typography>
-                <Typography variant="h4">3</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-
-        {/* Book Appointment Section */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-           gap: "2rem",
-            marginTop: 4,
-          }}
-        >
-          <Typography variant="h6">Book Appointment</Typography>
-          <Fab
-            color="primary"
-            aria-label="add"
-            onClick={() => {
-              // Navigate to booking page
-              navigate("/booking");
+        {/* Dashboard Content */}
+        <Box sx={{ marginTop: 10, padding: 3 }}>
+          {/* Welcome Section */}
+          <Box
+            sx={{
+              backgroundColor: "#ffffff",
+              padding: 3,
+              borderRadius: 2,
+              marginBottom: 4,
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <Add />
-          </Fab>
+            <Typography variant="h5" align="center">
+              Welcome, Dr. {doctorName}!
+            </Typography>
+          </Box>
+
+          {/* Dashboard Cards */}
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)" }}>
+                <CardContent>
+                  <Typography variant="h6">Approved Referrals</Typography>
+                  <Typography variant="h4">12</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)" }}>
+                <CardContent>
+                  <Typography variant="h6">Active Referrals</Typography>
+                  <Typography variant="h4">8</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)" }}>
+                <CardContent>
+                  <Typography variant="h6">Pending Referrals</Typography>
+                  <Typography variant="h4">3</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+
+          {/* Book Appointment Section */}
+          <Box
+            sx={{
+              marginTop: 4,
+              textAlign: "center",
+              padding: 3,
+              backgroundColor: "#ffffff",
+              borderRadius: 2,
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <Typography variant="h6">Book Appointment</Typography>
+            <Fab
+              color="primary"
+              aria-label="add"
+              onClick={() => navigate("/booking")}
+              sx={{ marginTop: 2 }}
+            >
+              <Add />
+            </Fab>
+          </Box>
         </Box>
       </Box>
     </Box>
