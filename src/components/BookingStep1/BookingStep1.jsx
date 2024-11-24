@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Box, Typography, TextField, Button, List } from "@mui/material";
-import PatientCard from "../PatientCard/PatientCard"; // Import PatientCard
-import { PatientsContext } from "../../context/PatientsContext"; // Ensure context import is correct
+import PatientCard from "../PatientCard/PatientCard"; 
+import { PatientsContext } from "../../context/PatientsContext"; 
 
 function BookingStep1({ formData, onNext, onBack, onDataChange }) {
-  const { patients, loading, error } = useContext(PatientsContext); // Use context
+  const { patients, loading, error } = useContext(PatientsContext); 
   const [searchCriteria, setSearchCriteria] = useState({ name: "", insurance: "" });
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -36,7 +36,7 @@ function BookingStep1({ formData, onNext, onBack, onDataChange }) {
   // Handle patient selection
   const handlePatientSelect = (patient) => {
     setSelectedPatient(patient);
-    onDataChange("patient", patient.id); // Pass selected patient ID to formData
+    onDataChange("patient", patient); // Pass selected patient ID to formData
   };
 
   // Proceed to the next step

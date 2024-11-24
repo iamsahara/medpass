@@ -23,8 +23,9 @@ export const PatientsProvider = ({ children }) => {
         setLoading(false);
       }
     };
-
     fetchPatients();
+
+
   }, []);
 
   return (

@@ -11,7 +11,11 @@ import Patients from "./components/Patients/Patients";
 import Specialists from "./components/Specialists/Specialists";
 import theme from "./styles/theme";
 import { PatientsProvider } from "./context/PatientsContext"; 
+import { SpecialistsProvider } from "./context/SpecialistsContext"; 
 
+const handleStepNavigation = (step) => {
+  setCurrentStep(step);
+};
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -29,6 +33,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
           <PatientsProvider>
+          <SpecialistsProvider>
       <BrowserRouter>
         <CssBaseline />
         {isAuthenticated && (
@@ -58,6 +63,7 @@ export default function App() {
           </Routes>
         </Box>
       </BrowserRouter>
+      </SpecialistsProvider>
       </PatientsProvider>
     </ThemeProvider>
   );

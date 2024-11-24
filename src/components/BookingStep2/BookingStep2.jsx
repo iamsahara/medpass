@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -8,44 +8,25 @@ import {
   Card,
   CardContent,
   Divider,
-} from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
+} from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
+import { SpecialistsContext } from "../../context/SpecialistsContext";
 
-function BookingStep1({ formData, onNext, onDataChange }) {
-  const mockSpecialists = [
-    {
-      id: 1,
-      name: 'Dr. Green',
-      specialty: 'Cardiology',
-      address: '123 Main St, New York, NY',
-      phone: '123-456-7890',
-      firstAvailable: '2024-11-21',
-      availability: ['2024-11-21', '2024-11-22', '2024-11-23'],
-    },
-    {
-      id: 2,
-      name: 'Dr. Brown',
-      specialty: 'Neurology',
-      address: '456 Elm St, Los Angeles, CA',
-      phone: '987-654-3210',
-      firstAvailable: '2024-11-22',
-      availability: ['2024-11-22', '2024-11-24'],
-    },
-  ];
-
-  const [searchCriteria, setSearchCriteria] = useState({ name: '', specialty: '' });
-  const [filteredSpecialists, setFilteredSpecialists] = useState(mockSpecialists);
+function BookingStep2({ onBack, onNext, onDataChange }) {
+  const { specialists, loading, error } = useContext(SpecialistsContext);
+  const [searchCriteria, setSearchCriteria] = useState({ name: "", specialty: "" });
+  const [filteredSpecialists, setFilteredSpecialists] = useState(specialists);
   const [selectedSpecialist, setSelectedSpecialist] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [localError, setLocalError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSearchChange = (field, value) => {
     const updatedCriteria = { ...searchCriteria, [field]: value };
     setSearchCriteria(updatedCriteria);
 
-    const filtered = mockSpecialists.filter((specialist) => {
+    const filtered = specialists.filter((specialist) => {
       return (
         (!updatedCriteria.name ||
           specialist.name.toLowerCase().includes(updatedCriteria.name.toLowerCase())) &&
@@ -60,60 +41,72 @@ function BookingStep1({ formData, onNext, onDataChange }) {
   const handleSpecialistSelect = (specialist) => {
     setSelectedSpecialist(specialist);
     setSelectedDate(null);
-    onDataChange('specialist', specialist.id);
+    onDataChange("specialist", specialist);
   };
 
   const handleDateSelect = (date) => {
     if (date) {
       setSelectedDate(date);
-      onDataChange('appointmentDate', date.format('YYYY-MM-DD'));
+      onDataChange("appointmentDate", date.format("YYYY-MM-DD"));
     }
   };
 
   const handleNext = () => {
     if (!selectedSpecialist) {
-      setError('Please select a specialist.');
-      setSuccessMessage('');
+      setLocalError("Please select a specialist.");
+      setSuccessMessage("");
       return;
     }
     if (!selectedDate) {
-      setError('Please select an appointment date.');
-      setSuccessMessage('');
+      setLocalError("Please select an appointment date.");
+      setSuccessMessage("");
       return;
     }
 
-    // Show success message and navigate to Step 2
-    setError('');
-    setSuccessMessage('Step 1 completed successfully!');
+    // Show success message and navigate to Step 3
+    setLocalError("");
+    setSuccessMessage("Step 2 completed successfully!");
     setTimeout(() => {
       onNext(); // Proceed to the next step after 1 second
     }, 1000);
   };
 
+  if (loading) {
+    return <Typography variant="body1">Loading Specialist List...</Typography>;
+  }
+
+  if (error) {
+    return (
+      <Typography variant="body1" color="error">
+        {error}
+      </Typography>
+    );
+  }
+
   return (
     <Box>
       <Typography variant="h5" gutterBottom>
-        Step 1: Select a Specialist
+        Step 2: Select a Specialist
       </Typography>
 
-      <Box sx={{ display: 'flex', gap: 2, marginBottom: 2 }}>
+      <Box sx={{ display: "flex", gap: 2, marginBottom: 3 }}>
         <TextField
           label="Search by Name"
           value={searchCriteria.name}
-          onChange={(e) => handleSearchChange('name', e.target.value)}
+          onChange={(e) => handleSearchChange("name", e.target.value)}
           fullWidth
         />
         <TextField
           label="Search by Specialty"
           value={searchCriteria.specialty}
-          onChange={(e) => handleSearchChange('specialty', e.target.value)}
+          onChange={(e) => handleSearchChange("specialty", e.target.value)}
           fullWidth
         />
       </Box>
 
-      {error && (
+      {localError && (
         <Typography color="error" sx={{ marginBottom: 2 }}>
-          {error}
+          {localError}
         </Typography>
       )}
 
@@ -124,44 +117,57 @@ function BookingStep1({ formData, onNext, onDataChange }) {
       )}
 
       <List>
-        {filteredSpecialists.map((specialist) => (
-          <Card
-            key={specialist.id}
-            sx={{
-              marginBottom: 2,
-              border: selectedSpecialist?.id === specialist.id ? '2px solid #00C853' : '1px solid #ddd',
-            }}
-          >
-            <CardContent>
-              <Typography
-                variant="h6"
-                sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                onClick={() => handleSpecialistSelect(specialist)}
-              >
-                {specialist.name}
-              </Typography>
-              <Typography variant="body2">Specialty: {specialist.specialty}</Typography>
-              <Typography variant="body2">Address: {specialist.address}</Typography>
-              <Typography variant="body2">Phone: {specialist.phone}</Typography>
-              <Typography variant="body2">
-                First Available: {dayjs(specialist.firstAvailable).format('MMMM DD, YYYY')}
-              </Typography>
-              <Divider sx={{ my: 2 }} />
-              <DatePicker
-                label="Select Appointment Date"
-                value={selectedSpecialist?.id === specialist.id ? selectedDate : null}
-                onChange={(date) => handleDateSelect(date)}
-                shouldDisableDate={(date) =>
-                  !specialist.availability.includes(date.format('YYYY-MM-DD'))
-                }
-              />
-            </CardContent>
-          </Card>
-        ))}
+        {filteredSpecialists.length > 0 ? (
+          filteredSpecialists.map((specialist) => (
+            <Card
+              key={specialist.id}
+              sx={{
+                marginBottom: 2,
+                border:
+                  selectedSpecialist?.id === specialist.id
+                    ? "2px solid #00C853"
+                    : "1px solid #ddd",
+              }}
+            >
+              <CardContent>
+                <Typography
+                  variant="h6"
+                  sx={{ cursor: "pointer", textDecoration: "underline" }}
+                  onClick={() => handleSpecialistSelect(specialist)}
+                >
+                  {specialist.name}
+                </Typography>
+                <Typography variant="body2">Specialty: {specialist.specialty}</Typography>
+                <Typography variant="body2">Address: {specialist.address}</Typography>
+                <Typography variant="body2">Phone: {specialist.phone}</Typography>
+                <Typography variant="body2">
+                  First Available: {dayjs(specialist.firstAvailibility).format("MMMM DD, YYYY")}
+                </Typography>
+                <Divider sx={{ my: 2 }} />
+                <DatePicker
+                  label="Select Appointment Date"
+                  value={
+                    selectedSpecialist?.id === specialist.id ? selectedDate : null
+                  }
+                  onChange={(date) => handleDateSelect(date)}
+                  shouldDisableDate={(date) =>
+                    !specialist.availability.includes(date.format("YYYY-MM-DD"))
+                  }
+                />
+              </CardContent>
+            </Card>
+          ))
+        ) : (
+          <Typography variant="body2">No specialists found.</Typography>
+        )}
       </List>
 
-      <Box sx={{ marginTop: 4, display: 'flex', justifyContent: 'flex-end' }}>
-        <Button variant="contained" color="primary" onClick={handleNext}>
+      {/* Navigation Buttons */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 3 }}>
+        <Button variant="outlined" onClick={onBack}>
+          Back
+        </Button>
+        <Button variant="contained" onClick={handleNext} disabled={!selectedSpecialist}>
           Next
         </Button>
       </Box>
@@ -169,4 +175,4 @@ function BookingStep1({ formData, onNext, onDataChange }) {
   );
 }
 
-export default BookingStep1;
+export default BookingStep2;

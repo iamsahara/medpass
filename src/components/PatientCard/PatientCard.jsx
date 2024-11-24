@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Box, Card, CardContent, Typography, Button, Collapse, List, ListItem, CircularProgress } from "@mui/material";
 
 function PatientCard({ patient, onSelect, isSelected, onViewHistory }) {
+  console.log(patient, typeof onViewHistory);
+
+
   const [showHistory, setShowHistory] = useState(false);
   const [history, setHistory] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -10,8 +13,8 @@ function PatientCard({ patient, onSelect, isSelected, onViewHistory }) {
     e.stopPropagation(); // Prevent triggering onSelect
     if (!showHistory && !history) {
       setLoading(true);
-      const fetchedHistory = await onViewHistory(patient.id);
-      setHistory(fetchedHistory);
+      console.log(patient.id)
+      setHistory(patient.history);
       setLoading(false);
     }
     setShowHistory(!showHistory);

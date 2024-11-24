@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Edit, AttachFile } from "@mui/icons-material";
 
-function BookingStep3({ formData, onBack, onConfirm }) {
+function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -35,16 +35,35 @@ function BookingStep3({ formData, onBack, onConfirm }) {
         Appointment Confirmation
       </Typography>
 
+       {/* Patient */}
+       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
+        <Typography sx={{ flex: 1 }}>Patient</Typography>
+        <TextField
+          value={formData.patient?.name || "No patient selected"}
+          disabled
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => navigateToStep(0)}>
+                  <Edit />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          sx={{ flex: 2 }}
+        />
+      </Box>
+
       {/* Specialist */}
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Specialist</Typography>
         <TextField
-          value={formData.specialistName || "Dr. John Doe"}
+          value={formData.specialist?.name || "No specialist selected"}
           disabled
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton>
+                <IconButton onClick={() => navigateToStep(1)}>
                   <Edit />
                 </IconButton>
               </InputAdornment>
@@ -54,35 +73,17 @@ function BookingStep3({ formData, onBack, onConfirm }) {
         />
       </Box>
 
-      {/* Patient */}
-      <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
-        <Typography sx={{ flex: 1 }}>Patient</Typography>
-        <TextField
-          value={formData.patientName || "Lucy Gray"}
-          disabled
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton>
-                  <Edit />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          sx={{ flex: 2 }}
-        />
-      </Box>
-
+     
       {/* Appointment Date */}
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Date</Typography>
         <TextField
-          value={formData.appointmentDate || "2024-11-21"}
+          value={formData.appointmentDate || "No date selected"}
           disabled
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton>
+                <IconButton onClick={() => navigateToStep(1)}>
                   <Edit />
                 </IconButton>
               </InputAdornment>
