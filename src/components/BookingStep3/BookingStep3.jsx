@@ -8,8 +8,10 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Edit, AttachFile } from "@mui/icons-material";
+import axios from "axios";
 
 function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -19,14 +21,27 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
     setFile(uploadedFile);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (!description) {
       alert("Please add a description before confirming.");
       return;
     }
-    setShowSuccessMessage(true);
-    // Call the onConfirm function to proceed with the appointment
-    onConfirm({ description, file });
+    const response = await axios.post(
+      `${apiUrl}/api/patients/${formData.patient.id}/history`,
+      {
+        id: formData.patient.id,
+        date: formData.appointmentDate,
+        details: `${formData.specialist?.name || "Specialist"}: ${description}`,
+      }
+    );
+
+    if ((response.status = 200)) {
+      setShowSuccessMessage(true);
+      // Call the onConfirm function to proceed with the appointment
+      onConfirm({ description, file });
+    } else {
+      console.log("error");
+    }
   };
 
   return (
@@ -35,8 +50,8 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
         Appointment Confirmation
       </Typography>
 
-       {/* Patient */}
-       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
+      {/* Patient */}
+      <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Patient</Typography>
         <TextField
           value={formData.patient?.name || "No patient selected"}
@@ -73,7 +88,6 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
         />
       </Box>
 
-     
       {/* Appointment Date */}
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Date</Typography>
@@ -120,7 +134,9 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
       </Box>
 
       {/* Buttons */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}
+      >
         <Button variant="outlined" onClick={onBack}>
           Back
         </Button>
