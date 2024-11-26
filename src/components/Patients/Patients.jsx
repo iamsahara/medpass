@@ -1,22 +1,19 @@
-import React, { useContext, useState, useEffect } from "react";
-import axios from "axios";
+import React, { useContext, useEffect } from "react";
 import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import PatientCard from "../PatientCard/PatientCard";
 import { PatientsContext } from "../../context/PatientsContext";
 
 function PatientList() {
-  const { patients,loading : isLoading, error } = useContext(PatientsContext); 
+  const { fetchPatients,loading, error,patients } = useContext(PatientsContext); 
 
+  useEffect(() => {
+    fetchPatients();
+  }, [fetchPatients,patients]);
 
-  if (isLoading) {
+  if (loading) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <CircularProgress />
       </Box>
     );
@@ -24,17 +21,11 @@ function PatientList() {
 
   if (error) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <Typography color="error">{error}</Typography>
       </Box>
     );
   }
-
 
   return (
     <Box padding={3}>
@@ -63,7 +54,7 @@ function PatientList() {
               key={patient.id}
               patient={patient}
               onSelect={() => console.log(`Selected patient ID: ${patient.id}`)}
-              isSelected={false} // Replace with selection logic
+              isSelected={false}
             />
           ))}
         </Box>

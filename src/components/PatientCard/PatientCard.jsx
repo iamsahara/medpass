@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import { Box, Card, CardContent, Typography, Button, Collapse, List, ListItem, CircularProgress } from "@mui/material";
+import { useState } from "react";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Collapse,
+  List,
+  ListItem,
+} from "@mui/material";
 
-function PatientCard({ patient, onSelect, isSelected, onViewHistory }) {
-  console.log(patient, typeof onViewHistory);
-
-
+function PatientCard({ patient, onSelect, isSelected }) {
   const [showHistory, setShowHistory] = useState(false);
-  const [history, setHistory] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const toggleHistory = async (e) => {
-    e.stopPropagation(); // Prevent triggering onSelect
-    if (!showHistory && !history) {
-      setLoading(true);
-      console.log(patient.id)
-      setHistory(patient.history);
-      setLoading(false);
-    }
+  const toggleHistory = (e) => {
+    e.stopPropagation();
     setShowHistory(!showHistory);
   };
 
@@ -31,18 +28,15 @@ function PatientCard({ patient, onSelect, isSelected, onViewHistory }) {
       }}
     >
       <CardContent>
-        {/* Patient Info */}
         <Box>
           <Typography variant="h6">{patient.name}</Typography>
           <Typography variant="body2">Email: {patient.email}</Typography>
           <Typography variant="body2">Phone: {patient.phone}</Typography>
           <Typography variant="body2">
-            Date of Birth: {patient.date_of_birth}
+            Insurance Number: {patient.insurance_number}
           </Typography>
           <Typography variant="body2">Address: {patient.address}</Typography>
         </Box>
-
-        {/* View History Button */}
         <Box display="flex" justifyContent="flex-end" marginTop={2}>
           <Button
             variant="outlined"
@@ -53,32 +47,17 @@ function PatientCard({ patient, onSelect, isSelected, onViewHistory }) {
             {showHistory ? "Hide History" : "View History"}
           </Button>
         </Box>
-
-        {/* Patient History Section */}
-        <Collapse in={showHistory}>
-          {loading ? (
-            <Box display="flex" justifyContent="center" marginTop={2}>
-              <CircularProgress size={20} />
-            </Box>
-          ) : history ? (
-            <Box marginTop={2}>
-              <Typography variant="body2" fontWeight="bold">
-                Appointment History:
-              </Typography>
-              <List>
-                {history.map((appointment, index) => (
-                  <ListItem key={index}>
-                    <Typography variant="body2">
-                      {appointment.date}: {appointment.details}
-                    </Typography>
-                  </ListItem>
-                ))}
-              </List>
-            </Box>
+         <Collapse in={showHistory}>
+          {patient.history && patient.history.length > 0 ? (
+            <List>
+              {patient.history.map((appointment, index) => (
+                <ListItem key={index}>
+                  <Typography>{appointment.date}: {appointment.details}</Typography>
+                </ListItem>
+              ))}
+            </List>
           ) : (
-            <Typography variant="body2" color="text.secondary" marginTop={2}>
-              No history available.
-            </Typography>
+            <Typography>No history available.</Typography>
           )}
         </Collapse>
       </CardContent>

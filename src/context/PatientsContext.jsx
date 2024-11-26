@@ -1,19 +1,18 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import axios from "axios";
 
-// Create PatientsContext
 export const PatientsContext = createContext();
 
-// Provider Component
 export const PatientsProvider = ({ children }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch patients from the backend
-  useEffect(() => {
     const fetchPatients = async () => {
+      if (patients.length > 0) {
+        return; 
+      }
       try {
         const response = await axios.get(`${apiUrl}/api/patients`);
         setPatients(response.data);
@@ -23,13 +22,9 @@ export const PatientsProvider = ({ children }) => {
         setLoading(false);
       }
     };
-    fetchPatients();
-
-
-  }, []);
-
+   
   return (
-    <PatientsContext.Provider value={{ patients, setPatients, loading, error }}>
+    <PatientsContext.Provider value={{ patients, setPatients, loading, error, fetchPatients }}>
       {children}
     </PatientsContext.Provider>
   );

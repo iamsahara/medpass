@@ -1,10 +1,8 @@
-import React from "react";
 import {
   Card,
   CardContent,
   CardActions,
   Typography,
-  Button,
   Divider,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -56,12 +54,6 @@ function SpecialistCard({
         />
       </CardContent>
       <CardActions>
-        <Button
-          variant="contained"
-          onClick={() => onSelectSpecialist(specialist)}
-        >
-          Select Specialist
-        </Button>
       </CardActions>
     </Card>
   );
