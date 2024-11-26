@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
   const navigate = useNavigate();
 
   const handleRoleSelect = (role) => {
-    // For now, we navigate to a single login page for physicians
     if (role === "physician") {
       navigate("/login");
     } else {

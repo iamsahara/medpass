@@ -19,7 +19,6 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check for token in localStorage
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
