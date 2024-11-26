@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import { CssBaseline, Box, Typography } from "@mui/material";
+import { CssBaseline, Box } from "@mui/material";
 import Header from "./components/Header/Header";
 import NotFound from "./pages/NotFound/NotFound";
 import Login from "./pages/Login/Login";
@@ -13,10 +13,19 @@ import HomePage from "./pages/HomePage/HomePage";
 import theme from "./styles/theme";
 import { PatientsProvider } from "./context/PatientsContext";
 import { SpecialistsProvider } from "./context/SpecialistsContext";
-import UserProfile from "./components/UserProfile/UserProfile"
+import UserProfile from "./components/UserProfile/UserProfile";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Check for token in localStorage
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -24,6 +33,7 @@ export default function App() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     setIsAuthenticated(false);
     console.log("Logged out");
   };
@@ -35,27 +45,58 @@ export default function App() {
           <BrowserRouter>
             <CssBaseline />
             {isAuthenticated && (
-              <Header isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
+              <Header
+                isAuthenticated={isAuthenticated}
+                handleLogout={handleLogout}
+              />
             )}
             <Box component="main" sx={{ minHeight: "80vh", mt: isAuthenticated ? 8 : 0 }}>
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
-                
+
                 {/* Protected Routes */}
-                {isAuthenticated ? (
-                  <>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/patients" element={<Patients />} />
-                    <Route path="/specialists" element={<Specialists />} />
-                    <Route path="/booking" element={<Booking />} />
-                    <Route path="/profile" element={<UserProfile />} />
-                  </>
-                ) : (
-                  // Redirect unauthenticated users to login
-                  <Route path="*" element={<Navigate to="/login" />} />
-                )}
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/patients"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <Patients />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/specialists"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <Specialists />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/booking"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <Booking />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <UserProfile />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Box>

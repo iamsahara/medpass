@@ -1,22 +1,35 @@
 import React, { useState } from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-
- function Login({ onLogin }) {
+function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (email === "admin@example.com" && password === "password") {
-      setError("");
+    try {
+      // Send login request to backend
+      const response = await axios.post("http://localhost:5050/api/auth/login", {
+        email,
+        password,
+      });
+
+      const { token } = response.data;
+
+      // Save JWT in localStorage
+      localStorage.setItem("token", token);
+
+      // Notify App component of login success
       onLogin();
-      navigate('/dashboard');
-    } else {
+
+      // Redirect to dashboard
+      navigate("/dashboard");
+    } catch (err) {
       setError("Invalid email or password");
     }
   };
@@ -72,4 +85,5 @@ import {useNavigate} from "react-router-dom";
     </Box>
   );
 }
+
 export default Login;
