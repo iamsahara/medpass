@@ -1,42 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, Typography, Grid, CircularProgress } from "@mui/material";
-import axios from "axios";
 import SpecialistCard from "../SpecialistCard/SpecialistCard";
+import { SpecialistsContext } from "../../context/SpecialistsContext";
 
 function SpecialistsList() {
-  const [specialists, setSpecialists] = useState([]);
+  const {specialists, fetchSpecialists,loading, error} =useContext(SpecialistsContext)
   const [selectedSpecialist, setSelectedSpecialist] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchSpecialists() {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      try {
-        const response = await axios.get(`${apiUrl}/api/specialists`);
-        setSpecialists(response.data);
-      } catch (err) {
-        setError("Failed to fetch specialists. Please try again.");
-        console.error("Error fetching specialists:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchSpecialists();
-  }, []);
+   fetchSpecialists()
+     
+  }, [fetchSpecialists,specialists]);
 
   const handleSelectSpecialist = (specialist) => {
     setSelectedSpecialist(specialist);
-    setSelectedDate(null); // Reset the date when a new specialist is selected
+    setSelectedDate(null); 
   };
 
   const handleSelectDate = (date) => {
     setSelectedDate(date);
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <CircularProgress />
