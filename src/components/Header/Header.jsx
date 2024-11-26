@@ -1,114 +1,78 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Button, Stack } from "@mui/material";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import { Link as RouterLink } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
-import LoginIcon from "@mui/icons-material/Login";
+import logo2 from "../../assets/Image/logo2.png";
 
 const Header = ({ isAuthenticated, handleLogout }) => {
-  const location = useLocation();
-
   return (
     <AppBar
       sx={{
-        backgroundColor: "#2c3e50", // Classic dark navy blue
-        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
+        backgroundColor: "primary.main", // Primary theme color
+        boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.2)", // Subtle elevation
         padding: "0 1rem",
       }}
     >
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        {/* Logo or App Name */}
-        <Typography
-          variant="h5"
-          component={RouterLink}
-          to="/"
-          sx={{
-            textDecoration: "none",
-            color: "#ecf0f1", // Soft off-white
-            fontWeight: "bold",
-            letterSpacing: "2px",
-            "&:hover": {
-              color: "#bdc3c7", // Light gray on hover
-            },
-            transition: "color 0.3s ease",
-          }}
-        >
-          MedPass
-        </Typography>
-
-        {/* Navigation Links */}
-        <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
-          <Button
-            component={RouterLink}
-            to="/dashboard"
-            startIcon={<DashboardIcon />}
-            sx={{
-              fontSize: "1rem",
-              textTransform: "none",
-              backgroundColor:
-                location.pathname === "/dashboard" ? "#34495e" : "transparent", // Subtle blue-gray highlight
-              color: location.pathname === "/dashboard" ? "#ecf0f1" : "#bdc3c7",
-              borderRadius: "12px",
-              padding: "0.5rem 1rem",
-              boxShadow:
-                location.pathname === "/dashboard"
-                  ? "0px 4px 8px rgba(0, 0, 0, 0.2)"
-                  : "none",
-              transition: "all 0.3s ease, box-shadow 0.3s ease",
-              "&:hover": {
-                backgroundColor: "#34495e",
-                color: "#ecf0f1",
-                transform: "scale(1.05)",
-              },
+      <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
+        {/* Logo and App Name */}
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <RouterLink
+            to="/"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
             }}
           >
-            Dashboard
-          </Button>
+            <img
+              src={logo2}
+              alt="MedPass Logo"
+              style={{
+                height: "40px", // Adjust logo size
+                marginRight: "8px", // Space between logo and text
+              }}
+            />
+            <Typography
+              variant="h5"
+              sx={{
+                color: "text.contrastText", // White text from theme
+                fontWeight: "bold",
+                letterSpacing: "2px",
+                "&:hover": {
+                  color: "secondary.main", // Secondary color on hover
+                },
+                transition: "color 0.3s ease",
+              }}
+            >
+              MedPass
+            </Typography>
+          </RouterLink>
         </Stack>
 
         {/* Authentication Button */}
-        {isAuthenticated ? (
+        {isAuthenticated && (
           <Button
             onClick={handleLogout}
             endIcon={<LogoutIcon />}
             sx={{
-              color: "#ecf0f1",
-              border: "1px solid",
-              borderColor: "#7f8c8d", // Classic gray
-              borderRadius: "12px",
-              padding: "0.5rem 1rem",
+              color: "text.contrastText", // White text
+              backgroundColor: "#5271FF", // Subtle classic blue background
+              border: "1px solid", // Classic border
+              borderColor: "#3C4A9E", // Darker blue for contrast
+              borderRadius: "8px", // Rounded corners for professional look
+              padding: "0.5rem 1.5rem",
+              fontSize: "0.9rem", // Slightly smaller text size for refinement
+              fontWeight: 500,
               transition: "all 0.3s ease",
               "&:hover": {
-                backgroundColor: "#7f8c8d",
-                borderColor: "#95a5a6", // Lighter gray
-                transform: "scale(1.1)",
-                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.3)",
+                backgroundColor: "#3C4A9E", // Darker blue hover for emphasis
+                borderColor: "#364ABF", // Slightly darker border
+                transform: "scale(1.03)", // Subtle scale on hover
+                boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.2)", // Light shadow for depth
               },
             }}
           >
             Logout
-          </Button>
-        ) : (
-          <Button
-            component={RouterLink}
-            to="/login"
-            endIcon={<LoginIcon />}
-            sx={{
-              color: "#ecf0f1",
-              border: "1px solid",
-              borderColor: "#7f8c8d", // Classic gray
-              borderRadius: "12px",
-              padding: "0.5rem 1rem",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                backgroundColor: "#7f8c8d",
-                borderColor: "#95a5a6", // Lighter gray
-                transform: "scale(1.1)",
-                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.3)",
-              },
-            }}
-          >
-            Login
           </Button>
         )}
       </Toolbar>

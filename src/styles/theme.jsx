@@ -4,37 +4,37 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#5A67D8", // Vibrant indigo
-      light: "#798BFF", // Lighter indigo for hover
-      dark: "#3C4A9E", // Deep indigo for contrast
+      main: "#5271FF", // Bright blue inspired by the logo
+      light: "#7D95FF", // Lighter blue for hover and accents
+      dark: "#364ABF", // Deeper blue for contrast
     },
     secondary: {
-      main: "#FF758F", // Vibrant pinkish-red
-      light: "#FF97A8", // Lighter pink for hover
-      dark: "#B24A5E", // Deep pink-red for contrast
+      main: "#FF6E6E", // Vibrant red from the logo
+      light: "#FF8E8E", // Lighter red for hover and accents
+      dark: "#CC5656", // Deeper red for contrast
     },
     background: {
-      default: "#F7FAFC", // Soft off-white
-      paper: "#FFFFFF", // White for cards
+      default: "#F8FAFF", // Very light blue for the main background
+      paper: "#FFFFFF", // Bright white for cards and containers
     },
     text: {
-      primary: "#2D3748", // Rich dark gray
-      secondary: "#718096", // Soft gray
+      primary: "#2C3E50", // Deep navy blue from the logo
+      secondary: "#718096", // Neutral gray for less important text
       contrastText: "#FFFFFF", // White text for contrast
     },
     action: {
-      hover: "#EDF2F7", // Light hover effect for all elements
-      selected: "#E2E8F0", // Subtle selection highlight
+      hover: "#EDF4FF", // Very light blue for hover states
+      selected: "#DDEBFF", // Light blue for selected elements
     },
   },
   typography: {
-    fontFamily: "Inter, Poppins, Arial, sans-serif", // Modern sans-serif combo
+    fontFamily: "Inter, Poppins, Arial, sans-serif", // Clean, modern sans-serif fonts
     h1: { fontWeight: 800, fontSize: "2.5rem", lineHeight: 1.2 },
     h2: { fontWeight: 700, fontSize: "2rem", lineHeight: 1.3 },
     h3: { fontWeight: 600, fontSize: "1.75rem", lineHeight: 1.4 },
     body1: { fontWeight: 400, fontSize: "1rem", lineHeight: 1.6 },
     button: {
-      textTransform: "uppercase", // Modern uppercase buttons
+      textTransform: "uppercase", // Consistent uppercase buttons
       fontWeight: 600,
     },
   },
@@ -42,7 +42,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: "10px", // Modern button shape
+          borderRadius: "10px", // Rounded button shape
           padding: "10px 20px", // Larger button size
           transition: "transform 0.2s ease, background-color 0.3s ease",
           "&:hover": {
@@ -50,33 +50,33 @@ const theme = createTheme({
           },
         },
         containedPrimary: {
-          backgroundColor: "#5A67D8",
+          backgroundColor: "#5271FF",
           color: "#FFFFFF",
           "&:hover": {
-            backgroundColor: "#798BFF",
+            backgroundColor: "#7D95FF",
           },
         },
         containedSecondary: {
-          backgroundColor: "#FF758F",
+          backgroundColor: "#FF6E6E",
           color: "#FFFFFF",
           "&:hover": {
-            backgroundColor: "#FF97A8",
+            backgroundColor: "#FF8E8E",
           },
         },
         outlinedPrimary: {
-          borderColor: "#5A67D8",
-          color: "#5A67D8",
+          borderColor: "#5271FF",
+          color: "#5271FF",
           "&:hover": {
-            borderColor: "#798BFF",
-            backgroundColor: "#F7FAFC",
+            borderColor: "#7D95FF",
+            backgroundColor: "#EDF4FF",
           },
         },
         outlinedSecondary: {
-          borderColor: "#FF758F",
-          color: "#FF758F",
+          borderColor: "#FF6E6E",
+          color: "#FF6E6E",
           "&:hover": {
-            borderColor: "#FF97A8",
-            backgroundColor: "#FFF5F7",
+            borderColor: "#FF8E8E",
+            backgroundColor: "#FFE8E8",
           },
         },
       },
@@ -84,12 +84,12 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: "16px", // Rounded card corners
-          boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.1)", // Stronger shadow
-          backgroundColor: "#FFFFFF",
-          overflow: "hidden", // Clean card edges
+          borderRadius: "16px", // Rounded corners for cards
+          boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.1)", // Subtle shadow
+          backgroundColor: "#FFFFFF", // White for card surfaces
+          overflow: "hidden",
           "&:hover": {
-            boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.15)", // Fancy hover shadow
+            boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.15)", // Stronger hover shadow
           },
         },
       },
@@ -97,7 +97,7 @@ const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          transition: "color 0.3s ease",
+          transition: "color 0.3s ease", // Smooth transition for text color
         },
       },
     },
@@ -107,7 +107,7 @@ const theme = createTheme({
           "& .MuiOutlinedInput-root": {
             borderRadius: "10px",
             "&.Mui-focused fieldset": {
-              borderColor: "#5A67D8",
+              borderColor: "#5271FF",
             },
           },
         },
@@ -116,9 +116,9 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "#5A67D8",
-          color: "#FFFFFF",
-          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
+          backgroundColor: "#5271FF", // Bright blue for the header
+          color: "#FFFFFF", // White text
+          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)", // Soft shadow
         },
       },
     },
