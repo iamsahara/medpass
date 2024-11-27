@@ -47,7 +47,7 @@ function PatientCard({ patient, onSelect, isSelected }) {
             {showHistory ? "Hide History" : "View History"}
           </Button>
         </Box>
-         <Collapse in={showHistory}>
+        <Collapse in={showHistory}>
           {patient.history && patient.history.length > 0 ? (
             <List>
               {patient.history.map((appointment, index) => (

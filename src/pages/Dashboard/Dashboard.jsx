@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
 import {
-  AppBar,
   Toolbar,
   Typography,
   Drawer,
@@ -20,20 +20,15 @@ import {
   Notifications,
   Person,
   People,
-  Settings,
   Add,
   LocalHospital,
-  Directions,
-  ManageAccounts,
   ManageHistory,
 } from "@mui/icons-material";
-import { useNavigate, NavLink } from "react-router-dom";
 
 function DashboardPage() {
   const navigate = useNavigate();
   const doctorName = "Green";
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
   const menuItems = [
     { text: "My Profile", icon: <Person />, path: "/profile" },
     { text: "Patients", icon: <People />, path: "/patients" },
@@ -44,7 +39,6 @@ function DashboardPage() {
 
   return (
     <Box sx={{ display: "flex" }}>
-      {/* Sidebar */}
       <Drawer
         variant="persistent"
         open={isSidebarOpen}
@@ -53,6 +47,8 @@ function DashboardPage() {
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: isSidebarOpen ? 240 : 0,
+            backgroundColor: "action.hover", 
+            color: "#364ABF",
             transition: "width 0.3s",
             boxSizing: "border-box",
           },
@@ -66,13 +62,38 @@ function DashboardPage() {
                 to={item.path}
                 style={({ isActive }) => ({
                   textDecoration: "none",
-                  color: isActive ? "blue" : "black",
+                  color: isActive ? "#FF6E6E" : "inherit",
                   width: "100%",
                 })}
               >
-                <ListItemButton>
-                  <ListItemText primary={item.text} />
+                <ListItemButton
+                  sx={{
+                    borderRadius: "8px", 
+                    padding: "10px 20px", 
+                    margin: "5px 10px", 
+                    "&:hover": {
+                      backgroundColor: "action.hover", 
+                      color: "primary.light", 
+                    },
+                    "&.Mui-selected": {
+                      backgroundColor: "action.selected", 
+                      color: "secondary.main", 
+                      "&:hover": {
+                        backgroundColor: "secondary.light", 
+                      },
+                    },
+                  }}
+                >
                   {item.icon}
+                  <ListItemText
+                    primary={item.text}
+                    sx={{
+                      marginLeft: "10px",
+                      color: "inherit",
+                      fontSize: "1rem",
+                      fontWeight: 500,
+                    }}
+                  />
                 </ListItemButton>
               </NavLink>
             </ListItem>
@@ -82,39 +103,36 @@ function DashboardPage() {
 
       {/* Main Content */}
       <Box sx={{ flexGrow: 1 }}>
-        {/* Header */}
-<Box
-  sx={{
-    backgroundColor: "#ffffff",
-    padding: 3,
-    borderRadius: 2,
-    marginBottom: 4,
-    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-    display: "flex",
-    alignItems: "center",
-  }}
->
-  <IconButton
-    color="inherit"
-    edge="start"
-    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-    sx={{
-      marginRight: 2,
-      backgroundColor: "#f5f5f5",
-      borderRadius: "50%",
-      padding: 1,
-      boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-    }}
-  >
-    <MenuIcon />
-  </IconButton>
-  <Typography variant="h6" sx={{ fontWeight: 500 }}>
-    Welcome, Dr. {doctorName}!
-  </Typography>
-</Box>
-
+        <Box
+          sx={{
+            backgroundColor: "background.paper",
+            padding: 3,
+            borderRadius: 2,
+            marginBottom: 4,
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <IconButton
+            color="inherit"
+            edge="start"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            sx={{
+              marginRight: 2,
+              backgroundColor: "action.hover",
+              borderRadius: "50%",
+              padding: 1,
+              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" sx={{ fontWeight: 500 }}>
+            Welcome, Dr. {doctorName}!
+          </Typography>
+        </Box>
         <Box sx={{ padding: 3 }}>
-          {/* Dashboard Cards */}
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={4}>
               <Card>
@@ -124,7 +142,6 @@ function DashboardPage() {
                 </CardContent>
               </Card>
             </Grid>
-
             <Grid item xs={12} sm={6} md={4}>
               <Card>
                 <CardContent>
@@ -133,7 +150,6 @@ function DashboardPage() {
                 </CardContent>
               </Card>
             </Grid>
-
             <Grid item xs={12} sm={6} md={4}>
               <Card>
                 <CardContent>
@@ -143,8 +159,6 @@ function DashboardPage() {
               </Card>
             </Grid>
           </Grid>
-
-          {/* Book Appointment Section */}
           <Box
             sx={{
               display: "flex",
@@ -159,7 +173,6 @@ function DashboardPage() {
               color="primary"
               aria-label="add"
               onClick={() => {
-                // Navigate to booking page
                 navigate("/booking");
               }}
             >

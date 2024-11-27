@@ -15,6 +15,7 @@ function SpecialistCard({
   onSelectSpecialist,
   onSelectDate,
 }) {
+  
   return (
     <Card
       sx={{
@@ -40,8 +41,6 @@ function SpecialistCard({
             : "Not Available"}
         </Typography>
         <Divider sx={{ my: 2 }} />
-
-        {/* DatePicker */}
         <DatePicker
           label="Select Appointment Date"
           value={selectedSpecialist?.id === specialist.id ? selectedDate : null}

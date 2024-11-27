@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   TextField,
@@ -37,7 +37,6 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
 
     if ((response.status = 200)) {
       setShowSuccessMessage(true);
-      // Call the onConfirm function to proceed with the appointment
       onConfirm({ description, file });
     } else {
       console.log("error");
@@ -49,8 +48,6 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
       <Typography variant="h5" sx={{ marginBottom: 3 }}>
         Appointment Confirmation
       </Typography>
-
-      {/* Patient */}
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Patient</Typography>
         <TextField
@@ -68,8 +65,6 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
           sx={{ flex: 2 }}
         />
       </Box>
-
-      {/* Specialist */}
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Specialist</Typography>
         <TextField
@@ -87,8 +82,6 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
           sx={{ flex: 2 }}
         />
       </Box>
-
-      {/* Appointment Date */}
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Date</Typography>
         <TextField
@@ -106,8 +99,6 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
           sx={{ flex: 2 }}
         />
       </Box>
-
-      {/* Description */}
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Description</Typography>
         <TextField
@@ -118,8 +109,6 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
           sx={{ flex: 2 }}
         />
       </Box>
-
-      {/* File Upload */}
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>File</Typography>
         <Button
@@ -132,8 +121,6 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
           <input type="file" hidden onChange={handleFileUpload} />
         </Button>
       </Box>
-
-      {/* Buttons */}
       <Box
         sx={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}
       >
@@ -144,8 +131,6 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
           Confirm
         </Button>
       </Box>
-
-      {/* Success Message */}
       {showSuccessMessage && (
         <Box sx={{ marginTop: 4, textAlign: "center" }}>
           <Typography variant="h6" color="success.main">

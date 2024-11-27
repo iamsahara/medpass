@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline, Box } from "@mui/material";
@@ -14,17 +14,16 @@ import theme from "./styles/theme";
 import { PatientsProvider } from "./context/PatientsContext";
 import { SpecialistsProvider } from "./context/SpecialistsContext";
 import UserProfile from "./components/UserProfile/UserProfile";
-import ProtectedRoute from "./utils/ProtectedRoute";
+import ProtectedRoute from "./utils/ProtectedRoute.jsx";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
+
+  const token = localStorage.getItem("token");
+  if (token) {
+    setIsAuthenticated(true);
+  }
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -37,6 +36,7 @@ export default function App() {
     console.log("Logged out");
   };
 
+  console.log(isAuthenticated)
   return (
     <ThemeProvider theme={theme}>
       <PatientsProvider>
@@ -51,11 +51,8 @@ export default function App() {
             )}
             <Box component="main" sx={{ minHeight: "80vh", mt: isAuthenticated ? 8 : 0 }}>
               <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<Login onLogin={handleLogin} />} />
-
-                {/* Protected Routes */}
+                <Route path="/" element={!isAuthenticated ? <HomePage /> : <Navigate to='/dashboard' />} />
+                <Route path="/login" element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to='/dashboard' />} />
                 <Route
                   path="/dashboard"
                   element={

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -11,23 +11,15 @@ function Login({ onLogin }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
-      // Send login request to backend
       const response = await axios.post("http://localhost:5050/api/auth/login", {
         email,
         password,
       });
 
       const { token } = response.data;
-
-      // Save JWT in localStorage
       localStorage.setItem("token", token);
-
-      // Notify App component of login success
       onLogin();
-
-      // Redirect to dashboard
       navigate("/dashboard");
     } catch (err) {
       setError("Invalid email or password");

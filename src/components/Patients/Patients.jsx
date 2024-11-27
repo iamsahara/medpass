@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import PatientCard from "../PatientCard/PatientCard";
 import { PatientsContext } from "../../context/PatientsContext";
 
 function PatientList() {
-  const { fetchPatients,loading, error,patients } = useContext(PatientsContext); 
+  const { fetchPatients, loading, error, patients } = useContext(PatientsContext);
 
   useEffect(() => {
     fetchPatients();
-  }, [fetchPatients,patients]);
+  }, [fetchPatients, patients]);
 
   if (loading) {
     return (
