@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import BookingStep1 from "../../components/BookingStep1/BookingStep1";
 import BookingStep2 from "../../components/BookingStep2/BookingStep2";
 import BookingStep3 from "../../components/BookingStep3/BookingStep3";
@@ -19,26 +19,21 @@ function Booking() {
     appointmentDate: null,
     patient: null,
   });
-
   const steps = ["Select Patient", "Select Specialist", "Confirm Appointment"];
   const navigate = useNavigate();
 
-  // Move to the next step
   const handleNext = () => {
     if (activeStep === 2) {
-      setActiveStep(3); // Proceed to confirmation step
+      setActiveStep(3); 
     } else {
       setActiveStep((prevStep) => prevStep + 1);
     }
   };
 
-  // Move to the previous step
   const handleBack = () => setActiveStep((prevStep) => prevStep - 1);
-
-  // Navigate directly to a specific step
+  
   const handleStepNavigation = (step) => setActiveStep(step);
-
-  // Update form data
+  
   const handleDataChange = (field, value) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -46,7 +41,6 @@ function Booking() {
     }));
   };
 
-  // Render step content
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
@@ -125,10 +119,8 @@ function Booking() {
         );
     }
   };
-
   return (
     <Box>
-      {/* Booking Content */}
       <Box sx={{ maxWidth: 600, margin: "auto", padding: 3 }}>
         <Typography variant="h4" align="center" gutterBottom>
           Booking Page

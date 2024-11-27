@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -14,25 +14,29 @@ import { SpecialistsContext } from "../../context/SpecialistsContext";
 
 function BookingStep2({ formData, onBack, onNext, onDataChange }) {
   const apiUrl = import.meta.env.VITE_API_URL;
-  console.log("Patient ID:", formData);
-  console.log("API URL:", apiUrl);
-  console.log("Form Data", formData);
-  const { specialists, loading, error } = useContext(SpecialistsContext);
+  const { fetchSpecialists, specialists, loading, error } = useContext(SpecialistsContext);
   const [searchCriteria, setSearchCriteria] = useState("");
   const [filteredSpecialists, setFilteredSpecialists] = useState(specialists);
-  const [sortOption, setSortOption] = useState(""); 
+  const [sortOption, setSortOption] = useState("");
   const [selectedSpecialist, setSelectedSpecialist] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [localError, setLocalError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  useEffect(async () => {
+    await fetchSpecialists();
+    console.log(specialists)
+  }, []);
+
+  useEffect(() => {
+    setFilteredSpecialists(specialists)
+  }, [specialists])
+
   const handleSearchChange = (value) => {
     setSearchCriteria(value);
-
     const filtered = specialists.filter((specialist) =>
       specialist.name.toLowerCase().includes(value.toLowerCase())
     );
-
     setFilteredSpecialists(filtered);
   };
 
@@ -43,7 +47,6 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
         const response = await axios.get(
           `${apiUrl}/api/specialists/closest?patientId=${formData.patient.id}`
         );
-        console.log(response.data)
         setFilteredSpecialists(response.data);
       } catch (err) {
         console.error("Error fetching closest specialists:", err.message);
@@ -100,8 +103,6 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
       <Typography variant="h5" gutterBottom>
         Step 2: Select a Specialist
       </Typography>
-
-      {/* Search and Sort Controls */}
       <Box sx={{ display: "flex", gap: 2, marginBottom: 3 }}>
         <TextField
           label="Search by Name"
@@ -109,20 +110,18 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
           onChange={(e) => handleSearchChange(e.target.value)}
           fullWidth
         />
-       <Select
-  value={sortOption}
-  onChange={(e) => handleSortChange(e.target.value)} // Updates sortOption state
-  displayEmpty
-  fullWidth
->
-  <MenuItem value="" disabled>
-    Sort By
-  </MenuItem>
-  <MenuItem value="closest">Closest to Patient</MenuItem>
-</Select>
+        <Select
+          value={sortOption}
+          onChange={(e) => handleSortChange(e.target.value)}
+          displayEmpty
+          fullWidth
+        >
+          <MenuItem value="" disabled>
+            Sort By
+          </MenuItem>
+          <MenuItem value="closest">Closest to Patient</MenuItem>
+        </Select>
       </Box>
-
-      {/* Specialist List */}
       <List>
         {filteredSpecialists.length > 0 ? (
           filteredSpecialists.map((specialist) => (
@@ -139,8 +138,6 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
           <Typography variant="body2">No specialists found.</Typography>
         )}
       </List>
-
-      {/* Navigation Buttons */}
       <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 3 }}>
         <Button variant="outlined" onClick={onBack}>
           Back
@@ -149,8 +146,6 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
           Next
         </Button>
       </Box>
-
-      {/* Error or Success Messages */}
       {localError && (
         <Typography color="error" sx={{ marginTop: 2 }}>
           {localError}

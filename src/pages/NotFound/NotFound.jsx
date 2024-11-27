@@ -1,8 +1,7 @@
-import { Container, Typography, Button, Box } from "@mui/material";
+import { Container, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function NotFound() {
-  console.log("NotFound component rendered");
   return (
     <Container
       maxWidth="md"
@@ -15,17 +14,12 @@ function NotFound() {
         textAlign: "center",
       }}
     >
-      {/* Page Title */}
       <Typography variant="h3" gutterBottom>
         Oops! Page Not Found
       </Typography>
-
-      {/* Description */}
       <Typography variant="body1" color="textSecondary" sx={{ mt: 2 }}>
         It seems the page you are looking for does not exist or may have been moved.
       </Typography>
-
-      {/* Back to Home Button */}
       <Button
         variant="contained"
         color="primary"
@@ -35,8 +29,6 @@ function NotFound() {
       >
         Back to Home
       </Button>
-
-      {/* CSS Animation */}
       <style>
         {`
           @keyframes pulse {

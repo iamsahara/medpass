@@ -1,21 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Box, Typography, Grid, CircularProgress } from "@mui/material";
 import SpecialistCard from "../SpecialistCard/SpecialistCard";
 import { SpecialistsContext } from "../../context/SpecialistsContext";
 
 function SpecialistsList() {
-  const {specialists, fetchSpecialists,loading, error} =useContext(SpecialistsContext)
+  const { specialists, fetchSpecialists, loading, error } = useContext(SpecialistsContext)
   const [selectedSpecialist, setSelectedSpecialist] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
-   fetchSpecialists()
-     
-  }, [fetchSpecialists,specialists]);
+    fetchSpecialists()
+  }, [fetchSpecialists, specialists]);
 
   const handleSelectSpecialist = (specialist) => {
     setSelectedSpecialist(specialist);
-    setSelectedDate(null); 
+    setSelectedDate(null);
   };
 
   const handleSelectDate = (date) => {

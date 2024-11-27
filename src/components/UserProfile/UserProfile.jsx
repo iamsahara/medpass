@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Card,
@@ -14,6 +14,7 @@ import { Edit } from "@mui/icons-material";
 import profileImage from "../../assets/Image/profileImage.png";
 
 function DoctorProfile() {
+  const navigate = useNavigate();
   const doctorInfo = {
     name: "Dr. Green",
     title: "Family Physician",
@@ -39,7 +40,6 @@ function DoctorProfile() {
         minHeight: "100vh",
       }}
     >
-      {/* Main Profile Card */}
       <Card
         sx={{
           maxWidth: 800,
@@ -49,7 +49,6 @@ function DoctorProfile() {
         }}
       >
         <CardContent>
-          {/* Header Section */}
           <Box
             sx={{
               display: "flex",
@@ -59,7 +58,7 @@ function DoctorProfile() {
           >
             <Avatar
               alt={doctorInfo.name}
-              src={doctorInfo.photo} // Dynamic photo URL
+              src={doctorInfo.photo}
               sx={{ width: 80, height: 80, marginRight: 2 }}
             />
             <Box sx={{ flexGrow: 1 }}>
@@ -79,10 +78,7 @@ function DoctorProfile() {
               <Edit />
             </IconButton>
           </Box>
-
           <Divider sx={{ marginY: 3 }} />
-
-          {/* Personal Information */}
           <Box sx={{ marginBottom: 3 }}>
             <Typography variant="h6" gutterBottom>
               Personal Information
@@ -107,8 +103,6 @@ function DoctorProfile() {
           </Box>
 
           <Divider sx={{ marginY: 3 }} />
-
-          {/* Professional Details */}
           <Box sx={{ marginBottom: 3 }}>
             <Typography variant="h6" gutterBottom>
               Professional Details
@@ -126,42 +120,20 @@ function DoctorProfile() {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1">
-                  <strong>Experience:</strong> {doctorInfo.experience}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1">
-                  <strong>Certifications:</strong>{" "}
-                  {doctorInfo.certifications.join(", ")}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1">
                   <strong>Languages:</strong> {doctorInfo.languages.join(", ")}
                 </Typography>
               </Grid>
             </Grid>
           </Box>
-
           <Divider sx={{ marginY: 3 }} />
-
-          {/* Buttons Section */}
           <Box sx={{ textAlign: "center", marginTop: 3 }}>
-            <Button
-              variant="contained"
+            <Button  variant="contained"
               color="primary"
-              sx={{ marginRight: 2 }}
-              onClick={() => alert("Edit functionality coming soon!")}
-            >
-              Edit Profile
-            </Button>
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => alert("Coming soon!")}
-            >
-              View Schedule
-            </Button>
+              sx={{ marginRight: 2 }}   onClick={() => {
+                navigate("/dashboard");
+              }}>
+          Dashboard
+        </Button>
           </Box>
         </CardContent>
       </Card>

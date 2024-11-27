@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import axios from "axios";
 
 export const SpecialistsContext = createContext();
@@ -9,20 +9,19 @@ export const SpecialistsProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-    const fetchSpecialists = async () => {
-      if (specialists.length > 0) {
-        return; 
-      }
-      try {
-        const response = await axios.get(`${apiUrl}/api/specialists`);
-        setSpecialists(response.data);
-      } catch (err) {
-        setError(err.message || "Failed to fetch specialists.");
-      } finally {
-        setLoading(false);
-      }
-    };
-   
+  const fetchSpecialists = async () => {
+
+    try {
+      const response = await axios.get(`${apiUrl}/api/specialists`);
+      console.log(response.data)
+      setSpecialists(response.data);
+    } catch (err) {
+      setError(err.message || "Failed to fetch specialists.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SpecialistsContext.Provider value={{ fetchSpecialists, specialists, setSpecialists, loading, error }}>
       {children}

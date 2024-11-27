@@ -1,20 +1,24 @@
-import React, { useContext, useState, useEffect } from "react";
+import{ useContext, useState, useEffect } from "react";
 import { Box, Typography, TextField, Button, List } from "@mui/material";
 import PatientCard from "../PatientCard/PatientCard"; 
 import { PatientsContext } from "../../context/PatientsContext"; 
+import { useNavigate} from "react-router-dom";
 
-function BookingStep1({ formData, onNext, onBack, onDataChange }) {
-  const { patients, loading, error } = useContext(PatientsContext); 
+function BookingStep1({ onNext, onBack, onDataChange }) {
+  const { fetchPatients,patients, loading, error } = useContext(PatientsContext); 
   const [searchCriteria, setSearchCriteria] = useState({ name: "", insurance: "" });
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const navigate = useNavigate();
+  
+  useEffect(async() => {
+    await fetchPatients();
+  }, []);
 
-  // Initialize filteredPatients with patients from context
   useEffect(() => {
     setFilteredPatients(patients || []);
   }, [patients]);
 
-  // Handle search criteria changes and filter the patient list
   const handleSearchChange = (field, value) => {
     const updatedCriteria = { ...searchCriteria, [field]: value };
     setSearchCriteria(updatedCriteria);
@@ -33,23 +37,17 @@ function BookingStep1({ formData, onNext, onBack, onDataChange }) {
     setFilteredPatients(filtered);
   };
 
-  // Handle patient selection
   const handlePatientSelect = (patient) => {
     setSelectedPatient(patient);
-    console.log("Form Data in Step 1:", formData);
-    onDataChange("patient", patient); // Pass selected patient ID to formData
+    onDataChange("patient", patient);
   };
 
-
-
-  // Proceed to the next step
   const handleNext = () => {
     if (selectedPatient) {
       onNext();
     }
   };
 
-  // Handle loading and error states
   if (loading) {
     return <Typography variant="body1">Loading patients...</Typography>;
   }
@@ -67,8 +65,6 @@ function BookingStep1({ formData, onNext, onBack, onDataChange }) {
       <Typography variant="h5" gutterBottom>
         Step 1: Select a Patient
       </Typography>
-
-      {/* Search Inputs */}
       <Box sx={{ display: "flex", gap: 2, marginBottom: 3 }}>
         <TextField
           label="Search by Name"
@@ -83,8 +79,6 @@ function BookingStep1({ formData, onNext, onBack, onDataChange }) {
           fullWidth
         />
       </Box>
-
-      {/* Patient List */}
       <List>
         {filteredPatients.length > 0 ? (
           filteredPatients.map((patient) => (
@@ -101,10 +95,10 @@ function BookingStep1({ formData, onNext, onBack, onDataChange }) {
           </Typography>
         )}
       </List>
-
-      {/* Navigation Buttons */}
       <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 3 }}>
-        <Button variant="outlined" onClick={onBack}>
+        <Button variant="outlined"   onClick={() => {
+                navigate("/dashboard");
+              }}>
           Back
         </Button>
         <Button variant="contained" onClick={handleNext} disabled={!selectedPatient}>
