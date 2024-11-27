@@ -22,114 +22,83 @@ Log in securely, access their dashboard, and book an appointment for a patient w
 Considerations:
 Protect sensitive patient data with secure authentication.
 Provide an intuitive and user-friendly interface to simplify the booking process.
-
+being able to search for closet specialist to patient.
+being able to keep the booked appointments in patient history. 
 
 ### Features
 
 ## User Story:
-“As a family doctor, I want to log in to my dashboard and book an appointment for a patient with a specialist.”
+
+“As a physician(family doctor), I want to log in to my dashboard and book an appointment for a patient with a specialist.”
+"As a physician(family doctor), I want to log in to my dashboard and check the patients history"
+"As a physician(family doctor), I want to log in to my dashboard and check the specialits availability and address"
+
 
 ## Key Features:
 
 1-Secure Login:
 Authenticate family doctors using JWT.
 
-2-Specialist Search and Selection:
-Search for specialists by name, specialty.
+2-Patient Selection:
+Search for patient by name or insurance number.
+
+3-Specialist Search and Selection:
+Search for specialists by name or closest to patient.
 View available time slots and select a specialist.
-
-3-Patient Selection:
-Search for patient by name, insurance#.
-
 
 4-Booking Confirmation:
 Confirmation message with appointment details.
 Option to add notes (e.g., reason for referral).
-option to upload files 
 
 ## Implementation
 
 ### Tech Stack
 
-Tech Stack
-
 Frontend:
-React
+
+React(SPA)
 JavaScript
-MUI
+Material-UI (MUI)
 SASS
 
 Backend:
+
+REST APIs
 Express
 MySQL
+Knex.js(Migration,seeds,controllers)
+JWT (JSON Web Tokens)
+Bcrypt.js
+Geocoding API
 
 Client Libraries:
-react, react-router, axios
+
+React Router
+Axios
+@mui/x-date-pickers
+Day.js
 
 Server Libraries:
-knex, express, bcrypt for password hashing
 
+dotenv
+bcryptjs for password hashing
+nodemon
+Knex
 
 ### APIs
 
-POST /api/login
-Authenticate a family doctor.
-Response Example:
-{ "token": "jwt_token", "user": { "id": 1, "name": "Dr. John Doe" } }
-
-
-GET /api/specialist
-Fetch a list of specialists with optional filters for name, specialty.
-Response Example:
-[
-  {
-    "id": 1,
-    "name": "Dr. Jane Smith",
-    "email": "jane.smith@example.com",
-    "specialty": "Cardiology",
-    "address": "123 Heart Lane, Toronto",
-    "phone_number": "123-456-7890",
-    "availability": ["2024-12-05T10:30:00"]
-  }
-]
-
-GET /api/patient
-Fetch a list of patients associated with the logged-in doctor.
-Response Example:
-[
-  {
-    "id": 1,
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "phone_number": "987-654-3210",
-    "address": "456 Maple St, Toronto",
-    "insurance_number": "INS12345",
-    "date_of_birth": "1990-01-01"
-  }
-]
-
-POST /api/appointment
-Book an appointment.
-Response Example:
-{
-  "id": 1,
-  "status": "confirmed",
-  "appointment_details": {
-    "specialist": "Dr. Jane Smith",
-    "patient": "John Doe",
-    "date": "2024-12-05",
-    "time": "10:30 AM"
-    "description": "the condition is ..."
-  }
-}
+**GET /api/geocoding/**
 
 ### Sitemap
+- 1-Home Page(/)
+- 2-login Page(/login)
+- 2-Dashboard(/dashboard)
+- 3-Specialists(/specialists)
+- 4-Patients(/patients)
+- 5-Booking(/booking)
+- 6-User Profile(/profile)
+- 7-Not Found Page(/*)
 
-- 1-Home page / login page
-- 2-Dashboard
-- 3-Specialist Selection
-- 4-Patient Selection
-- 5-Booking Confirmation
 
 ### Mockups
 
@@ -165,60 +134,159 @@ id, doctor_id, specialist_id, patient_id, appointment_time, notes
 
 ### Endpoints
 
+**POST /api/auth/login**
+Authenticates a family doctor.
+params: Email, password
+Response Example:
+```
+{ "token": "jwt_token"} 
+```
+**GET /api/patients**
+Fetches a list of patient
+Response Example:
+
+```
+[
+  {
+   "id": number,
+   "name": string,
+   "email": string,
+   "phone": string,
+   "insurance_number": string,
+   "address": string,
+   "lat": number,
+   "lon": number,
+   "history": [
+            {
+                "date": string,
+                "details": string
+            },
+            ...
+        ],
+    },
+    ...
+]
+```
+
+**GET /api/patient/:id**
+parameters: id
+Response Example:
+```
+  {
+   "id": number,
+   "name": string,
+   "email": string,
+   "phone": string,
+   "insurance_number": string,
+   "address": string,
+   "lat": number,
+   "lon": number,
+   "history": [
+            {
+                "date": string,
+                "details": string
+            },
+            ...
+        ],
+    }
+```
+**POST /api/patients/:id/history**
+parameters: patientId, date, details 
+Response Example:
+
+```
+[
+  {    
+    "id": number,
+    "date":string,
+    "details":string
+},
+...
+]
+```
+
 **GET /api/specialists**
 Fetches a list of specialists.
-Parameters:
-name, specialty 
+```
+Response Example:
+[ 
+  {
+    "id": number,
+    "name": string,
+    "specialty": string,
+    "email": string,
+    "phone_number": string,
+    "address": string,
+    "first availability": string[]
+  },
+  ...
+]
+```
+**GET /api/specialists/:id**
+parameters: id
+Response Example:
+```
+ {
+    "id": number,
+    "name": string,
+    "specialty": string,
+    "email": string,
+    "phone_number": string,
+    "address": string,
+    "first availability": string[]
+  }
+```
+
+**GET  /api/specialists/closest**
+params: patientId
+response would an array of specialists in order of distance from the patient
+Response Example:
+```
 [
   {
-    "id": 1,
-    "name": "Dr. Jane Smith",
-    "specialty": "Cardiology",
-    "email": "jane.smith@example.com",
-    "phone_number": "123-456-7890",
-    "address": "123 Heart Lane, Toronto",
-    "first availability": ["2024-12-05T10:30:00"]
-  }
-]
+        "id": number,
+        "name": string,
+        "specialty": string,
+        "address": string,
+        "lat": number,
+        "lon": number,
+        "phone": string,
+        "firstAvailibility": string,
+        "availability": string[],
+        "distance": number
+    },
+    ...
+    ]
+```    
 
-**GET /api/patients**
-
-Fetches a list of patient.
-
-Parameters:
-name, insurance# 
-[
-  {
-    "id": 1,
-    "name": "Dr. Jane Smith",
-    "insurance_number": "Cardiology",
-    "email": "jane.smith@example.com",
-    "phone_number": "123-456-7890",
-    "address": "123 Heart Lane, Toronto"
-  }
-]
-**POST /api/appointments**
-confirm an appointment.
-
-Parameters:
--specialist_id: Selected specialist's ID.
--patient_id: Selected patient's ID.
--appointment_time : Appointment date and time.
--notes: Additional notes about the appointment.
-
-**POST /api/login**
-Authenticates a family doctor.
-
-Parameters:
-
--email
--password
+**GET  /api/geocoding/geocode**
+parameters: address
+Response Example:
+```
 {
-  "token": "jwt_token",
-  "user": { "id": 1, "name": "Dr. John Doe" }
+    "latitude": "43",
+    "longitude": "-79"
 }
-
-
+```
+**GET  /api/geocoding/reverse-geocode**
+parameters : lat & long
+Response Example:
+```
+{
+    "address": {
+        "house_number": "123",
+        "road": "Spruce Avenue",
+        "city": "Richmond Hill",
+        "county": "York Region",
+        "state_district": "Golden Horseshoe",
+        "state": "Ontario",
+        "ISO3166-2-lvl4": "CA-ON",
+        "postcode": "L4C 5A6",
+        "country": "Canada",
+        "country_code": "ca"
+    }
+}
+```
 ## Roadmap
 
 Day(1-3) Set Up Client:
@@ -267,7 +335,7 @@ Allow doctors to select a specialist and a time slot.
 Day 7-8: Patient Search and Selection
 Patient Selection UI:
 Create a page to display and search for patients.
-Build the GET /api/patients endpoint to fetch the list of patients from the backend.
+Build the GET /api/dashboard/patients endpoint to fetch the list of patients from the backend.
 Optional Notes:
 
 Add an input field for optional notes (e.g., reason for referral).
@@ -291,9 +359,13 @@ Identify and fix bugs.
 
 ## Nice-to-haves
 
-1- Role-based dashboards for specialists and patients.
-2-Advanced search filters for specialists (e.g., location, ratings).
-3-Appointment history for family doctors.
-4-Quick statistics for users dashboard (e.g.,number of appointment, status of appointments)
-5-building users profile more efficient
+future of app: 
+
+1-Role-Based Dashboards: Develop dedicated dashboards for specialists and patients to enhance user experience and accessibility.
+
+2-Advanced Search Filters: Implement filters such as ratings to improve the discoverability of specialists.
+
+3-Appointment History for Family Doctors: Create a detailed and user-friendly dashboard for family doctors to view the status and results of past appointments.
+
+4-Quick Statistics for User Dashboards: Add functional statistics to display key metrics like the total number of appointments and their statuses.
 
