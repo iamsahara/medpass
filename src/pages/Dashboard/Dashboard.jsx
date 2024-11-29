@@ -28,7 +28,8 @@ import {
 function DashboardPage() {
   const navigate = useNavigate();
   const doctorName = "Green";
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const menuItems = [
     { text: "My Profile", icon: <Person />, path: "/profile" },
     { text: "Patients", icon: <People />, path: "/patients" },
@@ -38,23 +39,27 @@ function DashboardPage() {
   ];
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
+      {/* Sidebar */}
       <Drawer
-        variant="persistent"
+        variant="temporary" // Full-screen on mobile
         open={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
         sx={{
-          width: isSidebarOpen ? 240 : 0,
-          flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: isSidebarOpen ? 240 : 0,
-            backgroundColor: "action.hover", 
+            width: { xs: "100%", sm: 240 }, // Full-width on mobile, fixed on tablet/desktop
+            backgroundColor: "action.hover",
             color: "#364ABF",
-            transition: "width 0.3s",
             boxSizing: "border-box",
           },
         }}
       >
-        <Toolbar />
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6">Menu</Typography>
+          <IconButton onClick={() => setIsSidebarOpen(false)}>
+            <MenuIcon />
+          </IconButton>
+        </Toolbar>
         <List>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
@@ -66,33 +71,11 @@ function DashboardPage() {
                   width: "100%",
                 })}
               >
-                <ListItemButton
-                  sx={{
-                    borderRadius: "8px", 
-                    padding: "10px 20px", 
-                    margin: "5px 10px", 
-                    "&:hover": {
-                      backgroundColor: "action.hover", 
-                      color: "primary.light", 
-                    },
-                    "&.Mui-selected": {
-                      backgroundColor: "action.selected", 
-                      color: "secondary.main", 
-                      "&:hover": {
-                        backgroundColor: "secondary.light", 
-                      },
-                    },
-                  }}
-                >
+                <ListItemButton>
                   {item.icon}
                   <ListItemText
                     primary={item.text}
-                    sx={{
-                      marginLeft: "10px",
-                      color: "inherit",
-                      fontSize: "1rem",
-                      fontWeight: 500,
-                    }}
+                    sx={{ marginLeft: "10px", fontWeight: 500 }}
                   />
                 </ListItemButton>
               </NavLink>
@@ -102,83 +85,141 @@ function DashboardPage() {
       </Drawer>
 
       {/* Main Content */}
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, padding: 2 }}>
+        {/* Header */}
         <Box
           sx={{
             backgroundColor: "background.paper",
-            padding: 3,
+            padding: 2,
             borderRadius: 2,
             marginBottom: 4,
             boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
             display: "flex",
             alignItems: "center",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: 2,
           }}
         >
           <IconButton
-            color="inherit"
-            edge="start"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            onClick={() => setIsSidebarOpen(true)} // Open sidebar
             sx={{
-              marginRight: 2,
               backgroundColor: "action.hover",
               borderRadius: "50%",
               padding: 1,
-              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" sx={{ fontWeight: 500 }}>
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 500,
+              textAlign: { xs: "center", sm: "left" },
+              flexGrow: 1,
+            }}
+          >
             Welcome, Dr. {doctorName}!
           </Typography>
         </Box>
+
+        {/* Cards Section */}
         <Box sx={{ padding: 3 }}>
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={3}
+            justifyContent="center"
+            sx={{
+              paddingX: { xs: 0, sm: 2, md: 4 },
+              maxWidth: { sm: "100%", md: "1280px" },
+              margin: "0 auto",
+            }}
+          >
+            {/* Approved Referrals */}
             <Grid item xs={12} sm={6} md={4}>
               <Card>
                 <CardContent>
-                  <Typography variant="h6">Approved Referrals</Typography>
-                  <Typography variant="h4">12</Typography>
+                  <Typography variant="h6" textAlign="center">
+                    Approved Referrals
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: "primary.main",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
+                  >
+                    12
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
+
+            {/* Active Referrals */}
             <Grid item xs={12} sm={6} md={4}>
               <Card>
                 <CardContent>
-                  <Typography variant="h6">Active Referrals</Typography>
-                  <Typography variant="h4">8</Typography>
+                  <Typography variant="h6" textAlign="center">
+                    Active Referrals
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: "primary.main",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
+                  >
+                    8
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
+
+            {/* Pending Referrals */}
             <Grid item xs={12} sm={6} md={4}>
               <Card>
                 <CardContent>
-                  <Typography variant="h6">Pending Referrals</Typography>
-                  <Typography variant="h4">3</Typography>
+                  <Typography variant="h6" textAlign="center">
+                    Pending Referrals
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: "primary.main",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
+                  >
+                    3
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
           </Grid>
-          <Box
+        </Box>
+
+        {/* Appointment Button */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            marginTop: 4,
+            justifyContent: "center",
+          }}
+        >
+          <Typography variant="h6">Book Appointment</Typography>
+          <Fab
+            color="primary"
+            aria-label="add"
+            onClick={() => navigate("/booking")}
             sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "2rem",
-              marginTop: 4,
-              justifyContent: "center",
+              position: "relative",
             }}
           >
-            <Typography variant="h6">Book Appointment</Typography>
-            <Fab
-              color="primary"
-              aria-label="add"
-              onClick={() => {
-                navigate("/booking");
-              }}
-            >
-              <Add />
-            </Fab>
-          </Box>
+            <Add />
+          </Fab>
         </Box>
       </Box>
     </Box>

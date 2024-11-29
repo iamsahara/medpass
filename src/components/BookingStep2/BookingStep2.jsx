@@ -103,18 +103,54 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
       <Typography variant="h5" gutterBottom>
         Step 2: Select a Specialist
       </Typography>
-      <Box sx={{ display: "flex", gap: 2, marginBottom: 3 }}>
+      <Box  sx={{
+      display: "flex",
+      gap: 2,
+      marginBottom: 3,
+      alignItems: "center",
+      flexWrap: "wrap", // Allows responsive wrapping for smaller screens
+    }}>
         <TextField
           label="Search by Name"
           value={searchCriteria}
           onChange={(e) => handleSearchChange(e.target.value)}
           fullWidth
+          sx={{
+            backgroundColor: "white", // Subtle contrast for input field
+            borderRadius: 2, // Rounded corners
+            boxShadow: 1, // Slight shadow for depth
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "secondary.light", // Custom border color
+              },
+              "&:hover fieldset": {
+                borderColor: "secondary.main", // Darker border on hover
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "primary.main", // Primary color when focused
+              },
+            },
+          }}
         />
         <Select
           value={sortOption}
           onChange={(e) => handleSortChange(e.target.value)}
           displayEmpty
           fullWidth
+          sx={{
+            backgroundColor: "white",
+            borderRadius: 2,
+            boxShadow: 1,
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "secondary.light",
+            },
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "secondary.main",
+            },
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "primary.main",
+            },
+          }}
         >
           <MenuItem value="" disabled>
             Sort By

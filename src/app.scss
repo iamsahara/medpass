@@ -1,21 +1,23 @@
 #app {
   max-width: 1280px;
+  min-width: 320px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
- 
 }
+
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 body {
+  background: #4facfe; /* Fallback solid color */
   background: linear-gradient(90deg, #4facfe, #00f2fe);
   background-size: 200% 200%;
   animation: gradientAnimation 10s ease infinite;
   margin: 0;
-        padding: 0;
+  padding: 0;
 
 }
 
@@ -29,4 +31,8 @@ body {
   100% {
     background-position: 0% 50%;
   }
+}
+html, body {
+  min-width: 320px; /* Prevent the browser from resizing the entire page below 320px */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }

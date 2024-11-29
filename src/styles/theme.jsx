@@ -1,40 +1,52 @@
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 320,    // Mobile
+      sm: 760,  // Tablets
+      lg: 1280, // Desktop
+    },
+  },
   palette: {
     mode: "light",
     primary: {
-      main: "#5271FF", // Bright blue inspired by the logo
-      light: "#7D95FF", // Lighter blue for hover and accents
-      dark: "#364ABF", // Deeper blue for contrast
+      main: "#5271FF",
+      light: "#7D95FF",
+      dark: "#364ABF",
     },
     secondary: {
-      main: "#FF6E6E", // Vibrant red from the logo
-      light: "#FF8E8E", // Lighter red for hover and accents
-      dark: "#CC5656", // Deeper red for contrast
+      main: "#FF6E6E",
+      light: "#FF8E8E",
+      dark: "#CC5656",
+    },
+    success: {
+      main: "#4CAF50", // Green for success states
+      dark: "#388E3C", // Darker green for hover states
+      light: "#81C784", // Lighter green for accents
     },
     background: {
-      default: "#F8FAFF", // Very light blue for the main background
-      paper: "#FFFFFF", // Bright white for cards and containers
+      default: "#F8FAFF",
+      paper: "#FFFFFF",
     },
     text: {
-      primary: "#2C3E50", // Deep navy blue from the logo
-      secondary: "#718096", // Neutral gray for less important text
-      contrastText: "#FFFFFF", // White text for contrast
+      primary: "#2C3E50",
+      secondary: "#718096",
+      contrastText: "#FFFFFF",
     },
     action: {
-      hover: "#EDF4FF", // Very light blue for hover states
-      selected: "#DDEBFF", // Light blue for selected elements
+      hover: "#EDF4FF",
+      selected: "#DDEBFF",
     },
   },
   typography: {
-    fontFamily: "Inter, Poppins, Arial, sans-serif", // Clean, modern sans-serif fonts
+    fontFamily: "Inter, Poppins, Arial, sans-serif",
     h1: { fontWeight: 800, fontSize: "2.5rem", lineHeight: 1.2 },
     h2: { fontWeight: 700, fontSize: "2rem", lineHeight: 1.3 },
     h3: { fontWeight: 600, fontSize: "1.75rem", lineHeight: 1.4 },
     body1: { fontWeight: 400, fontSize: "1rem", lineHeight: 1.6 },
     button: {
-      textTransform: "uppercase", // Consistent uppercase buttons
+      textTransform: "uppercase",
       fontWeight: 600,
     },
   },
@@ -42,11 +54,11 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: "10px", // Rounded button shape
-          padding: "10px 20px", // Larger button size
+          borderRadius: "10px",
+          padding: "10px 20px",
           transition: "transform 0.2s ease, background-color 0.3s ease",
           "&:hover": {
-            transform: "translateY(-2px)", // Subtle hover lift effect
+            transform: "translateY(-2px)",
           },
         },
         containedPrimary: {
@@ -61,6 +73,13 @@ const theme = createTheme({
           color: "#FFFFFF",
           "&:hover": {
             backgroundColor: "#FF8E8E",
+          },
+        },
+        containedSuccess: {
+          backgroundColor: "#4CAF50",
+          color: "#FFFFFF",
+          "&:hover": {
+            backgroundColor: "#388E3C",
           },
         },
         outlinedPrimary: {
@@ -84,12 +103,12 @@ const theme = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: "16px", // Rounded corners for cards
-          boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.1)", // Subtle shadow
-          backgroundColor: "#FFFFFF", // White for card surfaces
+          borderRadius: "16px",
+          boxShadow: "0px 6px 20px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "#FFFFFF",
           overflow: "hidden",
           "&:hover": {
-            boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.15)", // Stronger hover shadow
+            boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.15)",
           },
         },
       },
@@ -97,7 +116,7 @@ const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          transition: "color 0.3s ease", // Smooth transition for text color
+          transition: "color 0.3s ease",
         },
       },
     },
@@ -116,9 +135,9 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: "#5271FF", // Bright blue for the header
-          color: "#FFFFFF", // White text
-          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)", // Soft shadow
+          backgroundColor: "#5271FF",
+          color: "#FFFFFF",
+          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
         },
       },
     },
