@@ -120,8 +120,8 @@ function Booking() {
     }
   };
   return (
-    <Box>
-      <Box sx={{ maxWidth: 600, margin: "auto", padding: 3 }}>
+    <Box sx={{ maxWidth: 600, margin: "auto", padding: 0 }} >
+      <Box sx={{ maxWidth: 600, margin: "auto", padding: 0 }}>
         <Typography variant="h4" align="center" gutterBottom>
           Booking Page
         </Typography>

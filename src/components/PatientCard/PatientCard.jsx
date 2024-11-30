@@ -9,10 +9,12 @@ import {
   List,
   ListItem,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 function PatientCard({ patient, onSelect, isSelected }) {
   const [showInfo, setShowInfo] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const theme = useTheme();
 
   const toggleInfo = (e) => {
     e.stopPropagation();
@@ -31,17 +33,19 @@ function PatientCard({ patient, onSelect, isSelected }) {
       onClick={onSelect}
       sx={{
         cursor: "pointer",
-        backgroundColor: isSelected ? "#f5fcff" : "#fff",
+        backgroundColor: isSelected
+          ? theme.palette.action.hover
+          : theme.palette.background.paper,
         border: "1px solid",
-        borderColor: isSelected ? "#00796b" : "rgba(0, 0, 0, 0.1)",
+        borderColor: isSelected ? theme.palette.primary.main : "rgba(0, 0, 0, 0.1)",
         borderRadius: "8px",
         boxShadow: isSelected
-          ? "0px 2px 4px rgba(0, 121, 107, 0.2)"
+          ? `0px 2px 4px ${theme.palette.primary.light}`
           : "0px 1px 3px rgba(0, 0, 0, 0.05)",
         transition: "all 0.3s ease",
         "&:hover": {
-          boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1)",
-          borderColor: "rgba(0, 121, 107, 0.3)",
+          boxShadow: `0px 3px 6px ${theme.palette.primary.light}`,
+          borderColor: theme.palette.primary.light,
         },
         width: "100%",
         height: showInfo || showHistory ? "auto" : "60px", // Dynamic height
@@ -63,7 +67,7 @@ function PatientCard({ patient, onSelect, isSelected }) {
             variant="subtitle1"
             sx={{
               fontWeight: 600,
-              color: "#00796b",
+              color: theme.palette.primary.main,
               fontSize: "0.85rem",
               whiteSpace: "nowrap",
               overflow: "hidden",
@@ -87,7 +91,6 @@ function PatientCard({ patient, onSelect, isSelected }) {
           <Button
             variant="outlined"
             size="small"
-            color="primary"
             onClick={toggleInfo}
             sx={{
               textTransform: "capitalize",
@@ -95,6 +98,11 @@ function PatientCard({ patient, onSelect, isSelected }) {
               borderRadius: "6px",
               fontSize: "0.65rem",
               paddingX: 1,
+              borderColor: theme.palette.primary.main,
+              color: theme.palette.primary.main,
+              "&:hover": {
+                backgroundColor: theme.palette.action.hover,
+              },
             }}
           >
             {showInfo ? "Hide Info" : "View Info"}
@@ -104,7 +112,6 @@ function PatientCard({ patient, onSelect, isSelected }) {
           <Button
             variant="outlined"
             size="small"
-            color="secondary"
             onClick={toggleHistory}
             sx={{
               textTransform: "capitalize",
@@ -112,6 +119,11 @@ function PatientCard({ patient, onSelect, isSelected }) {
               borderRadius: "6px",
               fontSize: "0.65rem",
               paddingX: 1,
+              borderColor: theme.palette.secondary.main,
+              color: theme.palette.secondary.main,
+              "&:hover": {
+                backgroundColor: theme.palette.action.hover,
+              },
             }}
           >
             {showHistory ? "Hide History" : "View History"}
@@ -124,25 +136,40 @@ function PatientCard({ patient, onSelect, isSelected }) {
         <CardContent sx={{ padding: "0.5rem 0" }}>
           <Typography
             variant="body2"
-            sx={{ color: "text.secondary", fontSize: "0.75rem", marginBottom: 0.5 }}
+            sx={{
+              color: theme.palette.text.secondary,
+              fontSize: "0.75rem",
+              marginBottom: 0.5,
+            }}
           >
             Email: {patient.email}
           </Typography>
           <Typography
             variant="body2"
-            sx={{ color: "text.secondary", fontSize: "0.75rem", marginBottom: 0.5 }}
+            sx={{
+              color: theme.palette.text.secondary,
+              fontSize: "0.75rem",
+              marginBottom: 0.5,
+            }}
           >
             Phone: {patient.phone}
           </Typography>
           <Typography
             variant="body2"
-            sx={{ color: "text.secondary", fontSize: "0.75rem", marginBottom: 0.5 }}
+            sx={{
+              color: theme.palette.text.secondary,
+              fontSize: "0.75rem",
+              marginBottom: 0.5,
+            }}
           >
             Insurance: {patient.insurance_number}
           </Typography>
           <Typography
             variant="body2"
-            sx={{ color: "text.secondary", fontSize: "0.75rem" }}
+            sx={{
+              color: theme.palette.text.secondary,
+              fontSize: "0.75rem",
+            }}
           >
             Address: {patient.address}
           </Typography>
@@ -165,7 +192,7 @@ function PatientCard({ patient, onSelect, isSelected }) {
                   variant="body2"
                   sx={{
                     fontSize: "0.65rem",
-                    color: "text.secondary",
+                    color: theme.palette.text.secondary,
                   }}
                 >
                   {appointment.date}: {appointment.details}
@@ -178,7 +205,7 @@ function PatientCard({ patient, onSelect, isSelected }) {
             variant="body2"
             sx={{
               fontSize: "0.65rem",
-              color: "text.secondary",
+              color: theme.palette.text.secondary,
               fontStyle: "italic",
               padding: "0.2rem",
             }}
