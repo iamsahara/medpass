@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Box, Typography, Button, CircularProgress } from "@mui/material";
+import { Box, Typography, Button, CircularProgress, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import PatientCard from "../PatientCard/PatientCard";
 import { PatientsContext } from "../../context/PatientsContext";
@@ -29,6 +29,7 @@ function PatientList() {
 
   return (
     <Box padding={3}>
+      {/* Header Section */}
       <Box
         display="flex"
         justifyContent="space-between"
@@ -45,19 +46,34 @@ function PatientList() {
           + Add New Patient
         </Button>
       </Box>
+
+      {/* Patient Cards */}
       {patients.length === 0 ? (
         <Typography align="center">No patients available.</Typography>
       ) : (
-        <Box display="flex" flexDirection="column" gap={2}>
+        <Grid 
+          container 
+          spacing={2} 
+          sx={{
+            maxWidth: "100%", // Ensures the grid container uses full width
+            margin: "0 auto", // Centers the content horizontally
+          }}
+        >
           {patients.map((patient) => (
-            <PatientCard
+            <Grid 
+              item 
+              xs={12} 
+              sm={6} // Ensures 2 cards per row on small screens and above
               key={patient.id}
-              patient={patient}
-              onSelect={() => console.log(`Selected patient ID: ${patient.id}`)}
-              isSelected={false}
-            />
+            >
+              <PatientCard
+                patient={patient}
+                onSelect={() => console.log(`Selected patient ID: ${patient.id}`)}
+                isSelected={false}
+              />
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       )}
     </Box>
   );
