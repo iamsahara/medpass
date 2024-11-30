@@ -10,10 +10,8 @@ import {
   ListItemButton,
   Box,
   Grid,
-  Card,
-  CardContent,
   IconButton,
-  Fab,
+  Button,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -24,11 +22,22 @@ import {
   LocalHospital,
   ManageHistory,
 } from "@mui/icons-material";
+import StatsCard from "../../components/StatsCard/StatsCard.jsx"
+import AppointmentButton from "../../components/AppointmentButton/AppointmentButton.jsx";
 
 function DashboardPage() {
   const navigate = useNavigate();
   const doctorName = "Green";
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const cardsData = [
+    { label: "Approved", value: 15, icon: <LocalHospital />, gradient: "#4A90E2, #357ABD" },
+    { label: "New Patients", value: 24, icon: <Person />, gradient: "#50B8A1, #3A8F7D" },
+    { label: "Pending", value: 7, icon: <Notifications />, gradient: "#9B51E0, #6D38B0" },
+    { label: "Completed", value: 18, icon: <People />, gradient: "#F2994A, #D87E2B" },
+    { label: "Appointments Today", value: 12, icon: <LocalHospital />, gradient: "#56CCF2, #2F80ED" },
+    { label: "Canceled", value: 3, icon: <Notifications />, gradient: "#EB5757, #D32F2F" },
+  ];
 
   const menuItems = [
     { text: "My Profile", icon: <Person />, path: "/profile" },
@@ -121,106 +130,32 @@ function DashboardPage() {
             Welcome, Dr. {doctorName}!
           </Typography>
         </Box>
-
-        {/* Cards Section */}
-        <Box sx={{ padding: 3 }}>
-          <Grid
-            container
-            spacing={3}
-            justifyContent="center"
-            sx={{
-              paddingX: { xs: 0, sm: 2, md: 4 },
-              maxWidth: { sm: "100%", md: "1280px" },
-              margin: "0 auto",
-            }}
-          >
-            {/* Approved Referrals */}
-            <Grid item xs={12} sm={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" textAlign="center">
-                    Approved Referrals
-                  </Typography>
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      color: "primary.main",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    12
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Active Referrals */}
-            <Grid item xs={12} sm={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" textAlign="center">
-                    Active Referrals
-                  </Typography>
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      color: "primary.main",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    8
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Pending Referrals */}
-            <Grid item xs={12} sm={6} md={4}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" textAlign="center">
-                    Pending Referrals
-                  </Typography>
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      color: "primary.main",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    3
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+        <Box sx={{ padding: 1 }}>
+      <Grid
+        container
+        spacing={1}
+        justifyContent="center"
+        sx={{
+          paddingX: { xs: 1, sm: 2 },
+          maxWidth: "1280px",
+          margin: "0 auto",
+        }}
+      >
+        {cardsData.map((card, index) => (
+          <Grid item xs={12} sm={4} md={2} key={index}>
+            <StatsCard
+              label={card.label}
+              value={card.value}
+              icon={card.icon}
+              gradient={card.gradient}
+            />
           </Grid>
-        </Box>
+        ))}
+      </Grid>
+    </Box>
 
-        {/* Appointment Button */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 2,
-            marginTop: 4,
-            justifyContent: "center",
-          }}
-        >
-          <Typography variant="h6">Book Appointment</Typography>
-          <Fab
-            color="primary"
-            aria-label="add"
-            onClick={() => navigate("/booking")}
-            sx={{
-              position: "relative",
-            }}
-          >
-            <Add />
-          </Fab>
-        </Box>
+    <AppointmentButton />
+
       </Box>
     </Box>
   );

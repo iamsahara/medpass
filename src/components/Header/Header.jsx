@@ -1,51 +1,74 @@
 import React from "react";
-import { AppBar, Toolbar, Button } from "@mui/material";
+import { AppBar, Toolbar, Button, Box, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useTheme } from "@mui/material/styles";
+import logo3 from "../../assets/Image/logo3.png";
 
 const Header = ({ isAuthenticated, handleLogout }) => {
   const theme = useTheme();
 
   return (
-    <div style={{ position: "relative", height: "30vh", overflow: "hidden" }}>
+    <Box sx={{ position: "relative", height: "30vh", overflow: "hidden" }}>
       {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        style={{
+      <Box
+        sx={{
           position: "absolute",
           top: 0,
           left: 0,
           width: "100%",
           height: "100%",
-          objectFit: "cover",
           zIndex: -1,
+          overflow: "hidden",
         }}
       >
-        <source src="./src/assets/videos/video1.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+        <video
+          autoPlay
+          loop
+          muted
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectFit: "cover",
+            filter: "brightness(0.9) blur(1px)",
+            transition: "all 0.5s ease-in-out",
+          }}
+        >
+          <source src="./src/assets/videos/video1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/* Gradient Overlay */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.2))",
+          }}
+        ></Box>
+      </Box>
 
       {/* Header Content */}
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "transparent",
-          boxShadow: "none",
-          padding: { xs: "0 0.5rem", sm: "0 1rem" },
+          background: `linear-gradient(135deg, ${theme.palette.background.paper}, ${theme.palette.background.default})`,
+          borderBottom: `2px solid ${theme.palette.primary.light}`, // Bottom border for separation
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Slight elevation
+          paddingX: { xs: 2, sm: 3 },
         }}
       >
         <Toolbar
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
-            flexDirection: { xs: "row", sm: "row" },
-            paddingY: { xs: 1, sm: 0 },
+            flexDirection: "row",
           }}
         >
-          {/* App Name */}
+          {/* App Logo */}
           <RouterLink
             to="/"
             style={{
@@ -54,51 +77,63 @@ const Header = ({ isAuthenticated, handleLogout }) => {
               textDecoration: "none",
             }}
           >
-            <Button
-              variant="h5"
+             <Box
+              component="img"
+              src={logo3}
+              alt="MedPass Logo"
               sx={{
-                color: theme.palette.text.contrastText,
-                backgroundColor: theme.palette.success.main,
-                borderRadius: "50px",
-                padding: { xs: "0.3rem 1rem", sm: "0.5rem 1.5rem" },
-                fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                fontWeight: 600,
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  backgroundColor: theme.palette.success.dark,
-                  transform: "scale(1.05)",
-                  boxShadow: "0px 6px 15px rgba(56, 142, 60, 0.5)",
-                },
+                height: { xs: 40, sm: 50 }, // Responsive logo size
+                marginRight: 1.5,
               }}
-            >
-              Dashboard
-            </Button>
+            />
           </RouterLink>
-          {isAuthenticated && (
-            <Button
-              onClick={handleLogout}
-              endIcon={<LogoutIcon />}
-              sx={{
-                color: theme.palette.text.contrastText,
-                backgroundColor: theme.palette.success.main,
-                borderRadius: "50px",
-                padding: { xs: "0.3rem 1rem", sm: "0.5rem 1.5rem" },
-                fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                fontWeight: 600,
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  backgroundColor: theme.palette.success.dark,
-                  transform: "scale(1.05)",
-                  boxShadow: "0px 6px 15px rgba(56, 142, 60, 0.5)",
-                },
+
+          {/* Buttons */}
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <RouterLink
+              to="/dashboard"
+              style={{
+                textDecoration: "none",
               }}
             >
-              Logout
-            </Button>
-          )}
+              <Button
+                variant="contained"
+                color="success"
+                sx={{
+                  paddingX: 3,
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  textTransform: "capitalize",
+                }}
+              >
+                Dashboard
+              </Button>
+            </RouterLink>
+            {isAuthenticated && (
+              <Button
+                onClick={handleLogout}
+                endIcon={<LogoutIcon />}
+                variant="outlined"
+                color="primary"
+                sx={{
+                  paddingX: 3,
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  textTransform: "capitalize",
+                  color: theme.palette.primary.main,
+                  borderColor: theme.palette.primary.main,
+                  "&:hover": {
+                    backgroundColor: theme.palette.action.hover,
+                  },
+                }}
+              >
+                Logout
+              </Button>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
-    </div>
+    </Box>
   );
 };
 
