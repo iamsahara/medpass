@@ -28,7 +28,7 @@ function PatientList() {
   }
 
   return (
-    <Box padding={3}>
+    <Box sx={{padding:3, height:"62vh"}}>
       {/* Header Section */}
       <Box
         display="flex"

@@ -77,9 +77,19 @@ const Header = ({ isAuthenticated, handleLogout }) => {
               alt="MedPass Logo"
               sx={{
                 height: { xs: 60, sm: 70 },
-                marginRight: 1.5,
+                cursor: "pointer",
+                animation: "spin 10s linear infinite",
+                "@keyframes spin": {
+                  "0%": { transform: "rotate(0deg)" },
+                  "100%": { transform: "rotate(360deg)" },
+                },
+                transition: "transform 0.3s ease",
+                "&:hover": {
+                  transform: "scale(1.1)",
+                },
               }}
             />
+
             <Typography
               variant="h5"
               sx={{

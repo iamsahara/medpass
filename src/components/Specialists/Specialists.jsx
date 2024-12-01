@@ -67,7 +67,7 @@ function Specialists() {
   }
 
   return (
-    <Box sx={{ padding: { xs: 2, sm: 4 }, backgroundColor: "#F9FAFB", minHeight: "100vh" }}>
+    <Box sx={{ padding: { xs: 2, sm: 4 }, backgroundColor: "#F9FAFB", minHeight: "62vh" }}>
       <Typography
         variant="h4"
         marginBottom={3}
@@ -80,8 +80,6 @@ function Specialists() {
       >
         Specialists
       </Typography>
-
-      {/* Search and Filter */}
       <Box
         display="flex"
         flexDirection={{ xs: "column", sm: "row" }}
@@ -90,7 +88,6 @@ function Specialists() {
         gap={2}
         marginBottom={3}
       >
-        {/* Search Bar */}
         <TextField
           variant="outlined"
           placeholder="Search by name"
@@ -98,6 +95,8 @@ function Specialists() {
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{
             flex: 1,
+            size:"small",
+            maxWidth:"50%",
             backgroundColor: "#FFF",
             borderRadius: 3,
             "& .MuiOutlinedInput-root": {
@@ -114,8 +113,6 @@ function Specialists() {
             },
           }}
         />
-
-        {/* Closest to Patient */}
         <Button
           onClick={() => setSortByClosest(!sortByClosest)}
           startIcon={<LocationOnIcon />}
@@ -139,8 +136,6 @@ function Specialists() {
           Closest to Patient
         </Button>
       </Box>
-
-      {/* Specialists List */}
       {filteredSpecialists.length === 0 ? (
         <Typography align="center" sx={{ color: "#9CA3AF", fontSize: "1rem" }}>
           No specialists available.

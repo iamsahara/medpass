@@ -17,20 +17,17 @@ const AppointmentButton = () => {
         textAlign: "center",
       }}
     >
-      {/* Heading */}
       <Typography
         variant="body1"
         sx={{
           fontWeight: 600,
-          fontSize: { xs: "0.8rem", sm: "1rem" }, // Compact and professional
-          color: "#A5D6A7", // Subtle green text
+          fontSize: { xs: "0.8rem", sm: "1rem" }, 
+          color: "#A5D6A7", 
           marginBottom: 0.5,
         }}
       >
         Book an Appointment
       </Typography>
-
-      {/* Compact Professional Button */}
       <Button
         variant="contained"
         onClick={() => navigate("/booking")}
@@ -41,19 +38,19 @@ const AppointmentButton = () => {
           background: `linear-gradient(135deg, #66BB6A, #43A047)`, 
           color: "#FFFFFF", 
           fontWeight: 600,
-          boxShadow: "0px 3px 6px rgba(67, 160, 71, 0.3)",
+          boxShadow: "0px 3px 6px rgba(67, 160, 71, 0.3)", 
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           transition: "transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease",
           "&:hover": {
             transform: "translateY(-2px) scale(1.05)", 
-            boxShadow: "0px 5px 10px rgba(67, 160, 71, 0.4)",
+            boxShadow: "0px 5px 10px rgba(67, 160, 71, 0.4)", 
             background: `linear-gradient(135deg, #81C784, #388E3C)`, 
           },
         }}
       >
-        <Add sx={{ fontSize: { xs: "1.5rem", sm: "1.8rem" } }} /> {/* Appropriately sized icon */}
+        <Add sx={{ fontSize: { xs: "1.5rem", sm: "1.8rem" } }} /> 
       </Button>
     </Box>
   );
