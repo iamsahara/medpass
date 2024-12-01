@@ -53,6 +53,7 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
         <TextField
           value={formData.patient?.name || "No patient selected"}
           disabled
+           size="small"
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -70,6 +71,7 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
         <TextField
           value={formData.specialist?.name || "No specialist selected"}
           disabled
+          size="small"
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -85,6 +87,7 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Typography sx={{ flex: 1 }}>Date</Typography>
         <TextField
+         size="small"
           value={formData.appointmentDate || "No date selected"}
           disabled
           InputProps={{

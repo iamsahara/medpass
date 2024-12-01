@@ -15,6 +15,7 @@ import { PatientsProvider } from "./context/PatientsContext";
 import { SpecialistsProvider } from "./context/SpecialistsContext";
 import UserProfile from "./components/UserProfile/UserProfile";
 import ProtectedRoute from "./utils/ProtectedRoute.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -96,6 +97,7 @@ export default function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Box>
+            <Footer/>
           </BrowserRouter>
         </SpecialistsProvider>
       </PatientsProvider>

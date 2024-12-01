@@ -1,162 +1,217 @@
-import { useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import React, { useState } from "react";
 import {
-  Toolbar,
+  Box,
   Typography,
+  Grid,
+  Button,
   Drawer,
   List,
   ListItem,
-  ListItemText,
   ListItemButton,
-  Box,
-  Grid,
+  ListItemText,
   IconButton,
-  Button,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
-  Notifications,
   Person,
   People,
-  Add,
   LocalHospital,
+  Notifications,
   ManageHistory,
 } from "@mui/icons-material";
-import StatsCard from "../../components/StatsCard/StatsCard.jsx"
+import { NavLink } from "react-router-dom";
+import StatsCard from "../../components/StatsCard/StatsCard.jsx";
 import AppointmentButton from "../../components/AppointmentButton/AppointmentButton.jsx";
 
 function DashboardPage() {
-  const navigate = useNavigate();
   const doctorName = "Green";
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false); // State to manage mobile drawer
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   const cardsData = [
-    { label: "Approved", value: 15, icon: <LocalHospital />, gradient: "#4A90E2, #357ABD" },
-    { label: "New Patients", value: 24, icon: <Person />, gradient: "#50B8A1, #3A8F7D" },
-    { label: "Pending", value: 7, icon: <Notifications />, gradient: "#9B51E0, #6D38B0" },
-    { label: "Completed", value: 18, icon: <People />, gradient: "#F2994A, #D87E2B" },
-    { label: "Appointments Today", value: 12, icon: <LocalHospital />, gradient: "#56CCF2, #2F80ED" },
-    { label: "Canceled", value: 3, icon: <Notifications />, gradient: "#EB5757, #D32F2F" },
+    { label: "Approved", value: 15, icon: <LocalHospital fontSize="large" />, gradient: "linear-gradient(90deg, #4A90E2, #357ABD)" },
+    { label: "New Patients", value: 2, icon: <Person fontSize="large" />, gradient: "linear-gradient(90deg, #50B8A1, #3A8F7D)" },
+    { label: "Pending", value: 1, icon: <Notifications fontSize="large" />, gradient: "linear-gradient(90deg, #9B51E0, #6D38B0)" },
+    { label: "Completed", value: 15, icon: <People fontSize="large" />, gradient: "linear-gradient(90deg, #F2994A, #D87E2B)" },
+    { label: "Appointments Today", value: 3, icon: <LocalHospital fontSize="large" />, gradient: "linear-gradient(90deg, #56CCF2, #2F80ED)" },
+    { label: "Canceled", value: 1, icon: <Notifications fontSize="large" />, gradient: "linear-gradient(90deg, #EB5757, #D32F2F)" },
   ];
 
   const menuItems = [
-    { text: "My Profile", icon: <Person />, path: "/profile" },
-    { text: "Patients", icon: <People />, path: "/patients" },
-    { text: "Specialists", icon: <LocalHospital />, path: "/specialists" },
-    { text: "Notifications", icon: <Notifications />, path: "/notifications" },
-    { text: "Manage Referrals", icon: <ManageHistory />, path: "/referrals" },
+    { text: "Profile", icon: <Person fontSize="small" />, path: "/profile" },
+    { text: "Patients", icon: <People fontSize="small" />, path: "/patients" },
+    { text: "Specialists", icon: <LocalHospital fontSize="small" />, path: "/specialists" },
+    { text: "Notifications", icon: <Notifications fontSize="small" />, path: "/notifications" },
+    { text: "Referrals", icon: <ManageHistory fontSize="small" />, path: "/referrals" },
   ];
 
+  const drawerContent = (
+    <Box sx={{ width: 250, padding: 2, backgroundColor: "#1E293B", height: "100%" }}>
+      <Typography variant="h6" sx={{ color: "#FFF", marginBottom: 2 }}>
+        Navigation
+      </Typography>
+      <List>
+        {menuItems.map((item) => (
+          <ListItem key={item.text} disablePadding>
+            <NavLink
+              to={item.path}
+              style={({ isActive }) => ({
+                textDecoration: "none",
+                color: isActive ? "#22C55E" : "#FFF",
+                width: "100%",
+              })}
+            >
+              <ListItemButton sx={{ borderRadius: 2, marginBottom: 1 }}>
+                {item.icon}
+                <ListItemText
+                  primary={item.text}
+                  sx={{ marginLeft: "10px", fontWeight: 500 }}
+                />
+              </ListItemButton>
+            </NavLink>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      {/* Sidebar */}
-      <Drawer
-        variant="temporary" // Full-screen on mobile
-        open={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
+    <Box sx={{ minHeight: "100vh", backgroundColor: "#0F172A", position: "relative", overflow: "hidden", marginTop: "-10vh" }}>
+      {/* AppBar for Mobile */}
+      <Box
         sx={{
-          "& .MuiDrawer-paper": {
-            width: { xs: "100%", sm: 240 }, // Full-width on mobile, fixed on tablet/desktop
-            backgroundColor: "action.hover",
-            color: "#364ABF",
-            boxSizing: "border-box",
-          },
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          backgroundColor: "rgba(30, 41, 59, 0.8)",
+          paddingY: 2,
+          borderRadius: 2,
+          marginBottom: 3,
+          paddingX: 3,
+          backdropFilter: "blur(10px)",
         }}
       >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6">Menu</Typography>
-          <IconButton onClick={() => setIsSidebarOpen(false)}>
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-        <List>
-          {menuItems.map((item) => (
-            <ListItem key={item.text} disablePadding>
-              <NavLink
-                to={item.path}
-                style={({ isActive }) => ({
-                  textDecoration: "none",
-                  color: isActive ? "#FF6E6E" : "inherit",
-                  width: "100%",
-                })}
-              >
-                <ListItemButton>
-                  {item.icon}
-                  <ListItemText
-                    primary={item.text}
-                    sx={{ marginLeft: "10px", fontWeight: 500 }}
-                  />
-                </ListItemButton>
-              </NavLink>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-
-      {/* Main Content */}
-      <Box sx={{ flexGrow: 1, padding: 2 }}>
-        {/* Header */}
+        <IconButton
+          onClick={handleDrawerToggle}
+          sx={{ display: { sm: "none" }, color: "#FFF" }}
+        >
+          <MenuIcon />
+        </IconButton>
         <Box
           sx={{
-            backgroundColor: "background.paper",
-            padding: 2,
-            borderRadius: 2,
-            marginBottom: 4,
-            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            alignItems: "center",
-            flexDirection: { xs: "column", sm: "row" },
+            display: { xs: "none", sm: "flex" },
             gap: 2,
           }}
         >
-          <IconButton
-            onClick={() => setIsSidebarOpen(true)} // Open sidebar
-            sx={{
-              backgroundColor: "action.hover",
-              borderRadius: "50%",
-              padding: 1,
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {menuItems.map((item) => (
+            <NavLink
+              key={item.text}
+              to={item.path}
+              style={({ isActive }) => ({
+                textDecoration: "none",
+                color: isActive ? "#22C55E" : "#FFF",
+              })}
+            >
+              <Button
+                startIcon={item.icon}
+                sx={{
+                  textTransform: "capitalize",
+                  color: "inherit",
+                  paddingX: 3,
+                  "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
+                }}
+              >
+                {item.text}
+              </Button>
+            </NavLink>
+          ))}
+        </Box>
+      </Box>
+
+      {/* Drawer for Mobile */}
+      <Drawer
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true, // Improves performance on mobile
+        }}
+        sx={{
+          display: { xs: "block", sm: "none" },
+          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 250 },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+
+      <Box
+        sx={{
+          background: "linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(47, 58, 80, 0.9))",
+          padding: { xs: 2, sm: 4 },
+          borderRadius: "12px",
+          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+          color: "#FFF",
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: { xs: 2, sm: 4 },
+          marginBottom: 3,
+        }}
+      >
+        {/* Welcome Text Section */}
+        <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
           <Typography
-            variant="h6"
+            variant="h4"
             sx={{
-              fontWeight: 500,
-              textAlign: { xs: "center", sm: "left" },
-              flexGrow: 1,
+              fontWeight: 700,
+              color: "#FFF",
+              fontSize: { xs: "1.5rem", sm: "2rem" },
+              lineHeight: 1.2,
             }}
           >
             Welcome, Dr. {doctorName}!
           </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              marginTop: 1,
+              color: "#D1D5DB",
+              fontSize: { xs: "0.85rem", sm: "1rem" },
+              lineHeight: 1.5,
+            }}
+          >
+            Here's your daily dashboard overview.
+          </Typography>
         </Box>
-        <Box sx={{ padding: 1 }}>
-      <Grid
-        container
-        spacing={1}
-        justifyContent="center"
-        sx={{
-          paddingX: { xs: 1, sm: 2 },
-          maxWidth: "1280px",
-          margin: "0 auto",
-        }}
-      >
-        {cardsData.map((card, index) => (
-          <Grid item xs={12} sm={4} md={2} key={index}>
-            <StatsCard
-              label={card.label}
-              value={card.value}
-              icon={card.icon}
-              gradient={card.gradient}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
 
-    <AppointmentButton />
-
+        {/* Appointment Button */}
+        <Box>
+          <AppointmentButton />
+        </Box>
       </Box>
+      {/* Main Content */}
+      <Grid container spacing={3} sx={{ paddingX: { xs: 2, sm: 8 } }}>
+        {/* Stats Section */}
+        <Grid item xs={12}>
+          <Box sx={{ borderRadius: 2, padding: 3, marginBottom: 4, color: "#FFF" }}>
+            <Grid container spacing={3}>
+              {cardsData.map((card, index) => (
+                <Grid item xs={6} sm={4} md={2} key={index}>
+                  <StatsCard
+                    label={card.label}
+                    value={card.value}
+                    icon={card.icon}
+                    gradient={card.gradient}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 }

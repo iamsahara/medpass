@@ -106,20 +106,25 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
       <Box  sx={{
       display: "flex",
       gap: 2,
-      marginBottom: 3,
+      marginBottom: 2,
       alignItems: "center",
       flexWrap: "wrap", // Allows responsive wrapping for smaller screens
     }}>
+                
         <TextField
           label="Search by Name"
+           placeholder="Enter specialist name..."
           value={searchCriteria}
           onChange={(e) => handleSearchChange(e.target.value)}
+          variant="outlined"
           fullWidth
+            size="small"
           sx={{
             backgroundColor: "white", // Subtle contrast for input field
-            borderRadius: 2, // Rounded corners
-            boxShadow: 1, // Slight shadow for depth
+            borderRadius: 3, // Rounded corners
+            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)", // Slight shadow for depth
             "& .MuiOutlinedInput-root": {
+              borderRadius: 3,
               "& fieldset": {
                 borderColor: "secondary.light", // Custom border color
               },
@@ -137,9 +142,10 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
           onChange={(e) => handleSortChange(e.target.value)}
           displayEmpty
           fullWidth
+          size="small"
           sx={{
-            backgroundColor: "white",
-            borderRadius: 2,
+            backgroundColor: "secondary.light",
+            borderRadius: 1,
             boxShadow: 1,
             "& .MuiOutlinedInput-notchedOutline": {
               borderColor: "secondary.light",

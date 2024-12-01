@@ -13,52 +13,47 @@ const AppointmentButton = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: 1.5,
-        marginTop: 3,
-        padding: 2,
-        borderRadius: 1.5,
-        background: `linear-gradient(135deg, rgba(230, 230, 255, 0.5), rgba(200, 255, 250, 0.5))`, // Light and techy gradient
-        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.05)", // Light container shadow
+        gap: 1,
         textAlign: "center",
       }}
     >
       {/* Heading */}
       <Typography
-        variant="body2"
+        variant="body1"
         sx={{
-          fontWeight: 700,
-          fontSize: { xs: "0.9rem", sm: "1rem" },
-          color: "text.primary",
+          fontWeight: 600,
+          fontSize: { xs: "0.8rem", sm: "1rem" }, // Compact and professional
+          color: "#A5D6A7", // Subtle green text
+          marginBottom: 0.5,
         }}
       >
-        Ready to Book?
+        Book an Appointment
       </Typography>
 
-      {/* Button */}
+      {/* Compact Professional Button */}
       <Button
         variant="contained"
-        size="small"
-        startIcon={<Add />}
         onClick={() => navigate("/booking")}
         sx={{
-          borderRadius: "24px",
-          paddingX: 2,
-          paddingY: 0.8,
+          width: { xs: 50, sm: 60 }, // Compact round size
+          height: { xs: 50, sm: 60 },
+          borderRadius: "50%", // Fully round button
+          background: `linear-gradient(135deg, #66BB6A, #43A047)`, // Professional green gradient
+          color: "#FFFFFF", // White text for contrast
           fontWeight: 600,
-          fontSize: { xs: "0.75rem", sm: "0.85rem" },
-          textTransform: "capitalize",
-          background: `linear-gradient(135deg, #D6E4FF, #A3D8F4)`, // Lighter, modern gradient
-          color: "#2D3436", // Dark text for contrast
-          boxShadow: "0px 3px 6px rgba(163, 216, 244, 0.4)", // Light shadow
+          boxShadow: "0px 3px 6px rgba(67, 160, 71, 0.3)", // Clean shadow
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           transition: "transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease",
           "&:hover": {
-            transform: "translateY(-2px)",
-            boxShadow: "0px 6px 12px rgba(163, 216, 244, 0.6)", // Enhanced shadow on hover
-            background: `linear-gradient(145deg, #C0E0FF, #92CDEB)`, // Slightly darker hover gradient
+            transform: "translateY(-2px) scale(1.05)", // Professional hover effect
+            boxShadow: "0px 5px 10px rgba(67, 160, 71, 0.4)", // Slightly enhanced hover shadow
+            background: `linear-gradient(135deg, #81C784, #388E3C)`, // Slightly brighter hover gradient
           },
         }}
       >
-        Book Now
+        <Add sx={{ fontSize: { xs: "1.5rem", sm: "1.8rem" } }} /> {/* Appropriately sized icon */}
       </Button>
     </Box>
   );

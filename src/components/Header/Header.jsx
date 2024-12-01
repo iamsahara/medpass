@@ -3,13 +3,13 @@ import { AppBar, Toolbar, Button, Box, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useTheme } from "@mui/material/styles";
-import logo3 from "../../assets/Image/logo3.png";
+import medpass from "../../assets/Image/medpass.png";
 
 const Header = ({ isAuthenticated, handleLogout }) => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ position: "relative", height: "30vh", overflow: "hidden" }}>
+    <Box sx={{ position: "relative", height: "30vh", overflow: "hidden",backgroundColor: "#1E293B" }}>
       {/* Background Video */}
       <Box
         sx={{
@@ -18,7 +18,7 @@ const Header = ({ isAuthenticated, handleLogout }) => {
           left: 0,
           width: "100%",
           height: "100%",
-          zIndex: -1,
+          zIndex: 0,
           overflow: "hidden",
         }}
       >
@@ -77,15 +77,24 @@ const Header = ({ isAuthenticated, handleLogout }) => {
               textDecoration: "none",
             }}
           >
-             <Box
+         <Box
               component="img"
-              src={logo3}
+              src={medpass}
               alt="MedPass Logo"
               sx={{
-                height: { xs: 40, sm: 50 }, // Responsive logo size
+                height: { xs: 60, sm: 70 }, // Responsive logo size
                 marginRight: 1.5,
               }}
             />
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 700,
+                color: "#FFF",
+              }}
+            >
+              MedPass
+            </Typography>
           </RouterLink>
 
           {/* Buttons */}
@@ -110,21 +119,21 @@ const Header = ({ isAuthenticated, handleLogout }) => {
               </Button>
             </RouterLink>
             {isAuthenticated && (
-              <Button
-                onClick={handleLogout}
-                endIcon={<LogoutIcon />}
-                variant="outlined"
-                color="primary"
-                sx={{
-                  paddingX: 3,
-                  fontSize: "0.85rem",
-                  fontWeight: 600,
-                  textTransform: "capitalize",
-                  color: theme.palette.primary.main,
-                  borderColor: theme.palette.primary.main,
-                  "&:hover": {
-                    backgroundColor: theme.palette.action.hover,
-                  },
+            
+                  <Button
+                  onClick={handleLogout}
+                  endIcon={<LogoutIcon />}
+                  variant="contained"
+                  sx={{
+                    paddingX: 3,
+                    fontSize: "0.85rem",
+                    fontWeight: 600,
+                    textTransform: "capitalize",
+                    color: "#FFF",
+                    backgroundColor: theme.palette.error.main,
+                    "&:hover": {
+                      backgroundColor: theme.palette.error.dark,
+                    },
                 }}
               >
                 Logout

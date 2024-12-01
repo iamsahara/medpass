@@ -74,7 +74,7 @@ function BookingStep1({ onNext, onBack, onDataChange }) {
   }
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box sx={{ padding: 1 }}>
       <Typography variant="h5" gutterBottom>
         Step 1: Select a Patient
       </Typography>
@@ -84,24 +84,35 @@ function BookingStep1({ onNext, onBack, onDataChange }) {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
-          gap: 2,
-          marginBottom: 3,
+          gap: 4,
+          marginBottom: 1,
           alignItems: "center", // Center content vertically
         }}
       >
         <TextField
+        
           label="Search by Name"
           value={searchCriteria.name}
           onChange={(e) => handleSearchChange("name", e.target.value)}
           variant="outlined"
           placeholder="Enter patient name..."
           fullWidth
+          size="small"
           sx={{
-            backgroundColor: "background.paper",
-            borderRadius: 2,
-            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)",
+            backgroundColor: "white", // Subtle contrast for input field
+            borderRadius: 3, // Rounded corners
+            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)", 
             "& .MuiOutlinedInput-root": {
-              borderRadius: 2,
+              borderRadius: 3,
+              "& fieldset": {
+                borderColor: "secondary.light", // Custom border color
+              },
+              "&:hover fieldset": {
+                borderColor: "secondary.main", // Darker border on hover
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "secondary.main", // Primary color when focused
+              },
             },
           }}
         />
@@ -112,12 +123,22 @@ function BookingStep1({ onNext, onBack, onDataChange }) {
           variant="outlined"
           placeholder="Enter insurance number..."
           fullWidth
+          size="small"
           sx={{
-            backgroundColor: "background.paper",
-            borderRadius: 2,
-            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)",
+            backgroundColor: "white", // Subtle contrast for input field
+            borderRadius: 3, // Rounded corners
+            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)", 
             "& .MuiOutlinedInput-root": {
-              borderRadius: 2,
+              borderRadius: 3,
+              "& fieldset": {
+                borderColor: "secondary.light", // Custom border color
+              },
+              "&:hover fieldset": {
+                borderColor: "secondary.main", // Darker border on hover
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "secondary.main", // Primary color when focused
+              },
             },
           }}
         />
@@ -126,7 +147,7 @@ function BookingStep1({ onNext, onBack, onDataChange }) {
       {/* Patient List */}
       <List
         sx={{
-          maxHeight: "55vh",
+          maxHeight: "50vh",
           overflowY: "auto",
           backgroundColor: "background.default",
           borderRadius: 2,

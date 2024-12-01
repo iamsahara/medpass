@@ -1,86 +1,91 @@
 import React from "react";
-import { Card, Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 const StatsCard = ({ label, value, icon }) => {
   const theme = useTheme();
 
+  // Dynamic Text Color based on label
+  const getTextColor = () => {
+    switch (label.toLowerCase()) {
+      case "approved":
+        return theme.palette.success.main; // Green for approved
+      case "canceled":
+        return theme.palette.error.main; // Red for canceled
+      case "pending":
+        return theme.palette.warning.main; // Yellow for pending
+      default:
+        return theme.palette.text.primary; // Default for others
+    }
+  };
+
   return (
-    <Card
+    <Box
       sx={{
-        background: `linear-gradient(135deg, ${theme.palette.primary.light}, #E3F2FD)`,
+        background: `linear-gradient(135deg, ${theme.palette.primary.light}50, ${theme.palette.background.default}50)`, // Subtle gradient
         color: theme.palette.text.primary,
-        borderRadius: "12px", // Slightly smaller rounding for compact design
-        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.05)",
-        height: { xs: 50, sm: 60 }, // Reduced height to half
-        width: "100%",
+        borderRadius: "4px",
+        padding: { xs: 1.5, sm: 2 },
+        height: "auto",
         display: "flex",
+        flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center",
-        padding: 0,
-        overflow: "hidden",
-        position: "relative",
-        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        justifyContent: "space-between",
+        gap: { xs: 1, sm: 2 },
+        transition: "transform 0.3s ease, background-color 0.3s ease", // Smooth transitions
         "&:hover": {
-          transform: "translateY(-2px) scale(1.02)", // Subtle hover lift
-          boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.1)",
+          transform: "translateY(-2px)", // Slight hover lift
+          backgroundColor: theme.palette.action.hover,
         },
       }}
     >
+      {/* Icon with Hover Animation */}
+      <Box
+        sx={{
+          fontSize: { xs: 28, sm: 36, md: 40 },
+          color: theme.palette.primary.main,
+          flexShrink: 0,
+          transition: "transform 0.3s ease",
+          "&:hover": {
+            transform: "scale(1.2) rotate(15deg)", // Scale and rotate icon on hover
+          },
+        }}
+      >
+        {icon}
+      </Box>
+
+      {/* Text Content */}
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "90%",
-          height: "90%",
-          gap: 0.5, // Reduced gap for smaller content spacing
+          flexDirection: "column",
+          alignItems: "flex-end",
+          textAlign: "right",
+          flexGrow: 1,
         }}
       >
-        {/* Icon */}
-        <Box
+        <Typography
+          variant="body2"
           sx={{
-            fontSize: { xs: 20, sm: 24 }, // Smaller icon size
-            color: theme.palette.secondary.main,
+            fontWeight: 600,
+            fontSize: { xs: "0.7rem", sm: "0.85rem", md: "0.9rem" },
+            color: theme.palette.text.secondary,
+            lineHeight: 1.2,
           }}
         >
-          {icon}
-        </Box>
-
-        {/* Text Content */}
-        <Box
+          {label}
+        </Typography>
+        <Typography
+          variant="h5"
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            justifyContent: "center",
-            gap: 0.3, // Reduced vertical spacing
-            width: "100%",
+            fontWeight: 700,
+            fontSize: { xs: "1rem", sm: "1.2rem", md: "1.4rem" },
+            color: getTextColor(), // Dynamic color for the value
           }}
         >
-          <Typography
-            variant="body2"
-            sx={{
-              fontWeight: 600,
-              fontSize: { xs: "0.6rem", sm: "0.75rem" }, // Smaller font for labels
-              color: theme.palette.text.secondary,
-            }}
-          >
-            {label}
-          </Typography>
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 700,
-              fontSize: { xs: "0.9rem", sm: "1.1rem" }, // Proportionally smaller value size
-              color: theme.palette.text.primary,
-            }}
-          >
-            {value}
-          </Typography>
-        </Box>
+          {value}
+        </Typography>
       </Box>
-    </Card>
+    </Box>
   );
 };
 
