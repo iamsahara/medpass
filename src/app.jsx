@@ -1,43 +1,105 @@
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline, Box } from "@mui/material";
+import { PatientsProvider } from "./context/PatientsContext";
+import { SpecialistsProvider } from "./context/SpecialistsContext";
 import Header from "./components/Header/Header";
 import NotFound from "./pages/NotFound/NotFound";
-
-
-const theme = createTheme({
-  palette: {
-    primary: { main: '#00C853', light: '#B9F6CA', dark: '#009624' },
-    secondary: { main: '#00ACC1', light: '#B2EBF2', dark: '#007C91' },
-    background: { default: '#F8FBF9', paper: '#FFFFFF' },
-    text: { primary: '#1B1B1B', secondary: '#4A4A4A' },
-  },
-  typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
-    h6: { color: '#00C853', fontWeight: 'bold' },
-  },
-});
+import Login from "./pages/Login/Login";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Booking from "./pages/Booking/Booking";
+import Patients from "./components/Patients/Patients";
+import Specialists from "./components/Specialists/Specialists";
+import HomePage from "./pages/HomePage/HomePage";
+import theme from "./styles/theme";
+import UserProfile from "./components/UserProfile/UserProfile";
+import ProtectedRoute from "./utils/ProtectedRoute.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    setIsAuthenticated(true);
+  }
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    console.log("Logged in");
+  };
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     setIsAuthenticated(false);
     console.log("Logged out");
   };
 
+  console.log(isAuthenticated)
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <CssBaseline />
-        <Header isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
-        <Box component="main" sx={{ minHeight: "80vh", mt: 8 }}>
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Box>
-      </BrowserRouter>
+      <PatientsProvider>
+        <SpecialistsProvider>
+          <BrowserRouter>
+            <CssBaseline />
+            {isAuthenticated && (
+              <Header
+                isAuthenticated={isAuthenticated}
+                handleLogout={handleLogout}
+              />
+            )}
+            <Box component="main" >
+              <Routes>
+                <Route path="/" element={!isAuthenticated ? <HomePage /> : <Navigate to='/dashboard' />} />
+                <Route path="/login" element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to='/dashboard' />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/patients"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <Patients />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/specialists"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <Specialists />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/booking"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <Booking />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute isAuthenticated={isAuthenticated}>
+                      <UserProfile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Box>
+            <Footer />
+          </BrowserRouter>
+        </SpecialistsProvider>
+      </PatientsProvider>
     </ThemeProvider>
   );
 }
