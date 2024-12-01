@@ -2,7 +2,7 @@ import { AppBar, Toolbar, Button, Box, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useTheme } from "@mui/material/styles";
-import medpass from "../../assets/Image/medpass.png";
+import medpassLogo from "../../assets/logo/medpassLogo.png";
 
 const Header = ({ isAuthenticated, handleLogout }) => {
   const theme = useTheme();
@@ -73,7 +73,7 @@ const Header = ({ isAuthenticated, handleLogout }) => {
           >
             <Box
               component="img"
-              src={medpass}
+              src={medpassLogo}
               alt="MedPass Logo"
               sx={{
                 height: { xs: 60, sm: 70 },

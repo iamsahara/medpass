@@ -11,7 +11,7 @@ import {
   Button,
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
-import profileImage from "../../assets/Image/profileImage.png";
+import profileImage from "../../assets/image/profileImage.png";
 
 function DoctorProfile() {
   const navigate = useNavigate();
@@ -127,13 +127,13 @@ function DoctorProfile() {
           </Box>
           <Divider sx={{ marginY: 3 }} />
           <Box sx={{ textAlign: "center", marginTop: 3 }}>
-            <Button  variant="contained"
+            <Button variant="contained"
               color="primary"
-              sx={{ marginRight: 2 }}   onClick={() => {
+              sx={{ marginRight: 2 }} onClick={() => {
                 navigate("/dashboard");
               }}>
-          Dashboard
-        </Button>
+              Dashboard
+            </Button>
           </Box>
         </CardContent>
       </Card>
