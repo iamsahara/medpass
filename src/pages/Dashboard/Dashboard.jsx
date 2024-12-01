@@ -25,7 +25,7 @@ import AppointmentButton from "../../components/AppointmentButton/AppointmentBut
 
 function DashboardPage() {
   const doctorName = "Green";
-  const [mobileOpen, setMobileOpen] = useState(false); // State to manage mobile drawer
+  const [mobileOpen, setMobileOpen] = useState(false); 
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -136,7 +136,7 @@ function DashboardPage() {
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true, // Improves performance on mobile
+          keepMounted: true, 
         }}
         sx={{
           display: { xs: "block", sm: "none" },

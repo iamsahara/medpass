@@ -88,12 +88,12 @@ function Specialists() {
         <ButtonGroup
           sx={{
             borderRadius: "12px",
-            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", // Slight elevation
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
             "& .MuiButton-root": {
               padding: "0.5rem 1.5rem",
               textTransform: "capitalize",
               fontWeight: 600,
-              borderRadius: "12px !important", // Rounded corners
+              borderRadius: "12px !important", 
               fontSize: "0.9rem",
               transition: "all 0.3s ease",
             },
@@ -107,7 +107,7 @@ function Specialists() {
               "&:hover": {
                 backgroundColor: !sortByClosest
                   ? "primary.dark"
-                  : "rgba(108, 92, 231, 0.1)", // Subtle hover
+                  : "rgba(108, 92, 231, 0.1)", 
               },
             }}
           >
@@ -121,7 +121,7 @@ function Specialists() {
               "&:hover": {
                 backgroundColor: sortByClosest
                   ? "primary.dark"
-                  : "rgba(108, 92, 231, 0.1)", // Subtle hover
+                  : "rgba(108, 92, 231, 0.1)", 
               },
             }}
           >

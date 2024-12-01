@@ -11,7 +11,7 @@ import PatientCard from "../PatientCard/PatientCard";
 import { PatientsContext } from "../../context/PatientsContext";
 import { useNavigate } from "react-router-dom";
 
-function BookingStep1({ onNext, onBack, onDataChange }) {
+function BookingStep1({ onNext, onDataChange }) {
   const { fetchPatients, patients, loading, error } = useContext(PatientsContext);
   const [searchCriteria, setSearchCriteria] = useState({ name: "", insurance: "" });
   const [filteredPatients, setFilteredPatients] = useState([]);
@@ -86,7 +86,7 @@ function BookingStep1({ onNext, onBack, onDataChange }) {
           flexDirection: { xs: "column", sm: "row" },
           gap: 4,
           marginBottom: 1,
-          alignItems: "center", // Center content vertically
+          alignItems: "center", 
         }}
       >
         <TextField
@@ -99,19 +99,19 @@ function BookingStep1({ onNext, onBack, onDataChange }) {
           fullWidth
           size="small"
           sx={{
-            backgroundColor: "white", // Subtle contrast for input field
-            borderRadius: 3, // Rounded corners
+            backgroundColor: "white", 
+            borderRadius: 3, 
             boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)", 
             "& .MuiOutlinedInput-root": {
               borderRadius: 3,
               "& fieldset": {
-                borderColor: "secondary.light", // Custom border color
+                borderColor: "secondary.light", 
               },
               "&:hover fieldset": {
-                borderColor: "secondary.main", // Darker border on hover
+                borderColor: "secondary.main", 
               },
               "&.Mui-focused fieldset": {
-                borderColor: "secondary.main", // Primary color when focused
+                borderColor: "secondary.main", 
               },
             },
           }}
@@ -125,19 +125,19 @@ function BookingStep1({ onNext, onBack, onDataChange }) {
           fullWidth
           size="small"
           sx={{
-            backgroundColor: "white", // Subtle contrast for input field
-            borderRadius: 3, // Rounded corners
+            backgroundColor: "white", 
+            borderRadius: 3, 
             boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)", 
             "& .MuiOutlinedInput-root": {
               borderRadius: 3,
               "& fieldset": {
-                borderColor: "secondary.light", // Custom border color
+                borderColor: "secondary.light", 
               },
               "&:hover fieldset": {
-                borderColor: "secondary.main", // Darker border on hover
+                borderColor: "secondary.main", 
               },
               "&.Mui-focused fieldset": {
-                borderColor: "secondary.main", // Primary color when focused
+                borderColor: "secondary.main", 
               },
             },
           }}
@@ -181,7 +181,7 @@ function BookingStep1({ onNext, onBack, onDataChange }) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          marginTop: 2,
+          marginTop: 3, marginBottom:3 
         }}
       >
         <Button

@@ -56,8 +56,8 @@ const Header = ({ isAuthenticated, handleLogout }) => {
         position="static"
         sx={{
           background: `linear-gradient(135deg, ${theme.palette.background.paper}, ${theme.palette.background.default})`,
-          borderBottom: `2px solid ${theme.palette.primary.light}`, // Bottom border for separation
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Slight elevation
+          borderBottom: `2px solid ${theme.palette.primary.light}`, 
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", 
           paddingX: { xs: 2, sm: 3 },
         }}
       >
@@ -82,7 +82,7 @@ const Header = ({ isAuthenticated, handleLogout }) => {
               src={medpass}
               alt="MedPass Logo"
               sx={{
-                height: { xs: 60, sm: 70 }, // Responsive logo size
+                height: { xs: 60, sm: 70 }, 
                 marginRight: 1.5,
               }}
             />

@@ -4,12 +4,12 @@ import { Box, Typography, Link } from "@mui/material";
 const Footer = () => {
   return (
     <Box
-      component="footer"
       sx={{
         backgroundColor: "#1E293B",
         color: "#9CA3AF",
         textAlign: "center",
         paddingY: 2,
+        position:"static"
       }}
     >
       {/* Top Line: Links */}

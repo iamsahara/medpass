@@ -35,21 +35,21 @@ const AppointmentButton = () => {
         variant="contained"
         onClick={() => navigate("/booking")}
         sx={{
-          width: { xs: 50, sm: 60 }, // Compact round size
-          height: { xs: 50, sm: 60 },
-          borderRadius: "50%", // Fully round button
-          background: `linear-gradient(135deg, #66BB6A, #43A047)`, // Professional green gradient
-          color: "#FFFFFF", // White text for contrast
+          width: { xs: 50, sm: 60 }, 
+          aspectRatio: "1/1",
+          borderRadius: "50%", 
+          background: `linear-gradient(135deg, #66BB6A, #43A047)`, 
+          color: "#FFFFFF", 
           fontWeight: 600,
-          boxShadow: "0px 3px 6px rgba(67, 160, 71, 0.3)", // Clean shadow
+          boxShadow: "0px 3px 6px rgba(67, 160, 71, 0.3)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           transition: "transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease",
           "&:hover": {
-            transform: "translateY(-2px) scale(1.05)", // Professional hover effect
-            boxShadow: "0px 5px 10px rgba(67, 160, 71, 0.4)", // Slightly enhanced hover shadow
-            background: `linear-gradient(135deg, #81C784, #388E3C)`, // Slightly brighter hover gradient
+            transform: "translateY(-2px) scale(1.05)", 
+            boxShadow: "0px 5px 10px rgba(67, 160, 71, 0.4)",
+            background: `linear-gradient(135deg, #81C784, #388E3C)`, 
           },
         }}
       >

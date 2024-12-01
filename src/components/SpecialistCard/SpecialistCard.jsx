@@ -18,7 +18,7 @@ function SpecialistCard({
   selectedDate,
   onSelectSpecialist,
   onSelectDate,
-  index, // Added index for unique background colors
+  index, 
 }) {
   const isSelected = selectedSpecialist?.id === specialist.id;
   const [showInfo, setShowInfo] = useState(false);
@@ -37,7 +37,7 @@ function SpecialistCard({
     if (showInfo) setShowInfo(false);
   };
 
-  // Background shades based on index
+  
   const backgroundColors = [
     theme.palette.background.default,
     theme.palette.action.hover,
@@ -200,23 +200,56 @@ function SpecialistCard({
           </Typography>
           <Divider sx={{ my: 1 }} />
           <DatePicker
-            label="Select Appointment Date"
-            value={isSelected ? selectedDate : null}
-            onChange={(date) => onSelectDate(date)}
-            shouldDisableDate={(date) =>
-              specialist.availability
-                ? !specialist.availability.includes(date.format("YYYY-MM-DD"))
-                : true
-            }
-            sx={{
-              width: "100%",
-              "& .MuiInputBase-root": {
-                fontSize: "0.85rem",
-                backgroundColor: theme.palette.background.paper,
-                borderRadius: "6px",
-              },
-            }}
-          />
+  label="Select Appointment Date"
+  value={isSelected ? selectedDate : null}
+  onChange={(date) => onSelectDate(date)}
+  shouldDisableDate={(date) =>
+    specialist.availability
+      ? !specialist.availability.includes(date.format("YYYY-MM-DD"))
+      : true
+  }
+  sx={{
+    width: "100%",
+    "& .MuiOutlinedInput-root": {
+      fontSize: "0.85rem",
+      backgroundColor: theme.palette.background.paper, 
+      borderRadius: "6px",
+      "& fieldset": {
+        borderColor: theme.palette.primary.main, 
+      },
+      "&:hover fieldset": {
+        borderColor: theme.palette.secondary.main, 
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: theme.palette.primary.dark, 
+      },
+    },
+    "& .MuiCalendarPicker-root": {
+      backgroundColor: theme.palette.background.paper, 
+      borderRadius: "8px",
+      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", 
+      padding: "10px",
+    },
+    "& .MuiPickersDay-root": {
+      fontWeight: 600, 
+      color: theme.palette.text.primary, 
+      "&:hover": {
+        backgroundColor: theme.palette.action.hover, 
+      },
+      "&.Mui-selected": {
+        backgroundColor: theme.palette.primary.main, 
+        color: "#FFF", 
+        "&:hover": {
+          backgroundColor: theme.palette.primary.dark,
+        },
+      },
+    },
+    "& .MuiPickersDay-today": {
+      border: `1px solid ${theme.palette.secondary.main}`,
+    },
+  }}
+/>
+
         </CardContent>
       </Collapse>
     </Card>

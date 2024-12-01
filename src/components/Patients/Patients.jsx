@@ -55,15 +55,15 @@ function PatientList() {
           container 
           spacing={2} 
           sx={{
-            maxWidth: "100%", // Ensures the grid container uses full width
-            margin: "0 auto", // Centers the content horizontally
+            maxWidth: "100%", 
+            margin: "0 auto", 
           }}
         >
           {patients.map((patient) => (
             <Grid 
               item 
               xs={12} 
-              sm={6} // Ensures 2 cards per row on small screens and above
+              sm={6} 
               key={patient.id}
             >
               <PatientCard

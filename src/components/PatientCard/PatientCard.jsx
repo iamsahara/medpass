@@ -19,13 +19,13 @@ function PatientCard({ patient, onSelect, isSelected }) {
   const toggleInfo = (e) => {
     e.stopPropagation();
     setShowInfo(!showInfo);
-    if (showHistory) setShowHistory(false); // Close history if it's open
+    if (showHistory) setShowHistory(false); 
   };
 
   const toggleHistory = (e) => {
     e.stopPropagation();
     setShowHistory(!showHistory);
-    if (showInfo) setShowInfo(false); // Close info if it's open
+    if (showInfo) setShowInfo(false);
   };
 
   return (
@@ -48,7 +48,7 @@ function PatientCard({ patient, onSelect, isSelected }) {
           borderColor: theme.palette.primary.light,
         },
         width: "100%",
-        height: showInfo || showHistory ? "auto" : "60px", // Dynamic height
+        height: showInfo || showHistory ? "auto" : "60px", 
         padding: "0.5rem 1rem",
         marginBottom: "0.5rem",
       }}

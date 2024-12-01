@@ -4,24 +4,24 @@ import { Box, Typography, useTheme } from "@mui/material";
 const StatsCard = ({ label, value, icon }) => {
   const theme = useTheme();
 
-  // Dynamic Text Color based on label
+  
   const getTextColor = () => {
     switch (label.toLowerCase()) {
       case "approved":
-        return theme.palette.success.main; // Green for approved
+        return theme.palette.success.main; 
       case "canceled":
-        return theme.palette.error.main; // Red for canceled
+        return theme.palette.error.main; 
       case "pending":
-        return theme.palette.warning.main; // Yellow for pending
+        return theme.palette.warning.main; 
       default:
-        return theme.palette.text.primary; // Default for others
+        return theme.palette.text.primary;
     }
   };
 
   return (
     <Box
       sx={{
-        background: `linear-gradient(135deg, ${theme.palette.primary.light}50, ${theme.palette.background.default}50)`, // Subtle gradient
+        background: `linear-gradient(135deg, ${theme.palette.primary.light}50, ${theme.palette.background.default}50)`, 
         color: theme.palette.text.primary,
         borderRadius: "4px",
         padding: { xs: 1.5, sm: 2 },
@@ -31,9 +31,9 @@ const StatsCard = ({ label, value, icon }) => {
         alignItems: "center",
         justifyContent: "space-between",
         gap: { xs: 1, sm: 2 },
-        transition: "transform 0.3s ease, background-color 0.3s ease", // Smooth transitions
+        transition: "transform 0.3s ease, background-color 0.3s ease", 
         "&:hover": {
-          transform: "translateY(-2px)", // Slight hover lift
+          transform: "translateY(-2px)", 
           backgroundColor: theme.palette.action.hover,
         },
       }}
@@ -46,7 +46,7 @@ const StatsCard = ({ label, value, icon }) => {
           flexShrink: 0,
           transition: "transform 0.3s ease",
           "&:hover": {
-            transform: "scale(1.2) rotate(15deg)", // Scale and rotate icon on hover
+            transform: "scale(1.2) rotate(15deg)", 
           },
         }}
       >
@@ -79,7 +79,7 @@ const StatsCard = ({ label, value, icon }) => {
           sx={{
             fontWeight: 700,
             fontSize: { xs: "1rem", sm: "1.2rem", md: "1.4rem" },
-            color: getTextColor(), // Dynamic color for the value
+            color: getTextColor(), 
           }}
         >
           {value}

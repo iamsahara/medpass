@@ -7,7 +7,9 @@ import {
   Select,
   MenuItem,
   List,
+
 } from "@mui/material";
+import { Map as MapIcon } from "@mui/icons-material";
 import axios from "axios";
 import SpecialistCard from "../SpecialistCard/SpecialistCard";
 import { SpecialistsContext } from "../../context/SpecialistsContext";
@@ -103,66 +105,85 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
       <Typography variant="h5" gutterBottom>
         Step 2: Select a Specialist
       </Typography>
-      <Box  sx={{
-      display: "flex",
-      gap: 2,
-      marginBottom: 2,
-      alignItems: "center",
-      flexWrap: "wrap", // Allows responsive wrapping for smaller screens
-    }}>
-                
+      <Box sx={{
+        display: "flex",
+        gap: 2,
+        marginBottom: 2,
+        alignItems: "center",
+        flexWrap: "wrap", 
+      }}>
+
         <TextField
           label="Search by Name"
-           placeholder="Enter specialist name..."
+          placeholder="Enter specialist name..."
           value={searchCriteria}
           onChange={(e) => handleSearchChange(e.target.value)}
           variant="outlined"
           fullWidth
-            size="small"
+          size="small"
           sx={{
-            backgroundColor: "white", // Subtle contrast for input field
-            borderRadius: 3, // Rounded corners
-            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)", // Slight shadow for depth
+            backgroundColor: "white", 
+            borderRadius: 3, 
+            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)", 
             "& .MuiOutlinedInput-root": {
               borderRadius: 3,
               "& fieldset": {
-                borderColor: "secondary.light", // Custom border color
+                borderColor: "secondary.light", 
               },
               "&:hover fieldset": {
-                borderColor: "secondary.main", // Darker border on hover
+                borderColor: "secondary.main", 
               },
               "&.Mui-focused fieldset": {
-                borderColor: "primary.main", // Primary color when focused
+                borderColor: "primary.main", 
               },
             },
           }}
         />
-        <Select
-          value={sortOption}
-          onChange={(e) => handleSortChange(e.target.value)}
-          displayEmpty
-          fullWidth
-          size="small"
-          sx={{
-            backgroundColor: "secondary.light",
-            borderRadius: 1,
-            boxShadow: 1,
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: "secondary.light",
-            },
-            "&:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: "secondary.main",
-            },
-            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "primary.main",
-            },
-          }}
-        >
-          <MenuItem value="" disabled>
-            Sort By
-          </MenuItem>
-          <MenuItem value="closest">Closest to Patient</MenuItem>
-        </Select>
+        <Box sx={{ display: "flex", gap: 2, marginBottom: 2 }}>
+          <Select
+            value={sortOption}
+            onChange={(e) => handleSortChange(e.target.value)}
+            displayEmpty
+            fullWidth
+            size="small"
+            sx={{
+              backgroundColor: "secondary.light",
+              borderRadius: 1,
+              boxShadow: 1,
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "secondary.light",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "secondary.main",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "primary.main",
+              },
+            }}
+          >
+            <MenuItem value="" disabled>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Typography variant="body2">Sort By</Typography>
+              </Box>
+            </MenuItem>
+            <MenuItem value="closest">
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                {/* Pin Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                  style={{ color: "#22C55E" }}
+                >
+                  <path d="M8 0a5 5 0 0 0-5 5c0 3.9 5 11 5 11s5-7.1 5-11a5 5 0 0 0-5-5zm0 7.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" />
+                </svg>
+                <Typography variant="body2">Closest to Patient</Typography>
+              </Box>
+            </MenuItem>
+          </Select>
+        </Box>
       </Box>
       <List>
         {filteredSpecialists.length > 0 ? (
@@ -180,7 +201,7 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
           <Typography variant="body2">No specialists found.</Typography>
         )}
       </List>
-      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 3, marginBottom: 3 }}>
         <Button variant="outlined" onClick={onBack}>
           Back
         </Button>
