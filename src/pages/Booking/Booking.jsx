@@ -71,7 +71,7 @@ function Booking() {
         );
       case 3:
         return (
-          <Box sx={{ textAlign: "center", marginTop: 3 }}>
+          <Box sx={{ height:"50vh", textAlign: "center", marginTop: 3 }}>
             <Typography variant="h6" color="success.main">
               Appointment Confirmed!
             </Typography>
