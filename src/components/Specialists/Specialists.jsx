@@ -5,11 +5,11 @@ import {
   Grid,
   CircularProgress,
   TextField,
-  ButtonGroup,
   Button,
 } from "@mui/material";
 import SpecialistCard from "../SpecialistCard/SpecialistCard";
 import { SpecialistsContext } from "../../context/SpecialistsContext";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 function Specialists() {
   const { specialists, fetchSpecialists, loading, error } =
@@ -40,34 +40,55 @@ function Specialists() {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <CircularProgress />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="80vh"
+        sx={{ backgroundColor: "#F9FAFB" }}
+      >
+        <CircularProgress color="primary" />
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="80vh"
+        sx={{ backgroundColor: "#F9FAFB" }}
+      >
         <Typography color="error">{error}</Typography>
       </Box>
     );
   }
 
   return (
-    <Box padding={3}>
-      <Typography variant="h4" marginBottom={3}>
+    <Box sx={{ padding: { xs: 2, sm: 4 }, backgroundColor: "#F9FAFB", minHeight: "100vh" }}>
+      <Typography
+        variant="h4"
+        marginBottom={3}
+        sx={{
+          fontSize: { xs: "1.5rem", sm: "2rem" },
+          fontWeight: 700,
+          color: "#1F2937",
+          textAlign: { xs: "center", sm: "left" },
+        }}
+      >
         Specialists
       </Typography>
 
       {/* Search and Filter */}
       <Box
         display="flex"
-        justifyContent="space-between"
+        flexDirection={{ xs: "column", sm: "row" }}
         alignItems="center"
-        flexWrap="wrap"
-        marginBottom={3}
+        justifyContent="space-between"
         gap={2}
+        marginBottom={3}
       >
         {/* Search Bar */}
         <TextField
@@ -76,67 +97,58 @@ function Specialists() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{
-            width: { xs: "100%", sm: "50%", md: "30%" },
-            borderRadius: 2,
+            flex: 1,
+            backgroundColor: "#FFF",
+            borderRadius: 3,
             "& .MuiOutlinedInput-root": {
-              borderRadius: 2,
+              borderRadius: 3,
+              "& fieldset": {
+                borderColor: "#E5E7EB",
+              },
+              "&:hover fieldset": {
+                borderColor: "#9CA3AF",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#3B82F6",
+              },
             },
           }}
         />
 
-        {/* Filter Buttons */}
-        <ButtonGroup
+        {/* Closest to Patient */}
+        <Button
+          onClick={() => setSortByClosest(!sortByClosest)}
+          startIcon={<LocationOnIcon />}
+          variant={sortByClosest ? "contained" : "outlined"}
+          color="primary"
           sx={{
-            borderRadius: "12px",
-            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            "& .MuiButton-root": {
-              padding: "0.5rem 1.5rem",
-              textTransform: "capitalize",
-              fontWeight: 600,
-              borderRadius: "12px !important", 
-              fontSize: "0.9rem",
-              transition: "all 0.3s ease",
+            padding: "0.75rem 1.5rem",
+            fontWeight: 600,
+            textTransform: "capitalize",
+            fontSize: "0.9rem",
+            borderRadius: 3,
+            boxShadow: sortByClosest ? "0px 4px 10px rgba(59, 130, 246, 0.4)" : "none",
+            backgroundColor: sortByClosest ? "#3B82F6" : "#FFF",
+            color: sortByClosest ? "#FFF" : "#1F2937",
+            "&:hover": {
+              backgroundColor: sortByClosest ? "#2563EB" : "#F3F4F6",
+              boxShadow: "0px 4px 12px rgba(59, 130, 246, 0.2)",
             },
           }}
         >
-          <Button
-            onClick={() => setSortByClosest(false)}
-            variant={!sortByClosest ? "contained" : "outlined"}
-            color="primary"
-            sx={{
-              "&:hover": {
-                backgroundColor: !sortByClosest
-                  ? "primary.dark"
-                  : "rgba(108, 92, 231, 0.1)", 
-              },
-            }}
-          >
-            Search by Name
-          </Button>
-          <Button
-            onClick={() => setSortByClosest(true)}
-            variant={sortByClosest ? "contained" : "outlined"}
-            color="primary"
-            sx={{
-              "&:hover": {
-                backgroundColor: sortByClosest
-                  ? "primary.dark"
-                  : "rgba(108, 92, 231, 0.1)", 
-              },
-            }}
-          >
-            Closest to Patient
-          </Button>
-        </ButtonGroup>
+          Closest to Patient
+        </Button>
       </Box>
 
       {/* Specialists List */}
       {filteredSpecialists.length === 0 ? (
-        <Typography align="center">No specialists available.</Typography>
+        <Typography align="center" sx={{ color: "#9CA3AF", fontSize: "1rem" }}>
+          No specialists available.
+        </Typography>
       ) : (
         <Grid container spacing={3}>
           {filteredSpecialists.map((specialist) => (
-            <Grid item xs={12} sm={6} md={4} key={specialist.id}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={specialist.id}>
               <SpecialistCard
                 specialist={specialist}
                 selectedSpecialist={selectedSpecialist}

@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import DashboardHeader from "../../components/DashboardHeader/DashboardHeader.jsx";
+import StatsCard from "../../components/StatsCard/StatsCard.jsx";
 import {
   Box,
   Typography,
@@ -19,18 +22,13 @@ import {
   Notifications,
   ManageHistory,
 } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
-import StatsCard from "../../components/StatsCard/StatsCard.jsx";
-import AppointmentButton from "../../components/AppointmentButton/AppointmentButton.jsx";
+
 
 function DashboardPage() {
-  const doctorName = "Green";
-  const [mobileOpen, setMobileOpen] = useState(false); 
-
+  const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
   const cardsData = [
     { label: "Approved", value: 15, icon: <LocalHospital fontSize="large" />, gradient: "linear-gradient(90deg, #4A90E2, #357ABD)" },
     { label: "New Patients", value: 2, icon: <Person fontSize="large" />, gradient: "linear-gradient(90deg, #50B8A1, #3A8F7D)" },
@@ -39,7 +37,6 @@ function DashboardPage() {
     { label: "Appointments Today", value: 3, icon: <LocalHospital fontSize="large" />, gradient: "linear-gradient(90deg, #56CCF2, #2F80ED)" },
     { label: "Canceled", value: 1, icon: <Notifications fontSize="large" />, gradient: "linear-gradient(90deg, #EB5757, #D32F2F)" },
   ];
-
   const menuItems = [
     { text: "Profile", icon: <Person fontSize="small" />, path: "/profile" },
     { text: "Patients", icon: <People fontSize="small" />, path: "/patients" },
@@ -47,7 +44,6 @@ function DashboardPage() {
     { text: "Notifications", icon: <Notifications fontSize="small" />, path: "/notifications" },
     { text: "Referrals", icon: <ManageHistory fontSize="small" />, path: "/referrals" },
   ];
-
   const drawerContent = (
     <Box sx={{ width: 250, padding: 2, backgroundColor: "#1E293B", height: "100%" }}>
       <Typography variant="h6" sx={{ color: "#FFF", marginBottom: 2 }}>
@@ -79,8 +75,7 @@ function DashboardPage() {
   );
 
   return (
-    <Box sx={{ minHeight: "100vh", backgroundColor: "#0F172A", position: "relative", overflow: "hidden", marginTop: "-10vh" }}>
-      {/* AppBar for Mobile */}
+    <Box sx={{ backgroundColor: "#0F172A", position: "relative", overflow: "hidden" }}>
       <Box
         sx={{
           display: "flex",
@@ -130,13 +125,11 @@ function DashboardPage() {
           ))}
         </Box>
       </Box>
-
-      {/* Drawer for Mobile */}
       <Drawer
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true, 
+          keepMounted: true,
         }}
         sx={{
           display: { xs: "block", sm: "none" },
@@ -145,11 +138,10 @@ function DashboardPage() {
       >
         {drawerContent}
       </Drawer>
-
       <Box
         sx={{
           background: "linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(47, 58, 80, 0.9))",
-          padding: { xs: 2, sm: 4 },
+          padding: { xs: 1, sm: 2 },
           borderRadius: "12px",
           boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
           color: "#FFF",
@@ -158,43 +150,12 @@ function DashboardPage() {
           alignItems: "center",
           justifyContent: "space-between",
           gap: { xs: 2, sm: 4 },
-          marginBottom: 3,
+
         }}
       >
-        {/* Welcome Text Section */}
-        <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
-          <Typography
-            variant="h4"
-            sx={{
-              fontWeight: 700,
-              color: "#FFF",
-              fontSize: { xs: "1.5rem", sm: "2rem" },
-              lineHeight: 1.2,
-            }}
-          >
-            Welcome, Dr. {doctorName}!
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            sx={{
-              marginTop: 1,
-              color: "#D1D5DB",
-              fontSize: { xs: "0.85rem", sm: "1rem" },
-              lineHeight: 1.5,
-            }}
-          >
-            Here's your daily dashboard overview.
-          </Typography>
-        </Box>
-
-        {/* Appointment Button */}
-        <Box>
-          <AppointmentButton />
-        </Box>
+        <DashboardHeader />
       </Box>
-      {/* Main Content */}
       <Grid container spacing={3} sx={{ paddingX: { xs: 2, sm: 8 } }}>
-        {/* Stats Section */}
         <Grid item xs={12}>
           <Box sx={{ borderRadius: 2, padding: 3, marginBottom: 4, color: "#FFF" }}>
             <Grid container spacing={3}>

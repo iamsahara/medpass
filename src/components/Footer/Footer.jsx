@@ -9,10 +9,11 @@ const Footer = () => {
         color: "#9CA3AF",
         textAlign: "center",
         paddingY: 2,
-        position:"static"
+        position:"static",
+        height:"auto",
+        margin:"auto"
       }}
     >
-      {/* Top Line: Links */}
       <Typography variant="body2" sx={{ marginBottom: 1 }}>
         <Link href="/about" underline="none" color="inherit" sx={{ marginX: 2 }}>
           About Us
@@ -24,8 +25,6 @@ const Footer = () => {
           Privacy Policy
         </Link>
       </Typography>
-
-      {/* Bottom Line: Copyright */}
       <Typography variant="body2">
         &copy; {new Date().getFullYear()} MedPass. All rights reserved.
       </Typography>

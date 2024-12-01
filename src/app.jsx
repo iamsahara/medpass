@@ -2,6 +2,8 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline, Box } from "@mui/material";
+import { PatientsProvider } from "./context/PatientsContext";
+import { SpecialistsProvider } from "./context/SpecialistsContext";
 import Header from "./components/Header/Header";
 import NotFound from "./pages/NotFound/NotFound";
 import Login from "./pages/Login/Login";
@@ -11,17 +13,14 @@ import Patients from "./components/Patients/Patients";
 import Specialists from "./components/Specialists/Specialists";
 import HomePage from "./pages/HomePage/HomePage";
 import theme from "./styles/theme";
-import { PatientsProvider } from "./context/PatientsContext";
-import { SpecialistsProvider } from "./context/SpecialistsContext";
 import UserProfile from "./components/UserProfile/UserProfile";
 import ProtectedRoute from "./utils/ProtectedRoute.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-
   const token = localStorage.getItem("token");
+
   if (token) {
     setIsAuthenticated(true);
   }
@@ -50,7 +49,7 @@ export default function App() {
                 handleLogout={handleLogout}
               />
             )}
-            <Box component="main" sx={{ minHeight: "80vh", mt: isAuthenticated ? 8 : 0 }}>
+            <Box component="main" >
               <Routes>
                 <Route path="/" element={!isAuthenticated ? <HomePage /> : <Navigate to='/dashboard' />} />
                 <Route path="/login" element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to='/dashboard' />} />
@@ -97,7 +96,7 @@ export default function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Box>
-            <Footer/>
+            <Footer />
           </BrowserRouter>
         </SpecialistsProvider>
       </PatientsProvider>

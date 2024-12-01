@@ -1,4 +1,3 @@
-import React from "react";
 import { AppBar, Toolbar, Button, Box, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -9,8 +8,7 @@ const Header = ({ isAuthenticated, handleLogout }) => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ position: "relative", height: "30vh", overflow: "hidden",backgroundColor: "#1E293B" }}>
-      {/* Background Video */}
+    <Box sx={{ position: "relative", height: "30vh", overflow: "hidden", backgroundColor: "#1E293B" }}>
       <Box
         sx={{
           position: "absolute",
@@ -38,7 +36,6 @@ const Header = ({ isAuthenticated, handleLogout }) => {
           <source src="./src/assets/videos/video1.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        {/* Gradient Overlay */}
         <Box
           sx={{
             position: "absolute",
@@ -50,14 +47,12 @@ const Header = ({ isAuthenticated, handleLogout }) => {
           }}
         ></Box>
       </Box>
-
-      {/* Header Content */}
       <AppBar
         position="static"
         sx={{
           background: `linear-gradient(135deg, ${theme.palette.background.paper}, ${theme.palette.background.default})`,
-          borderBottom: `2px solid ${theme.palette.primary.light}`, 
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", 
+          borderBottom: `2px solid ${theme.palette.primary.light}`,
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
           paddingX: { xs: 2, sm: 3 },
         }}
       >
@@ -68,7 +63,6 @@ const Header = ({ isAuthenticated, handleLogout }) => {
             flexDirection: "row",
           }}
         >
-          {/* App Logo */}
           <RouterLink
             to="/"
             style={{
@@ -77,12 +71,12 @@ const Header = ({ isAuthenticated, handleLogout }) => {
               textDecoration: "none",
             }}
           >
-         <Box
+            <Box
               component="img"
               src={medpass}
               alt="MedPass Logo"
               sx={{
-                height: { xs: 60, sm: 70 }, 
+                height: { xs: 60, sm: 70 },
                 marginRight: 1.5,
               }}
             />
@@ -96,8 +90,6 @@ const Header = ({ isAuthenticated, handleLogout }) => {
               MedPass
             </Typography>
           </RouterLink>
-
-          {/* Buttons */}
           <Box sx={{ display: "flex", gap: 2 }}>
             <RouterLink
               to="/dashboard"
@@ -119,21 +111,21 @@ const Header = ({ isAuthenticated, handleLogout }) => {
               </Button>
             </RouterLink>
             {isAuthenticated && (
-            
-                  <Button
-                  onClick={handleLogout}
-                  endIcon={<LogoutIcon />}
-                  variant="contained"
-                  sx={{
-                    paddingX: 3,
-                    fontSize: "0.85rem",
-                    fontWeight: 600,
-                    textTransform: "capitalize",
-                    color: "#FFF",
-                    backgroundColor: theme.palette.error.main,
-                    "&:hover": {
-                      backgroundColor: theme.palette.error.dark,
-                    },
+
+              <Button
+                onClick={handleLogout}
+                endIcon={<LogoutIcon />}
+                variant="contained"
+                sx={{
+                  paddingX: 3,
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  textTransform: "capitalize",
+                  color: "#FFF",
+                  backgroundColor: theme.palette.error.main,
+                  "&:hover": {
+                    backgroundColor: theme.palette.error.dark,
+                  },
                 }}
               >
                 Logout

@@ -9,31 +9,32 @@
 #root {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
-body {
-  background: linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
 
-  // background: linear-gradient(90deg, #4facfe, #00f2fe);
+body {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2));
   background-size: 200% 200%;
   animation: gradientAnimation 10s ease infinite;
   margin: 0;
   padding: 0;
-
 }
 
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
-html, body {
-  min-width: 320px; /* Prevent the browser from resizing the entire page below 320px */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+
+html,
+body {
+  min-width: 320px;
+  overflow-x: hidden;
 }

@@ -1,7 +1,7 @@
 import { Box, Typography, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
- function HomePage() {
+function HomePage() {
   const navigate = useNavigate();
 
   const handleRoleSelect = (role) => {
