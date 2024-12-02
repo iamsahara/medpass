@@ -9,12 +9,12 @@ import {
   List,
 
 } from "@mui/material";
-import { Map as MapIcon } from "@mui/icons-material";
 import axios from "axios";
 import SpecialistCard from "../SpecialistCard/SpecialistCard";
 import { SpecialistsContext } from "../../context/SpecialistsContext";
 
 function BookingStep2({ formData, onBack, onNext, onDataChange }) {
+  console.log(formData)
   const apiUrl = import.meta.env.VITE_API_URL;
   const { fetchSpecialists, specialists, loading, error } = useContext(SpecialistsContext);
   const [searchCriteria, setSearchCriteria] = useState("");
@@ -46,9 +46,11 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
     setSortOption(sortOption);
     if (sortOption === "closest") {
       try {
+        console.log(formData.patient.id); 
         const response = await axios.get(
           `${apiUrl}/api/specialists/closest?patientId=${formData.patient.id}`
         );
+        console.log(response.data)
         setFilteredSpecialists(response.data);
       } catch (err) {
         console.error("Error fetching closest specialists:", err.message);
@@ -101,7 +103,7 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
   }
 
   return (
-    <Box>
+    <Box sx={{overflow:"scroll", padding:3, height:"62vh"}}>
       <Typography variant="h5" gutterBottom>
         Step 2: Select a Specialist
       </Typography>

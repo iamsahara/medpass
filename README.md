@@ -251,7 +251,7 @@ Response Example:
         "lat": number,
         "lon": number,
         "phone": string,
-        "firstAvailibility": string,
+        "firstAvailability": string,
         "availability": string[],
         "distance": number
     },

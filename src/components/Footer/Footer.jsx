@@ -11,7 +11,8 @@ const Footer = () => {
         paddingY: 2,
         position:"static",
         height:"auto",
-        margin:"auto"
+        margin:"auto",
+        zIndex:1,
       }}
     >
       <Typography variant="body2" sx={{ marginBottom: 1 }}>

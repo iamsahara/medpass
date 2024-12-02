@@ -67,7 +67,7 @@ function Specialists() {
   }
 
   return (
-    <Box sx={{ padding: { xs: 2, sm: 4 }, backgroundColor: "#F9FAFB", minHeight: "62vh" }}>
+    <Box sx={{ padding: { xs: 2, sm: 4 }, backgroundColor: "#F9FAFB", minHeight: "62vh",overflow:"scroll", padding:3, height:"62vh" }}>
       <Typography
         variant="h4"
         marginBottom={3}
@@ -141,7 +141,11 @@ function Specialists() {
           No specialists available.
         </Typography>
       ) : (
-        <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{ overflow:"scroll",
+          zIndex:0,
+          maxWidth: "100%", 
+          margin: "0 auto", 
+          height:"50vh"}}>
           {filteredSpecialists.map((specialist) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={specialist.id}>
               <SpecialistCard

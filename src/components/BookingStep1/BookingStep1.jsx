@@ -74,7 +74,7 @@ function BookingStep1({ onNext, onDataChange }) {
   }
 
   return (
-    <Box sx={{ padding: 1 }}>
+    <Box sx={{ overflow:"scroll", padding:3, height:"62vh" }}>
       <Typography variant="h5" gutterBottom>
         Step 1: Select a Patient
       </Typography>
@@ -147,8 +147,8 @@ function BookingStep1({ onNext, onDataChange }) {
       {/* Patient List */}
       <List
         sx={{
-          maxHeight: "50vh",
-          overflowY: "auto",
+          // maxHeight: "50vh",
+          // overflowY: "auto",
           backgroundColor: "background.default",
           borderRadius: 2,
           padding: 2,

@@ -194,8 +194,8 @@ function SpecialistCard({
             }}
           >
             First Availability:{" "}
-            {specialist.firstAvailibility
-              ? dayjs(specialist.firstAvailibility).format("MMMM DD, YYYY")
+            {specialist.firstAvailability
+              ? dayjs(specialist.firstAvailability).format("MMMM DD, YYYY")
               : "Not Available"}
           </Typography>
           <Divider sx={{ my: 1 }} />

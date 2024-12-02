@@ -21,14 +21,14 @@ function PatientList() {
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh" >
         <Typography color="error">{error}</Typography>
       </Box>
     );
   }
 
   return (
-    <Box sx={{padding:3, height:"62vh"}}>
+    <Box sx={{overflow:"scroll", padding:3, height:"62vh"}}>
       {/* Header Section */}
       <Box
         display="flex"
@@ -55,8 +55,11 @@ function PatientList() {
           container 
           spacing={2} 
           sx={{
+            overflow:"scroll",
+            zIndex:0,
             maxWidth: "100%", 
             margin: "0 auto", 
+            height:"50vh"
           }}
         >
           {patients.map((patient) => (
