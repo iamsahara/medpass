@@ -39,7 +39,7 @@ function BookingStep3({ formData, onBack, onConfirm, navigateToStep }) {
       setShowSuccessMessage(true);
       onConfirm({ description, file });
     } else {
-      console.log("error");
+     console.error("error");
     }
   };
 

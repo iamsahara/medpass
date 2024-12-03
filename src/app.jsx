@@ -27,16 +27,13 @@ export default function App() {
 
   const handleLogin = () => {
     setIsAuthenticated(true);
-    console.log("Logged in");
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
-    console.log("Logged out");
   };
 
-  console.log(isAuthenticated)
   return (
     <ThemeProvider theme={theme}>
       <PatientsProvider>

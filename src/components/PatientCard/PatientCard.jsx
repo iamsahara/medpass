@@ -53,7 +53,6 @@ function PatientCard({ patient, onSelect, isSelected }) {
         marginBottom: "0.5rem",
       }}
     >
-      {/* Main Content */}
       <Box
         sx={{
           display: "flex",
@@ -61,7 +60,6 @@ function PatientCard({ patient, onSelect, isSelected }) {
           alignItems: "center",
         }}
       >
-        {/* Patient Name */}
         <Box sx={{ flex: 2 }}>
           <Typography
             variant="subtitle1"
@@ -77,8 +75,6 @@ function PatientCard({ patient, onSelect, isSelected }) {
             {patient.name}
           </Typography>
         </Box>
-
-        {/* Action Buttons */}
         <Box
           sx={{
             display: "flex",
@@ -87,7 +83,6 @@ function PatientCard({ patient, onSelect, isSelected }) {
             gap: "0.5rem",
           }}
         >
-          {/* Info Button */}
           <Button
             variant="outlined"
             size="small"
@@ -107,8 +102,6 @@ function PatientCard({ patient, onSelect, isSelected }) {
           >
             {showInfo ? "Hide Info" : "View Info"}
           </Button>
-
-          {/* History Button */}
           <Button
             variant="outlined"
             size="small"
@@ -248,7 +241,6 @@ function PatientCard({ patient, onSelect, isSelected }) {
               border: `1px solid ${theme.palette.divider}`,
             }}
           >
-            {/* Date Section */}
             <Box sx={{ flex: 1 }}>
               <Typography
                 variant="body1"
@@ -261,8 +253,6 @@ function PatientCard({ patient, onSelect, isSelected }) {
                 {appointment.date}
               </Typography>
             </Box>
-
-            {/* Details Section */}
             <Box sx={{ flex: 3 }}>
               <Typography
                 variant="body2"

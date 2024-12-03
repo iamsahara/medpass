@@ -68,7 +68,6 @@ function SpecialistCard({
       }}
       onClick={() => onSelectSpecialist(specialist)}
     >
-      {/* Main Content */}
       <Box
         sx={{
           display: "flex",
@@ -76,7 +75,6 @@ function SpecialistCard({
           alignItems: "center",
         }}
       >
-        {/* Specialist Name */}
         <Box sx={{ flex: 2 }}>
           <Typography
             variant="subtitle1"
@@ -92,61 +90,72 @@ function SpecialistCard({
             {specialist.name}
           </Typography>
         </Box>
-
-        {/* Action Buttons */}
         <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "0.5rem",
-          }}
-        >
-          {/* Info Button */}
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={toggleInfo}
-            sx={{
-              textTransform: "capitalize",
-              fontWeight: 500,
-              borderRadius: "6px",
-              fontSize: "0.65rem",
-              paddingX: 1,
-              borderColor: theme.palette.primary.main,
-              color: theme.palette.primary.main,
-              "&:hover": {
-                backgroundColor: theme.palette.action.hover,
-              },
-            }}
-          >
-            {showInfo ? "Hide Info" : "View Info"}
-          </Button>
-
-          {/* Availability Button */}
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={toggleAvailability}
-            sx={{
-              textTransform: "capitalize",
-              fontWeight: 500,
-              borderRadius: "6px",
-              fontSize: "0.65rem",
-              paddingX: 1,
-              borderColor: theme.palette.secondary.main,
-              color: theme.palette.secondary.main,
-              "&:hover": {
-                backgroundColor: theme.palette.action.hover,
-              },
-            }}
-          >
-            {showAvailability ? "Hide Availability" : "Check Availability"}
-          </Button>
-        </Box>
-      </Box>
-
-      {/* Collapsible Info Section */}
+  sx={{
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "0.5rem",
+  }}
+>
+  {specialist.distance && (
+    <Typography
+      variant="caption"
+      sx={{
+        fontWeight: 500,
+        color: theme.palette.text.secondary,
+        fontSize: "0.75rem",
+        backgroundColor: theme.palette.background.paper,
+        borderRadius: "12px",
+        padding: "2px 8px",
+        border: `1px solid ${theme.palette.primary.light}`,
+        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+        marginRight: "0.5rem",
+      }}
+    >
+      {`${specialist.distance.toFixed(1)} km`}
+    </Typography>
+  )}
+  <Button
+    variant="outlined"
+    size="small"
+    onClick={toggleInfo}
+    sx={{
+      textTransform: "capitalize",
+      fontWeight: 500,
+      borderRadius: "6px",
+      fontSize: "0.65rem",
+      paddingX: 1,
+      borderColor: theme.palette.primary.main,
+      color: theme.palette.primary.main,
+      "&:hover": {
+        backgroundColor: theme.palette.action.hover,
+      },
+    }}
+  >
+    {showInfo ? "Hide Info" : "View Info"}
+  </Button>
+  <Button
+    variant="outlined"
+    size="small"
+    onClick={toggleAvailability}
+    sx={{
+      textTransform: "capitalize",
+      fontWeight: 500,
+      borderRadius: "6px",
+      fontSize: "0.65rem",
+      paddingX: 1,
+      borderColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.main,
+      "&:hover": {
+        backgroundColor: theme.palette.action.hover,
+      },
+    }}
+  >
+    {showAvailability ? "Hide Availability" : "Check Availability"}
+  </Button>
+</Box>
+</Box>
       <Collapse in={showInfo} timeout="auto" unmountOnExit>
         <CardContent sx={{ padding: "0.5rem 0" }}>
           <Typography
@@ -181,8 +190,6 @@ function SpecialistCard({
           </Typography>
         </CardContent>
       </Collapse>
-
-      {/* Collapsible Availability Section */}
       <Collapse in={showAvailability} timeout="auto" unmountOnExit>
         <CardContent sx={{ padding: "0.5rem 0" }}>
           <Typography
