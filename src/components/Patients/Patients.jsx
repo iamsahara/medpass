@@ -29,7 +29,6 @@ function PatientList() {
 
   return (
     <Box sx={{overflow:"scroll", padding:3, height:"62vh"}}>
-      {/* Header Section */}
       <Box
         display="flex"
         justifyContent="space-between"
@@ -46,8 +45,6 @@ function PatientList() {
           + Add New Patient
         </Button>
       </Box>
-
-      {/* Patient Cards */}
       {patients.length === 0 ? (
         <Typography align="center">No patients available.</Typography>
       ) : (

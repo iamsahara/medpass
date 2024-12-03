@@ -78,8 +78,6 @@ function BookingStep1({ onNext, onDataChange }) {
       <Typography variant="h5" gutterBottom>
         Step 1: Select a Patient
       </Typography>
-
-      {/* Search Section */}
       <Box
         sx={{
           display: "flex",
@@ -143,12 +141,8 @@ function BookingStep1({ onNext, onDataChange }) {
           }}
         />
       </Box>
-
-      {/* Patient List */}
       <List
         sx={{
-          // maxHeight: "50vh",
-          // overflowY: "auto",
           backgroundColor: "background.default",
           borderRadius: 2,
           padding: 2,
@@ -175,8 +169,6 @@ function BookingStep1({ onNext, onDataChange }) {
           </Typography>
         )}
       </List>
-
-      {/* Navigation Buttons */}
       <Box
         sx={{
           display: "flex",

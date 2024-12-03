@@ -13,7 +13,7 @@ export const SpecialistsProvider = ({ children }) => {
 
     try {
       const response = await axios.get(`${apiUrl}/api/specialists`);
-      console.log(response.data)
+
       setSpecialists(response.data);
     } catch (err) {
       setError(err.message || "Failed to fetch specialists.");

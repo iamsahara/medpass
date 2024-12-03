@@ -14,7 +14,6 @@ import SpecialistCard from "../SpecialistCard/SpecialistCard";
 import { SpecialistsContext } from "../../context/SpecialistsContext";
 
 function BookingStep2({ formData, onBack, onNext, onDataChange }) {
-  console.log(formData)
   const apiUrl = import.meta.env.VITE_API_URL;
   const { fetchSpecialists, specialists, loading, error } = useContext(SpecialistsContext);
   const [searchCriteria, setSearchCriteria] = useState("");
@@ -25,15 +24,25 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
   const [localError, setLocalError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(async () => {
-    await fetchSpecialists();
-    console.log(specialists)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchSpecialists();
+      } catch (error) {
+        console.error("Error fetching specialists:", error);
+      }
+    };
+    
+    fetchData();
   }, []);
 
   useEffect(() => {
-    setFilteredSpecialists(specialists)
-  }, [specialists])
-
+    if (specialists?.length) {
+      setFilteredSpecialists(specialists)
+    }
+  }, [specialists]);
+  
   const handleSearchChange = (value) => {
     setSearchCriteria(value);
     const filtered = specialists.filter((specialist) =>
@@ -46,12 +55,12 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
     setSortOption(sortOption);
     if (sortOption === "closest") {
       try {
-        console.log(formData.patient.id); 
         const response = await axios.get(
           `${apiUrl}/api/specialists/closest?patientId=${formData.patient.id}`
         );
-        console.log(response.data)
-        setFilteredSpecialists(response.data);
+        const specialistsWithDistance = response.data;
+
+        setFilteredSpecialists(specialistsWithDistance);
       } catch (err) {
         console.error("Error fetching closest specialists:", err.message);
       }
@@ -170,7 +179,6 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
             </MenuItem>
             <MenuItem value="closest">
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                {/* Pin Icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -188,21 +196,23 @@ function BookingStep2({ formData, onBack, onNext, onDataChange }) {
         </Box>
       </Box>
       <List>
-        {filteredSpecialists.length > 0 ? (
-          filteredSpecialists.map((specialist) => (
-            <SpecialistCard
-              key={specialist.id}
-              specialist={specialist}
-              selectedSpecialist={selectedSpecialist}
-              selectedDate={selectedDate}
-              onSelectSpecialist={handleSpecialistSelect}
-              onSelectDate={handleDateSelect}
-            />
-          ))
-        ) : (
-          <Typography variant="body2">No specialists found.</Typography>
-        )}
-      </List>
+  {filteredSpecialists.length > 0 ? (
+    filteredSpecialists.map((specialist) => {
+      return (
+        <SpecialistCard
+          key={specialist.id}
+          specialist={specialist}
+          selectedSpecialist={selectedSpecialist}
+          selectedDate={selectedDate}
+          onSelectSpecialist={handleSpecialistSelect}
+          onSelectDate={handleDateSelect}
+        />
+      );
+    })
+  ) : (
+    <Typography variant="body2">No specialists found.</Typography>
+  )}
+</List>
       <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: 3, marginBottom: 3 }}>
         <Button variant="outlined" onClick={onBack}>
           Back

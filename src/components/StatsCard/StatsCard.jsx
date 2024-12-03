@@ -38,7 +38,6 @@ const StatsCard = ({ label, value, icon }) => {
         },
       }}
     >
-      {/* Icon with Hover Animation */}
       <Box
         sx={{
           fontSize: { xs: 28, sm: 36, md: 40 },
@@ -52,8 +51,6 @@ const StatsCard = ({ label, value, icon }) => {
       >
         {icon}
       </Box>
-
-      {/* Text Content */}
       <Box
         sx={{
           display: "flex",
